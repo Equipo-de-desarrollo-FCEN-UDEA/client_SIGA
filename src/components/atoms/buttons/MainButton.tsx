@@ -5,6 +5,7 @@ type MainButtonProps = {
   bgColor?: string;
   textColor?: string;
   buttonType?: "submit" | "reset" | "button";
+  onClick: () => void;
 };
 
 const MainButton: React.FC<MainButtonProps> = ({
@@ -12,11 +13,13 @@ const MainButton: React.FC<MainButtonProps> = ({
   bgColor = "bg-green-gradient",
   textColor = "text-white",
   buttonType = "submit",
+  onClick,
 }) => {
   return (
     <button
-      type={buttonType}
       className={`w-full h-9 rounded-md ${bgColor} ${textColor}`}
+      type={buttonType}
+      onClick={onClick}
     >
       {text}
     </button>

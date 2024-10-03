@@ -10,7 +10,7 @@ type MainButtonProps = {
 
 const MainButton: React.FC<MainButtonProps> = ({
   text,
-  bgColor = "bg-green-gradient",
+  bgColor = "green-btn-gradient",
   textColor = "text-white",
   buttonType = "submit",
   onClick,

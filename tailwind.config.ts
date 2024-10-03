@@ -11,9 +11,13 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        darkGreen: "rgba(2, 105, 55, 1)",
       },
       backgroundImage: {
-        'green-gradient': 'linear-gradient(90deg, rgba(67,182,73,0.8) 0%, rgba(67,182,73,0.9) 35%, rgba(141,198,63,1) 100%)',
+        "green-btn-gradient":
+          "linear-gradient(90deg, rgba(67,182,73,0.8) 0%, rgba(67,182,73,0.9) 35%, rgba(141,198,63,1) 100%)",
+        "green-navBar-gradient":
+          "linear-gradient(90deg, rgba(2,105,55,1) 0%, rgba(2,105,55,1) 0%, rgba(53,143,57,1) 100%)",
       },
     },
   },

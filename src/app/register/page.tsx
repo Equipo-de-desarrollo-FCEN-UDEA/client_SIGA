@@ -1,11 +1,11 @@
 "use client"
 
-import Login from '@modules/auth/pages/Login'
+import Register from '@/modules/auth/pages/Register'
 
-const page = () => {
+function page() {
   return (
     <div className='grid place-items-center mt-10'>
-      <Login />
+      <Register></Register>
     </div>
   )
 }

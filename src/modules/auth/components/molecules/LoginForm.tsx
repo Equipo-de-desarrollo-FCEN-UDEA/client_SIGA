@@ -30,7 +30,7 @@ function LoginForm() {
         <Link href="/">
           <p>¿Olvidaste tu contraseña?</p>
         </Link>
-        <Link href="/">
+        <Link href="../register">
           <p>Registrate</p>
         </Link>
       </div>

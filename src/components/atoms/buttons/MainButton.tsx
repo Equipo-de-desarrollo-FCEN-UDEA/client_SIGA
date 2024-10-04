@@ -5,12 +5,12 @@ type MainButtonProps = {
   bgColor?: string;
   textColor?: string;
   buttonType?: "submit" | "reset" | "button";
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const MainButton: React.FC<MainButtonProps> = ({
   text,
-  bgColor = "green-btn-gradient",
+  bgColor = "bg-green-btn-gradient",
   textColor = "text-white",
   buttonType = "submit",
   onClick,

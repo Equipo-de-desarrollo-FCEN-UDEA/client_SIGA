@@ -1,25 +1,47 @@
 "use client";
 
-/* type InputProps = {
+type InputProps = {
   label?: string;
-  type?: string;
-  placeholder: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}; */
+  placeholder?: string;
+  options: string[];
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+};
 
-const SelectInput = () => {
+const SelectInput = ({
+  label,
+  placeholder = "Seleccione una opción...",
+  options,
+  onChange,
+}: InputProps) => {
   return (
     <>
-      <select
-        className="h-10 border border-gray-300 p-2 rounded w-48"
-        name=""
-        id=""
-        value="Hola"
-        aria-placeholder="fasdf"
-      >
-        <option value="siga">Siga</option>
-      </select>
+      {!label ? (
+        <select
+          className="h-10 border border-gray-300 p-2 rounded w-full"
+          onChange={onChange}
+          defaultValue=""
+        >
+          <option disabled>{placeholder}</option>
+          {options.map((item) => (
+            <option value={item}>{item}</option>
+          ))}
+        </select>
+      ) : (
+        <label className="flex flex-col">
+          <span>{label}</span>
+          <select
+            className="h-10 border border-gray-300 p-2 rounded w-full"
+            onChange={onChange}
+          >
+            <option value="" disabled>
+              {placeholder}
+            </option>
+            {options.map((item, index) => (
+              <option value={item} key={index} >{item}</option>
+            ))}
+          </select>
+        </label>
+      )}
     </>
   );
 };

@@ -11,12 +11,14 @@ const RegisterConfirmation = () => {
       <TextInput
         placeholder=""
         value={prueba}
+        type="password"
         onChange={(e) => setPrueba(e.target.value)}
-        label="Contraseña:"
+        label="Crear Contraseña:"
       />
       <TextInput
         placeholder=""
         value={prueba}
+        type="password"
         onChange={(e) => setPrueba(e.target.value)}
         label="Confirmar Contraseña:"
       />

@@ -2,7 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { UUID } from "crypto";
-import Link from "next/link";
+import { Icon } from "@iconify/react";
+
+import SelectInput from "@components/atoms/inputs/SelectInput";
+import MainButton from "@components/atoms/buttons/MainButton";
 
 // Definir la interfaz del usuario
 interface User {
@@ -110,94 +113,96 @@ export default function UserDetail() {
 
   // Mostrar la información del usuario
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div className="mt-14 max-w-3xl border shadow-lg p-10 rounded-md">
-        <h2 className="text-xl font-bold text-center mb-3">Información del Usuario</h2>
-        <p>
-          <strong>Nombre:</strong> {user.name}
-        </p>
-        <p>
-          <strong>Apellido:</strong> {user.last_name}
-        </p>
-        <p>
-          <strong>Email:</strong> <p>{user.email}</p>
-        </p>
-        <p>
-          <strong>Tipo de Identificación:</strong> {user.identification_type}
-        </p>
-        <p>
-          <strong>Número de Identificación:</strong>{" "}
-          {user.identification_number}
-        </p>
-        <p>
-          <strong>Teléfono:</strong> {user.phone}
-        </p>
-        <p>
-          <strong>Activo:</strong> {user.is_active ? "Sí" : "No"}
-        </p>
+    <div className="flex flex-col md:flex-row md:flex-wrap md:gap-4 justify-center items-center">
+      <div className="mt-14 max-w-3xl md:w-[500px] md:h-full border shadow-lg p-10 rounded-md">
+        <h2 className="text-xl font-bold text-center mb-3">
+          Información del Usuario
+        </h2>
 
-        <p>
-          <strong>Roles:</strong>
-        </p>
-        <ul>
+        <div className="flex">
+          <strong>Nombre:</strong>
+          <p className="secondary-text ml-2 mb-1">{user.name}</p>
+        </div>
+        <div className="flex">
+          <strong>Apellido:</strong>
+          <p className="secondary-text ml-2 mb-1">{user.last_name}</p>
+        </div>
+        <div className="flex">
+          <strong>Email:</strong>
+          <p className="secondary-text ml-2 mb-1">{user.email}</p>
+        </div>
+        <div className="flex">
+          <strong>Tipo de Identificación:</strong>
+          <p className="secondary-text ml-2 mb-1">{user.identification_type}</p>
+        </div>
+        <div className="flex">
+          <strong>Número de Identificación:</strong>
+          <p className="secondary-text ml-2 mb-1">
+            {user.identification_number}
+          </p>
+        </div>
+        <div className="flex">
+          <strong>Teléfono:</strong>
+          <p className="secondary-text ml-2 mb-1">{user.phone}</p>
+        </div>
+        <div className="flex">
+          <strong>Activo:</strong>
+          <p className="secondary-text ml-2 mb-1">
+            {user.is_active ? "Sí" : "No"}
+          </p>
+        </div>
+        <div className="border-t border-gray-300 my-4"></div>
+
+        <h2 className="text-xl font-bold text-center mb-3">Rol</h2>
+        <ul className="list-disc mb-10">
           {user.user_roles_academic_units.map((roleAcademicUnit, index) => (
-            <li key={index}>
-              {roleAcademicUnit.rol.name} -{" "}
-              {roleAcademicUnit.academic_unit.name}
+            <li key={index} className="mb-3 flex justify-between items-center">
+              <div>
+                <p>
+                  {roleAcademicUnit.academic_unit.name}
+                  <br />{" "}
+                </p>{" "}
+                <strong>{roleAcademicUnit.rol.name}</strong>
+              </div>
+              <a href="">
+                <Icon
+                  icon="material-symbols:delete-outline"
+                  className="text-xl text-red-700"
+                />
+              </a>
             </li>
           ))}
+          <div className="w-full text-end">
+            <a href="" className="underline">
+              Agregar Rol
+            </a>
+          </div>
         </ul>
-
-        <h2>Roles</h2>
-        <form>
-          <div>
-            <label htmlFor="role">Seleccionar Rol:</label>
-            <select
-              id="role"
-              value={rol_id}
-              onChange={(e) => setRole(e.target.value)}
-              required
-            >
-              <option value="" disabled>
-                Selecciona un rol
-              </option>
-              {roles.map((role: User) => (
-                <option key={role.id} value={role.id}>
-                  {role.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="academicUnit">Seleccionar Unidad Académica:</label>
-            <select
-              id="academicUnit"
-              value={academic_unit_id}
-              onChange={(e) => setAcademicUnit(e.target.value)}
-              required
-            >
-              <option value="" disabled>
-                Selecciona una unidad académica
-              </option>
-              {academicUnits.map((unit: any) => (
-                <option key={unit.id} value={unit.id}>
-                  {unit.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        </form>
-
-        <div className="flex items-center justify-center mt-6">
-          <button
-            onClick={handleSubmit}
-            className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-          >
-            Haz clic aquí
-          </button>
+        <div className="mt-4">
+          <MainButton text="Salir" onClick={handleSubmit} />
         </div>
       </div>
+
+      {/* <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
+        <div className="absolute bg-white z-20 mt-14 min-w-3xl md:w-[500px] border shadow-lg p-10 rounded-md">
+          <h2 className="text-xl font-bold text-center my-3">Asignar Rol</h2>
+          <form className="mb-4">
+            <SelectInput
+              onChange={(e) => setRole(e.target.value)}
+              options={roles.map((role: any) => role.name)}
+              label="Seleccionar Unidad Académica:"
+            />
+            <SelectInput
+              onChange={(e) => setAcademicUnit(e.target.value)}
+              options={academicUnits.map((unit: any) => unit.name)}
+              label="Seleccionar Unidad Académica:"
+            />
+          </form>
+          <div className="mt-16">
+            <MainButton text="Guardar" onClick={handleSubmit} />
+          </div>
+        </div>
+      </div> */}
     </div>
   );
 }

@@ -13,3 +13,19 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+table {
+  @apply w-full text-sm text-left text-black outline -outline-offset-1 outline-slate-800 overflow-hidden rounded-xl;
+}
+
+thead {
+  @apply text-xs text-white uppercase tracking-[0.3em] bg-green-800;
+}
+
+th,
+td {
+  @apply px-6 py-3 text-gray-700 table-cell text-center;
+}
+
+th {
+  @apply text-white border border-slate-800;
+}

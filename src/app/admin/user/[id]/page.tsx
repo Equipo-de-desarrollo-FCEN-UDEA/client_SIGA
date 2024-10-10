@@ -1,39 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { UUID } from "crypto";
 import { Icon } from "@iconify/react";
 
 import SelectInput from "@components/atoms/inputs/SelectInput";
 import MainButton from "@components/atoms/buttons/MainButton";
-import Modal from '@components/templates/Modal'
-
-// Definir la interfaz del usuario
-interface User {
-  name: string;
-  last_name: string;
-  email: string;
-  identification_type: string;
-  identification_number: string;
-  phone: string;
-  is_active: boolean;
-  id: UUID;
-  user_roles_academic_units: RolAcademicUnit[];
-}
-
-interface RolAcademicUnit {
-  rol: Rol;
-  academic_unit: AcademicUnit;
-}
-
-interface AcademicUnit {
-  name: string;
-}
-
-interface Rol {
-  name: string;
-  description: string;
-}
+import Modal from "@components/templates/Modal";
+import User from "@/core/interfaces/user";
+import { fetchUserById } from "@/core/services/api/userService";
+import { fetchAcademicUnits } from "@/core/services/api/academicUnitService";
+import { fetchRoles } from "@/core/services/api/rolService";
 
 export default function UserDetail() {
   // Obtener el ID del usuario
@@ -50,40 +26,19 @@ export default function UserDetail() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const user_response = await fetch(
-          `http://localhost:8003/api/v1/user/${id}`
-        );
-        const data_user = await user_response.json();
+      const data_user = await fetchUserById(id);
+      const data_academic_unit = await fetchAcademicUnits();
+      const data_roles = await fetchRoles();
 
-        const academic_unit_response = await fetch(
-          "http://localhost:8003/api/v1/academic_unit/get-all?skip=0&limit=50"
-        );
-        const data_academic_unit = await academic_unit_response.json();
-
-        const response_roles = await fetch(
-          "http://localhost:8003/api/v1/rol/get-all?skip=0&limit=10"
-        );
-        const data_roles = await response_roles.json();
-
-        setUser(data_user);
-        setAcademicUnits(data_academic_unit);
-        setRoles(data_roles);
-      } catch (error) {
-        console.error("Error al obtener las unidades académicas:", error);
-      }
+      setUser(data_user);
+      setAcademicUnits(data_academic_unit);
+      setRoles(data_roles);
     };
 
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    console.log('academic_unit_id: ' + academic_unit_id)
-  }, [academic_unit_id])
-  
+  }, [id]);
 
   const handleSubmit = async () => {
-
     const userData = {
       user_id: user?.id,
       rol_id, // Incluye el rol seleccionado
@@ -196,29 +151,29 @@ export default function UserDetail() {
       </div>
 
       {modal && (
-        <Modal setModal={() => setModal(false)} >
+        <Modal setModal={() => setModal(false)}>
           <h2 className="text-xl font-bold text-center my-3">Asignar Rol</h2>
-            <form className="mb-4">
-              <SelectInput
-                value={rol_id}
-                onChange={(e) => setRole(e.target.value)}
-                options={roles.map((role: any) => role.name)}
-                valueOptions={roles.map((role: any) => role.id)}
-                label="Seleccionar un Rol:"
-                placeholder="Seleccione una opción...."
-                />
-              <SelectInput
-                value={academic_unit_id}
-                onChange={(e) => setAcademicUnit(e.target.value)}
-                options={academicUnits.map((unit: any) => unit.name)}
-                valueOptions={academicUnits.map((unit: any) => unit.id)}
-                label="Seleccionar Unidad Académica:"
-                placeholder="Seleccione una opción...."
-              />
-            </form>
-            <div className="mt-16">
-              <MainButton text="Guardar" onClick={handleSubmit} />
-            </div>
+          <form className="mb-4">
+            <SelectInput
+              value={rol_id}
+              onChange={(e) => setRole(e.target.value)}
+              options={roles.map((role: any) => role.name)}
+              valueOptions={roles.map((role: any) => role.id)}
+              label="Seleccionar un Rol:"
+              placeholder="Seleccione una opción...."
+            />
+            <SelectInput
+              value={academic_unit_id}
+              onChange={(e) => setAcademicUnit(e.target.value)}
+              options={academicUnits.map((unit: any) => unit.name)}
+              valueOptions={academicUnits.map((unit: any) => unit.id)}
+              label="Seleccionar Unidad Académica:"
+              placeholder="Seleccione una opción...."
+            />
+          </form>
+          <div className="mt-16">
+            <MainButton text="Guardar" onClick={handleSubmit} />
+          </div>
         </Modal>
       )}
     </div>

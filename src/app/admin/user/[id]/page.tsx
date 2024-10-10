@@ -6,6 +6,7 @@ import { Icon } from "@iconify/react";
 
 import SelectInput from "@components/atoms/inputs/SelectInput";
 import MainButton from "@components/atoms/buttons/MainButton";
+import Modal from '@components/templates/Modal'
 
 // Definir la interfaz del usuario
 interface User {
@@ -42,6 +43,8 @@ export default function UserDetail() {
   const [academicUnits, setAcademicUnits] = useState([]);
   const [roles, setRoles] = useState([]);
 
+  const [modal, setModal] = useState(false);
+
   const [academic_unit_id, setAcademicUnit] = useState("");
   const [rol_id, setRole] = useState("");
 
@@ -74,7 +77,13 @@ export default function UserDetail() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    console.log('academic_unit_id: ' + academic_unit_id)
+  }, [academic_unit_id])
+  
+
   const handleSubmit = async () => {
+
     const userData = {
       user_id: user?.id,
       rol_id, // Incluye el rol seleccionado
@@ -173,9 +182,12 @@ export default function UserDetail() {
             </li>
           ))}
           <div className="w-full text-end">
-            <a href="" className="underline">
+            <p
+              className="underline cursor-pointer inline-block"
+              onClick={() => setModal(true)}
+            >
               Agregar Rol
-            </a>
+            </p>
           </div>
         </ul>
         <div className="mt-4">
@@ -183,26 +195,32 @@ export default function UserDetail() {
         </div>
       </div>
 
-      {/* <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-        <div className="absolute bg-white z-20 mt-14 min-w-3xl md:w-[500px] border shadow-lg p-10 rounded-md">
+      {modal && (
+        <Modal setModal={() => setModal(false)} >
           <h2 className="text-xl font-bold text-center my-3">Asignar Rol</h2>
-          <form className="mb-4">
-            <SelectInput
-              onChange={(e) => setRole(e.target.value)}
-              options={roles.map((role: any) => role.name)}
-              label="Seleccionar Unidad Académica:"
-            />
-            <SelectInput
-              onChange={(e) => setAcademicUnit(e.target.value)}
-              options={academicUnits.map((unit: any) => unit.name)}
-              label="Seleccionar Unidad Académica:"
-            />
-          </form>
-          <div className="mt-16">
-            <MainButton text="Guardar" onClick={handleSubmit} />
-          </div>
-        </div>
-      </div> */}
+            <form className="mb-4">
+              <SelectInput
+                value={rol_id}
+                onChange={(e) => setRole(e.target.value)}
+                options={roles.map((role: any) => role.name)}
+                valueOptions={roles.map((role: any) => role.id)}
+                label="Seleccionar un Rol:"
+                placeholder="Seleccione una opción...."
+                />
+              <SelectInput
+                value={academic_unit_id}
+                onChange={(e) => setAcademicUnit(e.target.value)}
+                options={academicUnits.map((unit: any) => unit.name)}
+                valueOptions={academicUnits.map((unit: any) => unit.id)}
+                label="Seleccionar Unidad Académica:"
+                placeholder="Seleccione una opción...."
+              />
+            </form>
+            <div className="mt-16">
+              <MainButton text="Guardar" onClick={handleSubmit} />
+            </div>
+        </Modal>
+      )}
     </div>
   );
 }

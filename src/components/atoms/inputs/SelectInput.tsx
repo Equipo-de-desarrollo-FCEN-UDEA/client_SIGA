@@ -2,26 +2,30 @@
 
 type InputProps = {
   label?: string;
+  value: string
   placeholder?: string;
   options: string[];
+  valueOptions: string[];
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 const SelectInput = ({
   label,
+  value,
   placeholder = "Seleccione una opción...",
   options,
+  valueOptions,
   onChange,
 }: InputProps) => {
   return (
     <>
       {!label ? (
         <select
+          value={value}
           className="h-10 border border-gray-300 p-2 rounded w-full"
           onChange={onChange}
-          defaultValue=""
         >
-          <option disabled>{placeholder}</option>
+          <option value={placeholder}>{placeholder}</option>
           {options.map((item) => (
             <option value={item}>{item}</option>
           ))}
@@ -30,14 +34,15 @@ const SelectInput = ({
         <label className="flex flex-col">
           <span>{label}</span>
           <select
+            value={value}
             className="h-10 border border-gray-300 p-2 rounded w-full"
             onChange={onChange}
           >
-            <option value="" disabled>
-              {placeholder}
-            </option>
+            <option value={placeholder}>{placeholder}</option>
             {options.map((item, index) => (
-              <option value={item} key={index} >{item}</option>
+              <option value={valueOptions[index]} key={index}>
+                {item}
+              </option>
             ))}
           </select>
         </label>

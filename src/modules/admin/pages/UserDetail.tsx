@@ -5,6 +5,7 @@ import MainButton from "@components/atoms/buttons/MainButton";
 import Modal from "@components/templates/Modal";
 import InfoUserItem from "../components/atoms/InfoUserItem";
 import RolUserItem from "../components/molecules/RolUserItem";
+import InputDisable from "@components/atoms/inputs/InputDisable";
 
 import User from "@/core/interfaces/user";
 import {
@@ -60,7 +61,21 @@ export default function UserDetail({ id }: { id: string | string[] }) {
           Información del Usuario
         </h2>
 
-        <InfoUserItem title="Nombre:" text={user.name} />
+        <InputDisable label="Nombre:" value={user.name} />
+        <InputDisable label="Apellido:" value={user.last_name} />
+        <InputDisable label="Email:" value={user.email} />
+        <InputDisable
+          label="Tipo de Identificación:"
+          value={user.identification_type}
+        />
+        <InputDisable
+          label="Número de Identificación:"
+          value={user.identification_number}
+        />
+        <InputDisable label="Teléfono:" value={user.phone} />
+        <InputDisable label="Activo:" value={user.is_active ? "Sí" : "No"} />
+
+        {/* <InfoUserItem title="Nombre:" text={user.name} />
         <InfoUserItem title="Apellido:" text={user.last_name} />
         <InfoUserItem title="Email:" text={user.email} />
         <InfoUserItem
@@ -71,12 +86,8 @@ export default function UserDetail({ id }: { id: string | string[] }) {
           title="Número de Identificación:"
           text={user.identification_number}
         />
-        <InfoUserItem
-          title="Número de Identificación:"
-          text={user.identification_number}
-        />
         <InfoUserItem title="Teléfono:" text={user.phone} />
-        <InfoUserItem title="Activo:" text={user.is_active ? "Sí" : "No"} />
+        <InfoUserItem title="Activo:" text={user.is_active ? "Sí" : "No"} /> */}
 
         <div className="border-t border-gray-300 my-4"></div>
 

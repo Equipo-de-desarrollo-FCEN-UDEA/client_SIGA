@@ -20,7 +20,7 @@ export const assignRoleToUser = async (userData: string) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(userData),
+        body: userData,
       }
     );
     

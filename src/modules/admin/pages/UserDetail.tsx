@@ -6,7 +6,7 @@ import SecondaryButton from "@components/atoms/buttons/SecondaryButton";
 import Modal from "@components/templates/Modal";
 import InfoUserItem from "../components/atoms/InfoUserItem";
 import InputDisable from "@/modules/admin/components/molecules/InputDisable";
-import ActiveBadge from '../components/atoms/ActiveBadge'
+import ActiveBadge from "../components/atoms/ActiveBadge";
 
 import User from "@/core/interfaces/user";
 import {
@@ -15,6 +15,7 @@ import {
 } from "@/core/services/api/userService";
 import { fetchAcademicUnits } from "@/core/services/api/academicUnitService";
 import { fetchRoles } from "@/core/services/api/rolService";
+import Link from "next/link";
 
 export default function UserDetail({ id }: { id: string | string[] }) {
   const [user, setUser] = useState<User | null>(null);
@@ -58,9 +59,7 @@ export default function UserDetail({ id }: { id: string | string[] }) {
   return (
     <div className="flex flex-col md:flex-row md:flex-wrap md:gap-4 justify-center items-center">
       <div className="mt-14 max-w-3xl md:w-[650px] md:h-full border shadow-lg p-10 rounded-md">
-        <h2 className="text-xl font-bold mb-3">
-          Información del Usuario
-        </h2>
+        <h2 className="text-xl font-bold mb-3">Información del Usuario</h2>
 
         <div className="flex justify-between">
           <div>
@@ -73,8 +72,8 @@ export default function UserDetail({ id }: { id: string | string[] }) {
             <ActiveBadge isActive={user.is_active} />
           </div>
           <div>
-          <InfoUserItem title="Email:" text={user.email} />
-            
+            <InfoUserItem title="Email:" text={user.email} />
+
             <InfoUserItem
               title="Número de Identificación:"
               text={user.identification_number}
@@ -95,7 +94,9 @@ export default function UserDetail({ id }: { id: string | string[] }) {
           ))}
         </ul>
         <div className="w-full flex gap-4 justify-between mt-4">
-          <SecondaryButton text="Salir" onClick={handleSubmit} />
+          <Link href="../user" className="w-full" >
+            <SecondaryButton text="Salir" onClick={handleSubmit} />
+          </Link>
           <MainButton text="Agregar Rol" onClick={() => setModal(true)} />
         </div>
       </div>

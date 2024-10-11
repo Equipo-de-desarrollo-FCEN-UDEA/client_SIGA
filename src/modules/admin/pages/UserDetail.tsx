@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from "react";
 import SelectInput from "@components/atoms/inputs/SelectInput";
 import MainButton from "@components/atoms/buttons/MainButton";
+import SecondaryButton from "@components/atoms/buttons/SecondaryButton";
 import Modal from "@components/templates/Modal";
 import InfoUserItem from "../components/atoms/InfoUserItem";
-import RolUserItem from "../components/molecules/RolUserItem";
-import InputDisable from "@components/atoms/inputs/InputDisable";
+import InputDisable from "@/modules/admin/components/molecules/InputDisable";
+import ActiveBadge from '../components/atoms/ActiveBadge'
 
 import User from "@/core/interfaces/user";
 import {
@@ -56,69 +57,53 @@ export default function UserDetail({ id }: { id: string | string[] }) {
   // Mostrar la información del usuario
   return (
     <div className="flex flex-col md:flex-row md:flex-wrap md:gap-4 justify-center items-center">
-      <div className="mt-14 max-w-3xl md:w-[500px] md:h-full border shadow-lg p-10 rounded-md">
-        <h2 className="text-xl font-bold text-center mb-3">
+      <div className="mt-14 max-w-3xl md:w-[650px] md:h-full border shadow-lg p-10 rounded-md">
+        <h2 className="text-xl font-bold mb-3">
           Información del Usuario
         </h2>
 
-        <InputDisable label="Nombre:" value={user.name} />
-        <InputDisable label="Apellido:" value={user.last_name} />
-        <InputDisable label="Email:" value={user.email} />
-        <InputDisable
-          label="Tipo de Identificación:"
-          value={user.identification_type}
-        />
-        <InputDisable
-          label="Número de Identificación:"
-          value={user.identification_number}
-        />
-        <InputDisable label="Teléfono:" value={user.phone} />
-        <InputDisable label="Activo:" value={user.is_active ? "Sí" : "No"} />
+        <div className="flex justify-between">
+          <div>
+            <InfoUserItem title="Nombre:" text={user.name} />
+            <InfoUserItem title="Apellido:" text={user.last_name} />
+            <InfoUserItem
+              title="Tipo de Identificación:"
+              text={user.identification_type}
+            />
+            <ActiveBadge isActive={user.is_active} />
+          </div>
+          <div>
+          <InfoUserItem title="Email:" text={user.email} />
+            
+            <InfoUserItem
+              title="Número de Identificación:"
+              text={user.identification_number}
+            />
+            <InfoUserItem title="Teléfono:" text={user.phone} />
+          </div>
+        </div>
 
-        {/* <InfoUserItem title="Nombre:" text={user.name} />
-        <InfoUserItem title="Apellido:" text={user.last_name} />
-        <InfoUserItem title="Email:" text={user.email} />
-        <InfoUserItem
-          title="Tipo de Identificación:"
-          text={user.identification_type}
-        />
-        <InfoUserItem
-          title="Número de Identificación:"
-          text={user.identification_number}
-        />
-        <InfoUserItem title="Teléfono:" text={user.phone} />
-        <InfoUserItem title="Activo:" text={user.is_active ? "Sí" : "No"} /> */}
-
-        <div className="border-t border-gray-300 my-4"></div>
-
-        <h2 className="text-xl font-bold text-center mb-3">Rol</h2>
+        <h2 className="text-xl font-bold mt-5 mb-3">Rol</h2>
         <ul className="list-disc mb-10">
           {user.user_roles_academic_units.map((roleAcademicUnit, index) => (
             <li key={index} className="mb-3 flex justify-between items-center">
-              <RolUserItem
-                academic_unit={roleAcademicUnit.academic_unit.name}
-                academic_rol={roleAcademicUnit.rol.name}
+              <InputDisable
+                label={roleAcademicUnit.academic_unit.name}
+                value={roleAcademicUnit.rol.name}
               />
             </li>
           ))}
-          <div className="w-full text-end">
-            <p
-              className="underline cursor-pointer inline-block"
-              onClick={() => setModal(true)}
-            >
-              Agregar Rol
-            </p>
-          </div>
         </ul>
-        <div className="mt-4">
-          <MainButton text="Salir" onClick={handleSubmit} />
+        <div className="w-full flex gap-4 justify-between mt-4">
+          <SecondaryButton text="Salir" onClick={handleSubmit} />
+          <MainButton text="Agregar Rol" onClick={() => setModal(true)} />
         </div>
       </div>
 
       {modal && (
         <Modal setModal={() => setModal(false)}>
           <h2 className="text-xl font-bold text-center my-3">Asignar Rol</h2>
-          <form className="mb-4">
+          <form className="mb-4 flex flex-col gap-3">
             <SelectInput
               value={rol_id}
               onChange={(e) => setRole(e.target.value)}

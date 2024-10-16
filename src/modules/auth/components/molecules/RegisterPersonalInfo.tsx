@@ -23,7 +23,7 @@ const RegisterPersonalInfo = () => {
         onChange={(e) => setPrueba(e.target.value)}
         label="Nombres:"
       />
-      <SelectInput onChange={(e) => setPrueba(e.target.value)} options={identificationType} label="Tipo de Identificación:" />
+      <SelectInput onChange={(e) => setPrueba(e.target.value)} options={identificationType} valueOptions={identificationType} value={prueba} label="Tipo de Identificación:" />
       <TextInput
         placeholder=""
         value={prueba}

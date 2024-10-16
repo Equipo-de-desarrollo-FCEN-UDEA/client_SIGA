@@ -18,8 +18,8 @@ const RegisterUserInfo = () => {
         onChange={(e) => setPrueba(e.target.value)}
         label="Correo Institucional:"
       />
-      <SelectInput onChange={(e) => setPrueba(e.target.value)} options={facultyOptions} label="Facultad:" />
-      <SelectInput onChange={(e) => setPrueba(e.target.value)} options={roleOptions} label="Facultad:" />
+      <SelectInput onChange={(e) => setPrueba(e.target.value)} options={facultyOptions} valueOptions={facultyOptions} value={prueba} label="Facultad:" />
+      <SelectInput onChange={(e) => setPrueba(e.target.value)} valueOptions={facultyOptions} value={prueba} options={roleOptions} label="Facultad:" />
     </div>
   );
 };

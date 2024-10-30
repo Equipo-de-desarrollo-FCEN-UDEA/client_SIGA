@@ -2,7 +2,6 @@
 
 import { use, useState } from "react";
 import Link from "next/link";
-import axios from 'axios';
 
 import TextInput from "@components/atoms/inputs/TextInput";
 import MainButton from "@components/atoms/buttons/MainButton";

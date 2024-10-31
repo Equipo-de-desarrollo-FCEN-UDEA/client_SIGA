@@ -11,7 +11,9 @@ export default function Home() {
     const fetchUsers = async () => {
       try {
         setLoading(true); 
-        const response = await fetch("http://localhost:8003/api/v1/user?skip=0&limit=286");
+        const response = await fetch("http://localhost:8003/api/v1/user?skip=0&limit=286", {
+          credentials: "include",
+        });
         const data = await response.json();
         setUsers(data);
       } catch (error) {

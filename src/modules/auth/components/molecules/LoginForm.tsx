@@ -1,36 +1,42 @@
 "use client";
 
-import { use, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-
 import TextInput from "@components/atoms/inputs/TextInput";
 import MainButton from "@components/atoms/buttons/MainButton";
-import handler from "@/core/services/api/login";
+import { useRouter } from "next/navigation";
 
 function LoginForm() {
-  const [username, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
+
+  const formData = new FormData();
+  formData.append('username', credentials.username);
+  formData.append('password', credentials.password);
+
+  const router = useRouter();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("username", username);
-    formData.append("password", password);
-
     try {
       const response = await fetch("http://localhost:8003/api/v1/auth/access-token", {
         method: "POST",
-        credentials: "include",
         body: formData,
       });
 
-      if (!response.ok) {
-        throw new Error("Login failed");
+      if (response.status === 200) {
+        router.push("/admin/user");
       }
-
-      const data = await response.json();
-      console.log("Login successful:", data);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -41,15 +47,17 @@ function LoginForm() {
       <div className="flex flex-col gap-y-4">
         <TextInput
           placeholder="Correo institucional"
-          onChange={(e) => setEmail(e.target.value)}
-          value={username}
-        ></TextInput>
+          onChange={handleChange}
+          value={credentials.username}
+          name="username"
+        />
         <TextInput
           placeholder="Contraseña"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
+          onChange={handleChange}
+          value={credentials.password}
+          name="password"
           type="password"
-        ></TextInput>
+        />
       </div>
 
       <div className="w-full flex justify-between text-darkGreen underline mb-10">
@@ -61,7 +69,7 @@ function LoginForm() {
         </Link>
       </div>
 
-      <MainButton text="Iniciar Sesión"></MainButton>
+      <MainButton text="Iniciar Sesión" buttonType="submit" />
     </form>
   );
 }

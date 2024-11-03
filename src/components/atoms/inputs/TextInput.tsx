@@ -3,6 +3,7 @@
 type InputProps = {
   label?: string;
   type?: string;
+  name?: string;
   placeholder: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -11,6 +12,7 @@ type InputProps = {
 const TextInput: React.FC<InputProps> = ({
   label,
   type = "text",
+  name = "",
   placeholder,
   value,
   onChange,
@@ -22,17 +24,19 @@ const TextInput: React.FC<InputProps> = ({
           type={type}
           placeholder={placeholder}
           value={value}
+          name={name}
           onChange={onChange}
           className="h-10 border border-gray-300 p-2 rounded w-full"
           autoComplete="on"
-        />
-      ) : (
-        <label className="flex flex-col">
+          />
+        ) : (
+          <label className="flex flex-col">
           <span>{label}</span>
           <input
             type={type}
             placeholder={placeholder}
             value={value}
+            name={name}
             onChange={onChange}
             className="h-10 border border-gray-300 p-2 rounded w-full"
             autoComplete="on"

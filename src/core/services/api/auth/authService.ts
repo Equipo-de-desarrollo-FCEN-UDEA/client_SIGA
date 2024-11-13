@@ -1,19 +1,16 @@
 export const activateAccount = async (token: string) => {
-    console.log("Activando cuenta con token:", token);
     try {
         const response = await fetch(
-            `http://localhost:8003/api/v1/auth/activate-account/`, 
+            'http://localhost:8003/api/v1/auth/activate-account/', 
             {
                 method: 'POST',
-                credentials: 'include',
-                headers: {
+                // credentials: 'include',
+                headers: { 
                     'Content-Type': 'application/json',
                 },
-                body: token
+                body: JSON.stringify( token )
             }
-        
         );
-        console.log("Respuesta del servidor:", response);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }

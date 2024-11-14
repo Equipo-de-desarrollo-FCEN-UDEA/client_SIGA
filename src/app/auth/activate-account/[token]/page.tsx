@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { activateAccount } from "src/core/services/api/auth/authService";
 
 export default function Page({ params }: { params: { token: string } }) {
@@ -13,10 +14,13 @@ export default function Page({ params }: { params: { token: string } }) {
     }
   };
 
+  useEffect(() => {
+    handleActivateAccount();
+  }, []);
+
   return (
-    <>
-      <h1>{params.token}</h1>
-      <button onClick={handleActivateAccount}>Activar Cuenta</button>
-    </>
+    <div>
+      Activando cuenta...
+    </div>
   );
 }

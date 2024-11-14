@@ -2,9 +2,9 @@
 
 import React, { ReactNode } from "react";
 import { TiTick } from "react-icons/ti";
-
 import MainButton from "@components/atoms/buttons/MainButton";
 import "./FormStepper.css";
+import { UseFormHandleSubmit, FieldValues } from "react-hook-form";
 
 type FormStepperProps = {
   children: ReactNode;
@@ -12,6 +12,8 @@ type FormStepperProps = {
   currentStep: number;
   complete: boolean;
   onClick: () => void;
+  onSubmit: (data: any) => void;
+  handleSubmit: UseFormHandleSubmit<FieldValues>;
 };
 
 const FormStepper: React.FC<FormStepperProps> = ({
@@ -20,32 +22,50 @@ const FormStepper: React.FC<FormStepperProps> = ({
   currentStep,
   complete,
   onClick,
+  onSubmit,
+  handleSubmit,
 }) => {
   return (
     <>
-      <div className="w-full flex">
-        {steps?.map((step, i) => (
-          <div
-            key={i}
-            className={`step-item ${currentStep === i + 1 && "active"} ${
-              (i + 1 < currentStep || complete) && "complete"
-            } `}
-          >
-            <div className="step">
-              {i + 1 < currentStep || complete ? <TiTick size={24} className="text-white" /> : i + 1}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className="w-full flex">
+          {steps?.map((step, i) => (
+            <div
+              key={i}
+              className={`step-item ${currentStep === i + 1 && "active"} ${
+                (i + 1 < currentStep || complete) && "complete"
+              } `}
+            >
+              <div className="step">
+                {i + 1 < currentStep || complete ? (
+                  <TiTick size={24} className="text-white" />
+                ) : (
+                  i + 1
+                )}
+              </div>
+              <p className="text-gray-500">{step}</p>
             </div>
-            <p className="text-gray-500">{step}</p>
-          </div>
-        ))}
-      </div>
-      <div>{children}</div>
+          ))}
+        </div>
 
-      {!complete && (
-        <MainButton
-          onClick={onClick}
-          text={currentStep === steps.length ? "Terminar" : "Siguiente"}
-        />
-      )}
+        {children}
+
+        {currentStep < steps.length && (
+          <MainButton
+            onClick={onClick}
+            buttonType={"button"}
+            text={"Siguiente"}
+          />
+        )}
+        {currentStep === steps.length && (
+          <MainButton
+            buttonType={"submit"}
+            text={"Terminar"}
+          />
+        )}
+      </form>
     </>
   );
 };

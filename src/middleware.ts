@@ -18,12 +18,14 @@ export async function middleware(request: {
       jwt.value,
       new TextEncoder().encode(process.env.SECRET_KEY)
     );
+
     return NextResponse.next();
   } catch (error) {
     return NextResponse.redirect(new URL("/auth", request.url));
   }
 }
 
+// Protección de rutas con respecto a un rol
 export const config = {
   matcher: ["/admin/:path*"],
 };

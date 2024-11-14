@@ -2,38 +2,53 @@
 
 import TextInput from "@components/atoms/inputs/TextInput";
 import SelectInput from "@components/atoms/inputs/SelectInput";
+import createUser from "@/core/interfaces/createUser";
+import { UseFormRegister, FieldValues } from "react-hook-form";
 
-import { useState } from "react";
-
-const RegisterPersonalInfo = () => {
-  const [prueba, setPrueba] = useState("");
-  const identificationType = ['CÉDULA DE CIUDADANÍA', 'CÉDULA DE EXTRANJERÍA', 'PASAPORTE', 'TARJETA DE IDENTIDAD', 'DOC. IDENT. DE EXTRANJEROS'];
+const RegisterPersonalInfo = ({
+  formValues,
+  handleChange,
+  register,
+}: {
+  formValues: createUser;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  register: UseFormRegister<FieldValues>;
+}) => {
+  const identificationType = [
+    "CÉDULA DE CIUDADANÍA",
+    "CÉDULA DE EXTRANJERÍA",
+    "PASAPORTE",
+    "TARJETA DE IDENTIDAD",
+    "DOC. IDENT. DE EXTRANJEROS",
+  ];
+  const identificationValue = [
+    "CEDULA_CIUDADANIA",
+    "CEDULA_EXTRANJERIA",
+    "PASAPORTE",
+    "TARJETA_IDENTIDAD",
+    "DOCUMENTO_IDENTIDAD_EXTRANJEROS",
+  ];
 
   return (
     <div className="grid gap-4 my-7">
-      <TextInput
-        placeholder=""
-        value={prueba}
-        onChange={(e) => setPrueba(e.target.value)}
-        label="Apellidos:"
+      <TextInput placeholder="" label="Apellidos:" {...register("last_name")} />
+      <TextInput placeholder="" {...register("name")} label="Nombres:" />
+      <SelectInput
+        options={identificationType}
+        valueOptions={identificationValue}
+        {...register("identification_type")}
+        label="Tipo de Identificación:"
       />
       <TextInput
         placeholder=""
-        value={prueba}
-        onChange={(e) => setPrueba(e.target.value)}
-        label="Nombres:"
-      />
-      <SelectInput onChange={(e) => setPrueba(e.target.value)} options={identificationType} valueOptions={identificationType} value={prueba} label="Tipo de Identificación:" />
-      <TextInput
-        placeholder=""
-        value={prueba}
-        onChange={(e) => setPrueba(e.target.value)}
+        {...register("identification_number")}
         label="Número de Identificación:"
       />
       <TextInput
         placeholder=""
-        value={prueba}
-        onChange={(e) => setPrueba(e.target.value)}
+        {...register("phone")}
         label="Teléfono:"
       />
     </div>

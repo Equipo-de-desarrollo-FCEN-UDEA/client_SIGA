@@ -32,8 +32,10 @@ function LoginForm() {
       const response = await fetch("http://localhost:8003/api/v1/auth/access-token", {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
-
+      
+      console.log("REsponse", response);
       if (response.status === 200) {
         router.push("/admin/user");
       }
@@ -64,7 +66,7 @@ function LoginForm() {
         <Link href="/">
           <p>¿Olvidaste tu contraseña?</p>
         </Link>
-        <Link href="../register">
+        <Link href="/auth/register">
           <p>Registrate</p>
         </Link>
       </div>

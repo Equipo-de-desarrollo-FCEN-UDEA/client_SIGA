@@ -2,22 +2,44 @@
 import React, { useEffect, useState } from "react";
 
 import {fetchVotingById} from "@/core/services/api/voting/votingService";
+import { fetchVoteTypes, assignUserVoteToVoting } from "@/core/services/api/voting/voteService";
 import InfoUserItem from "@modules/admin/components/atoms/InfoUserItem";
 import Statuses from "../components/molecules/statuses";
 
 import Voting from "@/core/interfaces/voting";
+import MainButton from "@/components/atoms/buttons/MainButton";
+import Modal from "@/components/templates/Modal";
+import SelectInput from "@/components/atoms/inputs/SelectInput";
 
 function VotingDetail({id}: {id: string | string[]}) {
     const [voting, setVoting] = useState<Voting | null>(null);
+    const [modal, setModal] = useState(false);
+    const [vote_types, setVoteTypes] = useState([]);
+    const [vote_type_id, setVote] = useState("");
+    const [voting_id, setVotingId] = useState("");
+
+    console.log(voting);
 
     useEffect(() => {
         const fetchData = async () => {
             const data_voting = await fetchVotingById(id);
-            console.log(data_voting);
+            const data_vote_types = await fetchVoteTypes();
             setVoting(data_voting);
+            setVotingId(data_voting.id);
+            setVoteTypes(data_vote_types);
         };
+
         fetchData();
     }, [id]);
+
+    const handleSubmit = async () => {
+        const votingData = {
+            voting_id,
+            vote_type_id
+        };
+    
+        assignUserVoteToVoting(JSON.stringify(votingData));
+      };
 
     if (!voting) {
         return <div>Cargando información de la votación...</div>;
@@ -40,9 +62,27 @@ function VotingDetail({id}: {id: string | string[]}) {
                 <div>
                     <Statuses statuses = {voting.info_voting.statuses} />
                 </div>
-                <button>votar</button>
+                <MainButton text="Votar" onClick={() => setModal(true)} />
             </div>
         </div>
+        {modal && (
+        <Modal setModal={() => setModal(false)}>
+          <h2 className="text-xl font-bold text-center my-3">Votar</h2>
+          <form className="mb-4 flex flex-col gap-3">
+            <SelectInput
+              value={vote_type_id}
+              onChange={(e) => setVote(e.target.value)}
+              options={vote_types.map((vote_type: any) => vote_type.name)}
+              valueOptions={vote_types.map((vote_type: any) => vote_type.id)}
+              label="Seleccionar un tipo de voto:"
+              placeholder="Seleccione una opción...."
+            />
+          </form>
+          <div className="mt-16">
+             <MainButton text="Guardar" onClick={handleSubmit} />
+          </div>
+        </Modal>
+      )}
         </>
     )
 }

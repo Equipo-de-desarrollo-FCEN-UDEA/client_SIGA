@@ -1,9 +1,9 @@
-const url_base = "http://localhost:8003/api/v1";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL+"/api/v1";
 
 export const fetchVoteTypes= async () => {
     try {
       const response_vote_types = await fetch(
-        url_base + "/vote_type"
+        apiUrl + "/vote_type"
       );
       const data_vote_types = await response_vote_types.json();
   
@@ -16,7 +16,7 @@ export const fetchVoteTypes= async () => {
   export const assignUserVoteToVoting = async (voteData: string) => {
     try {
       const response = await fetch(
-        url_base + "/vote",
+        apiUrl + "/vote",
         {
           method: "POST",
           headers: {

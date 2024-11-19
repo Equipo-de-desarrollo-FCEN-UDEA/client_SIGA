@@ -6,10 +6,14 @@ import { fetchVoteTypes, assignUserVoteToVoting } from "@/core/services/api/voti
 import InfoUserItem from "@modules/admin/components/atoms/InfoUserItem";
 import Statuses from "../components/molecules/statuses";
 
-import Voting from "@/core/interfaces/voting";
+import Voting from "@/core/interfaces/voting/voting";
 import MainButton from "@/components/atoms/buttons/MainButton";
 import Modal from "@/components/templates/Modal";
 import SelectInput from "@/components/atoms/inputs/SelectInput";
+
+import VotingChart from "../components/molecules/results";
+import vote from "@/core/interfaces/voting/vote";
+
 
 function VotingDetail({id}: {id: string | string[]}) {
     const [voting, setVoting] = useState<Voting | null>(null);
@@ -17,8 +21,6 @@ function VotingDetail({id}: {id: string | string[]}) {
     const [vote_types, setVoteTypes] = useState([]);
     const [vote_type_id, setVote] = useState("");
     const [voting_id, setVotingId] = useState("");
-
-    console.log(voting);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -61,6 +63,9 @@ function VotingDetail({id}: {id: string | string[]}) {
                 </div>
                 <div>
                     <Statuses statuses = {voting.info_voting.statuses} />
+                </div>
+                <div>
+                    <VotingChart votes={voting.votes}/>
                 </div>
                 <MainButton text="Votar" onClick={() => setModal(true)} />
             </div>

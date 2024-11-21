@@ -6,7 +6,6 @@ export default function Home() {
   const [votings, setVotings] = useState([]);
   const [loading, setLoading] = useState(true);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
-  console.log(apiUrl);
   useEffect(() => {
     const fetchUsers = async () => {
       try {

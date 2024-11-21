@@ -29,7 +29,6 @@ export const fetchVoteTypes= async () => {
       
       if (response.ok) {
         const responseData = await response.json();
-        console.log("Datos enviados con éxito: ", responseData);
         window.location.reload();
       }
   

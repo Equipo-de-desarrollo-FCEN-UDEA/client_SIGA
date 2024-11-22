@@ -1,5 +1,5 @@
 "use client";
-import Voting from "@/core/interfaces/voting";
+import Voting from "@/core/interfaces/voting/voting";
 import Link from "next/link";
 import { usePagination } from "pagination-react-js";
 import Pagination from "@components/molecules/Pagination/index";

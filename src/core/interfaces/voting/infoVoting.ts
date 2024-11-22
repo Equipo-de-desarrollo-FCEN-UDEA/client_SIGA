@@ -1,5 +1,5 @@
 import { UUID } from 'crypto';
-import Status from './status';
+import Status from '../status';
 
 interface InfoVoting {
     id_postgres: UUID;

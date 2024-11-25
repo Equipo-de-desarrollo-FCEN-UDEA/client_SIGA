@@ -15,7 +15,7 @@ import VotingChart from "../components/molecules/results";
 import vote from "@/core/interfaces/voting/vote";
 import { toast } from "react-toastify";
 
-import Error from "@/components/atoms/errors/error";
+import Error from "@/components/atoms/errors/ErrorCode";
 import Loading from "@/components/atoms/loading/Loading";
 
 

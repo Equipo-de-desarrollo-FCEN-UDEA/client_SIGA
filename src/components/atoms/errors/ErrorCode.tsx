@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Error = ({ errorCode }: { errorCode: number }) => {
+const ErrorCode = ({ errorCode }: { errorCode: number }) => {
     if (errorCode === 401) {
         return (
             <div className="flex items-center justify-center min-h-screen">
@@ -13,4 +13,4 @@ const Error = ({ errorCode }: { errorCode: number }) => {
     return null;
 }
 
-export default Error
+export default ErrorCode

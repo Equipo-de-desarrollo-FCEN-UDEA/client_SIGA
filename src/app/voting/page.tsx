@@ -5,12 +5,12 @@ import VotingTable from '@modules/voting/pages/VotingTable';
 export default function Home() {
   const [votings, setVotings] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         setLoading(true); 
-        const response = await fetch("http://localhost:8003/api/v1/voting", {
+        const response = await fetch(apiUrl+"/api/v1/voting", {
           credentials: "include",
         });
         const data = await response.json();

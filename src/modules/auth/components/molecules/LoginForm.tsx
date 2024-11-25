@@ -7,6 +7,8 @@ import TextInput from "@components/atoms/inputs/TextInput";
 import MainButton from "@components/atoms/buttons/MainButton";
 import handler from "@/core/services/api/login";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 function LoginForm() {
   const [username, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +21,7 @@ function LoginForm() {
     formData.append("password", password);
 
     try {
-      const response = await fetch("http://localhost:8003/api/v1/auth/access-token", {
+      const response = await fetch(apiUrl+"/api/v1/auth/access-token", {
         method: "POST",
         credentials: "include",
         body: formData,

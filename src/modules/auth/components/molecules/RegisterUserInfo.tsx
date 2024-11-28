@@ -1,36 +1,22 @@
 import TextInput from "@/components/atoms/inputs/TextInput";
 import SelectInput from "@/components/atoms/inputs/SelectInput";
-import createUser from "@/core/interfaces/createUser";
-import Faculty from "@/core/interfaces/faculty";
 import { useEffect, useState } from "react";
-import { UseFormRegister, FieldValues, useForm, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
 type TypeAcademicUnit = { name: string; id: string }[];
 
 const RegisterUserInfo = ({
-  formValues,
   facultyObject,
-  handleChange,
   rolId,
-  academicUnitId,
   setRolId,
-  setAcademicUnitId,
-  register,
 }: {
-  formValues: createUser;
   facultyObject: {
     undergraduate: TypeAcademicUnit;
     postgraduate: TypeAcademicUnit;
     institute: TypeAcademicUnit;
   };
-  handleChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
   rolId: string;
-  academicUnitId: string;
   setRolId: (rolId: string) => void;
-  setAcademicUnitId: (academicUnitId: string) => void;
-  register: UseFormRegister<FieldValues>;
 }) => {
   const facultyOptions = ["FACULTAD DE CIENCIAS EXACTAS"];
   const roleOptions = [
@@ -47,71 +33,93 @@ const RegisterUserInfo = ({
     ADMINISTRATIVO: "ea81184e-952c-4eb2-a01f-fc2ec6e8b876",
   };
 
-  const { setValue } = useFormContext();
+  const {
+    setValue,
+    watch,
+    register,
+    formState: { errors },
+  } = useFormContext();
 
-  const [faculty, setFaculty] = useState("");
-  const [vinculation, setVinculation] = useState(""); // Estado para guardar la vinculación seleccionada
+  const vinculation = watch("stepTwo.vinculation", ""); // Sincroniza vinculation con el formulario
 
-  const handleRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedRole = e.target.value;
-    setVinculation(selectedRole); // Actualiza el estado con el valor de vinculación
-    setValue("vinculation", selectedRole);
-    if (selectedRole === "PROFESOR") {
+  useEffect(() => {
+    // Actualiza el rolId basado en la vinculación seleccionada
+    if (vinculation === "PROFESOR") {
       setRolId(rolesId.PROFESOR);
-    } else if (selectedRole === "ESTUDIANTE PREGRADO") {
+    } else if (vinculation === "ESTUDIANTE PREGRADO") {
       setRolId(rolesId.ESTUDIANTE_PREGRADO);
-    } else if (selectedRole === "ESTUDIANTE POSGRADO") {
+    } else if (vinculation === "ESTUDIANTE POSGRADO") {
       setRolId(rolesId.ESTUDIANTE_POSGRADO);
-    } else if (selectedRole === "ADMINISTRATIVO") {
+    } else if (vinculation === "ADMINISTRATIVO") {
       setRolId(rolesId.ADMINISTRATIVO);
     }
-  };
+  }, [vinculation]);
 
   return (
     <div className="grid gap-4 my-7">
+      {/* Correo Institucional */}
       <TextInput
         placeholder=""
         label="Correo Institucional:"
-        {...register("email")}
+        {...register("stepTwo.email")}
+        error={(errors.stepTwo as any)?.email?.message}
       />
+
+      {/* Facultad */}
       <SelectInput
         options={facultyOptions}
         valueOptions={facultyOptions}
         label="Facultad:"
-        {...register("faculty")}
+        {...register("stepTwo.faculty")}
+        error={(errors.stepTwo as any)?.faculty?.message}
       />
+
+      {/* Vinculación */}
       <SelectInput
-        value={vinculation}
-        valueOptions={roleOptions}
         options={roleOptions}
+        valueOptions={roleOptions}
         label="Vinculación:"
-        onChange={(e) => {
-          handleRoleChange(e);
-        }}
+        {...register("stepTwo.vinculation", {
+          onChange: (e) => {
+            setValue("stepTwo.vinculation", e.target.value); // Actualiza el formulario
+          },
+        })}
+        error={(errors.stepTwo as any)?.vinculation?.message}
       />
+
+      {/* Campos Condicionales */}
       {vinculation === "ESTUDIANTE PREGRADO" && (
-        <div>
-          <SelectInput
-            valueOptions={facultyObject.undergraduate.map((item) => item.id)}
-            options={facultyObject.undergraduate.map((item) =>
-              item.name.toLocaleUpperCase()
-            )}
-            label="Pregrado:"
-            {...register("academic_unit")}
-          />
-        </div>
+        <SelectInput
+          valueOptions={facultyObject.undergraduate.map((item) => item.id)}
+          options={facultyObject.undergraduate.map((item) =>
+            item.name.toLocaleUpperCase()
+          )}
+          label="Pregrado:"
+          {...register("stepTwo.academic_unit")}
+          error={(errors.stepTwo as any)?.academic_unit?.message}
+        />
       )}
       {vinculation === "ESTUDIANTE POSGRADO" && (
-        <div>
-          <SelectInput
-            valueOptions={facultyObject.postgraduate.map((item) => item.id)}
-            options={facultyObject.postgraduate.map((item) =>
-              item.name.toLocaleUpperCase()
-            )}
-            {...register("academic_unit")}
-            label="Posgrado:"
-          />
-        </div>
+        <SelectInput
+          valueOptions={facultyObject.postgraduate.map((item) => item.id)}
+          options={facultyObject.postgraduate.map((item) =>
+            item.name.toLocaleUpperCase()
+          )}
+          label="Posgrado:"
+          {...register("stepTwo.academic_unit")}
+          error={(errors.stepTwo as any)?.academic_unit?.message}
+        />
+      )}
+      {(vinculation === "PROFESOR" || vinculation === "ADMINISTRATIVO") && (
+        <SelectInput
+          valueOptions={facultyObject.institute.map((item) => item.id)}
+          options={facultyObject.institute.map((item) =>
+            item.name.toLocaleUpperCase()
+          )}
+          label="Instituto:"
+          {...register("stepTwo.academic_unit")}
+          error={(errors.stepTwo as any)?.academic_unit?.message}
+        />
       )}
     </div>
   );

@@ -2,20 +2,12 @@
 
 import TextInput from "@components/atoms/inputs/TextInput";
 import SelectInput from "@components/atoms/inputs/SelectInput";
-import createUser from "@/core/interfaces/createUser";
-import { UseFormRegister, FieldValues } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
-const RegisterPersonalInfo = ({
-  formValues,
-  handleChange,
-  register,
-}: {
-  formValues: createUser;
-  handleChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
-  register: UseFormRegister<FieldValues>;
-}) => {
+const RegisterPersonalInfo = () => {
+
+  const { register, formState: { errors } } = useFormContext();
+
   const identificationType = [
     "CÉDULA DE CIUDADANÍA",
     "CÉDULA DE EXTRANJERÍA",
@@ -33,23 +25,36 @@ const RegisterPersonalInfo = ({
 
   return (
     <div className="grid gap-4 my-7">
-      <TextInput placeholder="" label="Apellidos:" {...register("last_name")} />
-      <TextInput placeholder="" {...register("name")} label="Nombres:" />
+      <TextInput
+        placeholder=""
+        {...register("stepOne.name")}
+        label="Nombres:"
+        error={(errors.stepOne as any)?.name?.message}
+      />
+      <TextInput
+        placeholder=""
+        label="Apellidos:"
+        {...register("stepOne.last_name")}
+        error={(errors.stepOne as any)?.last_name?.message}
+      />
       <SelectInput
         options={identificationType}
         valueOptions={identificationValue}
-        {...register("identification_type")}
+        {...register("stepOne.identification_type")}
         label="Tipo de Identificación:"
+        error={(errors.stepOne as any)?.identification_type?.message}
       />
       <TextInput
         placeholder=""
-        {...register("identification_number")}
+        {...register("stepOne.identification_number")}
         label="Número de Identificación:"
+        error={(errors.stepOne as any)?.identification_number?.message}
       />
       <TextInput
         placeholder=""
-        {...register("phone")}
+        {...register("stepOne.phone")}
         label="Teléfono:"
+        error={(errors.stepOne as any)?.phone?.message}
       />
     </div>
   );

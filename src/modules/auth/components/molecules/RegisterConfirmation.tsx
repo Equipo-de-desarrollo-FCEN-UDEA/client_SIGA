@@ -1,11 +1,14 @@
 "use client"
 
 import TextInput from "@/components/atoms/inputs/TextInput";
-import { useState } from "react";
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
-const RegisterConfirmation = ({register}: {register:UseFormRegister<FieldValues>}) => {
-  const [prueba, setPrueba] = useState("");
+const RegisterConfirmation = () => {
+
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
 
   return (
     <div className="grid gap-4 my-7">
@@ -13,13 +16,15 @@ const RegisterConfirmation = ({register}: {register:UseFormRegister<FieldValues>
         placeholder=""
         type="password"
         label="Crear Contraseña:"
-        {...register("password")}
+        {...register("stepThree.password")}
+        error={(errors.stepThree as any)?.password?.message}
       />
       <TextInput
         placeholder=""
         type="password"
         label="Confirmar Contraseña:"
-        {...register("confirmPassword")}
+        {...register("stepThree.confirmPassword")}
+        error={(errors.stepThree as any)?.confirmPassword?.message}
       />
     </div>
   )

@@ -10,9 +10,9 @@ type InputProps = {
   options: string[];
   valueOptions: string[];
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  error?: any;
 };
 
-// Usamos React.forwardRef para que el componente acepte ref
 const SelectInput = React.forwardRef<HTMLSelectElement, InputProps>(
   (
     {
@@ -23,35 +23,22 @@ const SelectInput = React.forwardRef<HTMLSelectElement, InputProps>(
       options,
       valueOptions,
       onChange,
+      error,
     },
     ref
   ) => {
     return (
       <>
         {!label ? (
-          <select
-            value={value}
-            className="h-10 border border-gray-300 p-2 rounded w-full"
-            onChange={onChange}
-            name={name}
-            ref={ref} // Añadimos la referencia aquí
-          >
-            <option value="">{placeholder}</option>
-            {options.map((item, index) => (
-              <option value={valueOptions[index]} key={index}>
-                {item}
-              </option>
-            ))}
-          </select>
-        ) : (
-          <label className="flex flex-col">
-            <span>{label}</span>
+          <>
             <select
               value={value}
-              name={name}
-              className="h-10 border border-gray-300 p-2 rounded w-full"
+              className={`h-10 border border-gray-300 p-2 rounded w-full ${
+                error ? "border-red-500" : ""
+              }`}
               onChange={onChange}
-              ref={ref} // Añadimos la referencia aquí
+              name={name}
+              ref={ref}
             >
               <option value="">{placeholder}</option>
               {options.map((item, index) => (
@@ -60,6 +47,28 @@ const SelectInput = React.forwardRef<HTMLSelectElement, InputProps>(
                 </option>
               ))}
             </select>
+            {error && <span className="text-red-500 text-sm">{error}</span>}
+          </>
+        ) : (
+          <label className="flex flex-col">
+            <span>{label}</span>
+            <select
+              value={value}
+              name={name}
+              className={`h-10 border border-gray-300 p-2 rounded w-full ${
+                error ? "border-red-500" : ""
+              }`}
+              onChange={onChange}
+              ref={ref}
+            >
+              <option value="">{placeholder}</option>
+              {options.map((item, index) => (
+                <option value={valueOptions[index]} key={index}>
+                  {item}
+                </option>
+              ))}
+            </select>
+            {error && <span className="text-red-500 text-sm">{error}</span>}
           </label>
         )}
       </>

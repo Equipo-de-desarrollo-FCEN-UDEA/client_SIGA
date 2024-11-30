@@ -64,16 +64,14 @@ function VotingDetail({ id }: { id: string | string[] }) {
     return (
         <>
             <div className="flex flex-col md:flex-row md:flex-wrap md:gap-4 justify-center items-center">
-                <div className="mt-14 max-w-3xl md:w-[650px] md:h-full border shadow-lg p-10 rounded-md">
+                <div className="mt-14 max-w-3xl w-full md:w-[650px] md:h-full border shadow-lg p-10 rounded-md">
                     <h2 className="text-xl font-bold mb-3">Detalle de la votación</h2>
 
-                    <div className="flex justify-between">
+                    <div className="flex flex-col md:flex-row justify-between">
                         <div>
                             <InfoUserItem title="tipo de solicitud" text={voting.user_application.application.name} />
                             <InfoUserItem title="Solicitante" text={voting.user_application.user.name + " " + voting.user_application.user.last_name} />
                         </div>
-
-
                     </div>
                     <div>
                         <Statuses statuses={voting.info_voting.statuses} />

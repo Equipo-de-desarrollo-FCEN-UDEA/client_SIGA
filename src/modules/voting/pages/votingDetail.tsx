@@ -54,7 +54,7 @@ function VotingDetail({ id }: { id: string | string[] }) {
     };
 
     if (error) {
-        return <Error errorCode={error} />;
+        return <Error code={error} message="No Autorizado" />;
     }
 
     if (!voting || Object.keys(voting).length === 0) {

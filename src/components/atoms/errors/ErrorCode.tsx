@@ -1,11 +1,16 @@
 import React from 'react'
 
-const ErrorCode = ({ errorCode }: { errorCode: number }) => {
-    if (errorCode === 401) {
+interface InfoError {
+    code: number;
+    message: string;
+}
+
+const ErrorCode = (infoError: InfoError) => {
+    if (infoError.code === 401) {
         return (
             <div className="flex items-center justify-center min-h-screen">
                 <div className="bg-red-500 text-white p-4 rounded shadow-md">
-                    Acceso no autorizado
+                    {infoError.message}
                 </div>
             </div>
         );

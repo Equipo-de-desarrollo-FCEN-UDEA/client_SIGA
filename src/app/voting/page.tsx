@@ -26,11 +26,14 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-2/3 mx-auto">
+    <div className="flex flex-col items-center justify-center">
       {loading ? (
         <p>Cargando usuarios...</p>
       ) : (
-        <VotingTable votings={votings} />
+        <div className="md:w-2/3">
+          <VotingTable votings={votings} />
+        </div>
+        
       )}
     </div>
   );

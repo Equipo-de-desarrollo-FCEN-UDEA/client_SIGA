@@ -1,0 +1,21 @@
+import InfoStatus from "../atoms/status";
+import Status from "@/core/interfaces/status";
+
+interface StatusesProps {
+  statuses: Status[];
+}
+
+const Statuses: React.FC<StatusesProps> = ({ statuses }) => {
+    return (
+      <div className="p-4 md:p-6 lg:p-8">
+        <h2 className="text-lg font-bold mb-3">Historial de estados</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {statuses.map((status, index) => (
+              <InfoStatus key={index} {...status} />
+          ))}
+        </div>
+      </div>
+    );
+  };
+  
+  export default Statuses;

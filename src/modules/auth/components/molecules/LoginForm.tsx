@@ -6,6 +6,8 @@ import TextInput from "@components/atoms/inputs/TextInput";
 import MainButton from "@components/atoms/buttons/MainButton";
 import { useRouter } from "next/navigation";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 function LoginForm() {
   const [credentials, setCredentials] = useState({
     username: "",
@@ -29,7 +31,7 @@ function LoginForm() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8003/api/v1/auth/access-token", {
+      const response = await fetch(apiUrl+"/api/v1/auth/access-token", {
         method: "POST",
         body: formData,
         credentials: "include",

@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useForm } from "react-hook-form";
-import Mobility from "@/core/interfaces/applications/mobility/mobility";
+import { UseFormRegister } from "react-hook-form";
 
-const Paises = () => {
+interface PaisesProps {
+    register: UseFormRegister<any>; // Recibe el register como prop
+  }
+
+const Paises:React.FC<PaisesProps> = ({register}) => {
     const [countries, setCountries] = useState<{ code: string; name: string }[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredCountries, setFilteredCountries] = useState(countries);
@@ -44,7 +47,9 @@ const Paises = () => {
 
     return (
         <div className="">
+            <label className="block text-sm font-medium text-gray-700">País destino</label>
             <input
+                {...register("destination_country", { required: true })}
                 type="text"
                 value={searchTerm}
                 onChange={handleSearchChange}

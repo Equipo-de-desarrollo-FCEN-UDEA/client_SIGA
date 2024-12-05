@@ -1,15 +1,14 @@
 import React from "react";
+import { UseFormRegister } from "react-hook-form";
 
 type EnumSelectProps<T> = {
-  label: string;
   enumObject: T;
-  register: any; // Si usas `react-hook-form`, esto es el registro
+  register: UseFormRegister<any>;
   name: string;
   required?: boolean;
 };
 
 const EnumSelect = <T extends object>({
-  label,
   enumObject,
   register,
   name,
@@ -17,7 +16,6 @@ const EnumSelect = <T extends object>({
 }: EnumSelectProps<T>) => {
   return (
     <div>
-      <label className="block text-sm font-medium">{label}</label>
       <select
         {...register(name, { required })}
         className="w-full border rounded p-2"

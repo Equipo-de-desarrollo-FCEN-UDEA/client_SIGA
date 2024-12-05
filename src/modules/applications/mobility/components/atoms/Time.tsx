@@ -3,8 +3,15 @@ import React from 'react'
 import { useForm } from "react-hook-form";
 import Mobility from "@/core/interfaces/applications/mobility/mobility";
 
-const Time = () => {
-    const { register } = useForm<Mobility>();
+import { UseFormRegister, SubmitHandler } from "react-hook-form";
+
+interface Props {
+    register: UseFormRegister<any>;
+    onBack: () => void;
+    onSubmit: SubmitHandler<Mobility>;
+}
+
+const Time: React.FC<Props> = ({register, onBack, onSubmit}) => {
     return (
         <div>
             <div>
@@ -39,6 +46,22 @@ const Time = () => {
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                 />
             </div>
+
+            <div className="flex justify-between">
+                <button
+                    onClick={onBack}
+                    className="text-red-600 px-4 py-2 rounded-md shadow-sm hover:bg-red-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                >
+                    Atrás
+                </button>
+                <button
+                    type="submit"
+                    className="bg-green-btn-gradient text-white px-4 py-2 rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                >
+                    Enviar
+                </button>
+            </div>
+            
         </div>
     )
 }

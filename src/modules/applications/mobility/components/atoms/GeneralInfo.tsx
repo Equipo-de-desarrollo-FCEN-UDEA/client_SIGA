@@ -52,11 +52,7 @@ const GeneralInfo: React.FC<Props> = ({register, onNext}) => {
         <Input
         label="País de destino"
         >
-            <InputText
-            {...register('destination_country', { required: true })}
-            placeholder='ingrese el pais de destino'
-            name='destination_country'
-            />
+            <Paises register={register} />
         </Input>
 
         <Input

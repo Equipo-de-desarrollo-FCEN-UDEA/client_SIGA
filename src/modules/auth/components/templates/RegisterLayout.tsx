@@ -23,6 +23,19 @@ import {
 
 type TypeAcademicUnit = { name: string; id: string }[];
 
+interface UserResponse {
+  created_at: string;
+  email: string;
+  id: string;
+  identification_number: string;
+  identification_type: string;
+  is_active: boolean;
+  last_name: string;
+  name: string;
+  phone: string;
+  updated_at: string;
+}
+
 const RegisterLayout = () => {
   const steps = ["Info. Personal", "Info. Usuario", "Confirmación"];
   const [currentStep, setCurrentStep] = useState(1);
@@ -85,7 +98,11 @@ const RegisterLayout = () => {
     }
   };
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: {
+    stepOne: StepOneFormData;
+    stepTwo: StepTwoFormData;
+    stepThree: StepThreeFormData;
+  }) => {
     // Construye el cuerpo de la petición
     const requestBody = {
       name: data.stepOne.name,
@@ -97,19 +114,12 @@ const RegisterLayout = () => {
       is_active: true,
       password: data.stepThree.password,
     };
-
+  
     const queryParams = new URLSearchParams({
       rol_id: rolId,
       acadeic_unit_id: data.stepTwo.academic_unit,
     });
-
-    console.log('url');
-    console.log(`http://localhost:8003/api/v1/user?${queryParams.toString()}`);
-    
-    console.log('requestBody');
-    console.log(requestBody);
-    
-
+  
     try {
       const response = await fetch(
         `http://localhost:8003/api/v1/user?${queryParams.toString()}`,
@@ -121,21 +131,19 @@ const RegisterLayout = () => {
           body: JSON.stringify(requestBody),
         }
       );
-
+  
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.statusText}`);
       }
 
-      const result = await response.json();
-      console.log("Usuario creado con éxito:", result);
       alert("Usuario creado con éxito");
     } catch (error) {
-      console.error("Error al enviar los datos:", error);
       alert(
         "Hubo un error al crear el usuario. Revisa la consola para más detalles."
       );
     }
   };
+  
 
   useEffect(() => {
     const fetchAcademicUnitData = async () => {

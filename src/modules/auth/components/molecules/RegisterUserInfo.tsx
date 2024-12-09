@@ -27,13 +27,6 @@ const RegisterUserInfo = ({
     "ADMINISTRATIVO",
   ];
 
-  const rolesId = {
-    PROFESOR: "007cafea-5b30-48bd-9cc6-f6c8e3b43815",
-    ESTUDIANTE_PREGRADO: "939875b2-3e34-4a17-9f3c-76cabba73f52",
-    ESTUDIANTE_POSGRADO: "1ca355db-8700-4ee7-883b-18b8bbed403b",
-    ADMINISTRATIVO: "ea81184e-952c-4eb2-a01f-fc2ec6e8b876",
-  };
-
   const {
     setValue,
     watch,
@@ -48,19 +41,18 @@ const RegisterUserInfo = ({
   useEffect(() => {
     // Actualiza el rolId basado en la vinculación seleccionada
     if (vinculation === "PROFESOR") {
-      setRolId(rolesId.PROFESOR);
+      setRolId(process.env.ROL_PROFESOR || "");
     } else if (vinculation === "ESTUDIANTE PREGRADO") {
-      setRolId(rolesId.ESTUDIANTE_PREGRADO);
+      setRolId(process.env.ROL_ESTUDIANTE_PREGRADO || "");
     } else if (vinculation === "ESTUDIANTE POSGRADO") {
-      setRolId(rolesId.ESTUDIANTE_POSGRADO);
+      setRolId(process.env.ROL_ESTUDIANTE_POSGRADO || "");
     } else if (vinculation === "ADMINISTRATIVO") {
-      setRolId(rolesId.ADMINISTRATIVO);
+      setRolId(process.env.ROL_ADMINISTRATIVO || "");
     }
   }, [vinculation]);
 
   return (
     <div className="grid gap-4 my-7">
-      {/* Correo Institucional */}
       <TextInput
         placeholder=""
         label="Correo Institucional:"
@@ -68,7 +60,6 @@ const RegisterUserInfo = ({
         error={errors.stepTwo?.email?.message}
       />
 
-      {/* Facultad */}
       <SelectInput
         options={facultyOptions}
         valueOptions={facultyOptions}
@@ -77,7 +68,6 @@ const RegisterUserInfo = ({
         error={errors.stepTwo?.faculty?.message}
       />
 
-      {/* Vinculación */}
       <SelectInput
         options={roleOptions}
         valueOptions={roleOptions}
@@ -90,7 +80,6 @@ const RegisterUserInfo = ({
         error={errors.stepTwo?.vinculation?.message}
       />
 
-      {/* Campos Condicionales */}
       {vinculation === "ESTUDIANTE PREGRADO" && (
         <SelectInput
           valueOptions={facultyObject.undergraduate.map((item) => item.id)}

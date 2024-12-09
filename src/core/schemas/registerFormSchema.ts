@@ -83,3 +83,7 @@ export const combinedSchema = z.object({
   stepTwo: stepTwoSchema,
   stepThree: stepThreeSchema,
 });
+
+export type StepOneFormData = z.infer<typeof stepOneSchema>;
+export type StepTwoFormData = z.infer<typeof stepTwoSchema>;
+export type StepThreeFormData = z.infer<typeof stepThreeSchema>;

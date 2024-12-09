@@ -16,6 +16,9 @@ import {
   stepTwoSchema,
   stepThreeSchema,
   combinedSchema,
+  StepOneFormData,
+  StepTwoFormData,
+  StepThreeFormData,
 } from "@/core/schemas/registerFormSchema";
 
 type TypeAcademicUnit = { name: string; id: string }[];
@@ -25,7 +28,11 @@ const RegisterLayout = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [complete, setComplete] = useState(false);
 
-  const methods = useForm({
+  const methods = useForm<{
+    stepOne: StepOneFormData;
+    stepTwo: StepTwoFormData;
+    stepThree: StepThreeFormData;
+  }>({
     resolver: zodResolver(combinedSchema),
     defaultValues: {
       stepOne: {},
@@ -33,6 +40,7 @@ const RegisterLayout = () => {
       stepThree: {},
     },
   });
+  
 
   const [academicUnitData, setAcademicUnitData] = useState<{
     undergraduate: TypeAcademicUnit;

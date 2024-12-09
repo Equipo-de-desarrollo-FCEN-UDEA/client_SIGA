@@ -1,7 +1,8 @@
 import TextInput from "@/components/atoms/inputs/TextInput";
 import SelectInput from "@/components/atoms/inputs/SelectInput";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
+import { StepTwoFormData } from "@/core/schemas/registerFormSchema";
 
 type TypeAcademicUnit = { name: string; id: string }[];
 
@@ -38,7 +39,8 @@ const RegisterUserInfo = ({
     watch,
     register,
     formState: { errors },
-  } = useFormContext();
+  } = useFormContext<{stepTwo: StepTwoFormData}>();
+
 
   // Sincroniza vinculation con el formulario
   const vinculation = watch("stepTwo.vinculation", ""); 
@@ -63,7 +65,7 @@ const RegisterUserInfo = ({
         placeholder=""
         label="Correo Institucional:"
         {...register("stepTwo.email")}
-        error={(errors.stepTwo as any)?.email?.message}
+        error={errors.stepTwo?.email?.message}
       />
 
       {/* Facultad */}
@@ -72,7 +74,7 @@ const RegisterUserInfo = ({
         valueOptions={facultyOptions}
         label="Facultad:"
         {...register("stepTwo.faculty")}
-        error={(errors.stepTwo as any)?.faculty?.message}
+        error={errors.stepTwo?.faculty?.message}
       />
 
       {/* Vinculación */}
@@ -85,7 +87,7 @@ const RegisterUserInfo = ({
             setValue("stepTwo.vinculation", e.target.value);
           },
         })}
-        error={(errors.stepTwo as any)?.vinculation?.message}
+        error={errors.stepTwo?.vinculation?.message}
       />
 
       {/* Campos Condicionales */}
@@ -97,7 +99,7 @@ const RegisterUserInfo = ({
           )}
           label="Pregrado:"
           {...register("stepTwo.academic_unit")}
-          error={(errors.stepTwo as any)?.academic_unit?.message}
+          error={errors.stepTwo?.academic_unit?.message}
         />
       )}
       {vinculation === "ESTUDIANTE POSGRADO" && (
@@ -108,7 +110,7 @@ const RegisterUserInfo = ({
           )}
           label="Posgrado:"
           {...register("stepTwo.academic_unit")}
-          error={(errors.stepTwo as any)?.academic_unit?.message}
+          error={errors.stepTwo?.academic_unit?.message}
         />
       )}
       {(vinculation === "PROFESOR" || vinculation === "ADMINISTRATIVO") && (
@@ -119,7 +121,7 @@ const RegisterUserInfo = ({
           )}
           label="Instituto:"
           {...register("stepTwo.academic_unit")}
-          error={(errors.stepTwo as any)?.academic_unit?.message}
+          error={errors.stepTwo?.academic_unit?.message}
         />
       )}
     </div>

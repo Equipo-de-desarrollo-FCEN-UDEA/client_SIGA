@@ -1,6 +1,7 @@
 "use client"
 
 import TextInput from "@/components/atoms/inputs/TextInput";
+import { StepThreeFormData } from "@/core/schemas/registerFormSchema";
 import { useFormContext } from "react-hook-form";
 
 const RegisterConfirmation = () => {
@@ -8,7 +9,9 @@ const RegisterConfirmation = () => {
   const {
     register,
     formState: { errors },
-  } = useFormContext();
+  } = useFormContext<{
+    stepThree: StepThreeFormData;
+  }>();
 
   return (
     <div className="grid gap-4 my-7">
@@ -17,14 +20,14 @@ const RegisterConfirmation = () => {
         type="password"
         label="Crear Contraseña:"
         {...register("stepThree.password")}
-        error={(errors.stepThree as any)?.password?.message}
+        error={errors.stepThree?.password?.message}
       />
       <TextInput
         placeholder=""
         type="password"
         label="Confirmar Contraseña:"
         {...register("stepThree.confirmPassword")}
-        error={(errors.stepThree as any)?.confirmPassword?.message}
+        error={errors.stepThree?.confirmPassword?.message}
       />
     </div>
   )

@@ -56,7 +56,6 @@ const RegisterLayout = () => {
   });
 
   const [rolId, setRolId] = useState("");
-  const [academicUnitId, setAcademicUnitId] = useState("");
 
   const nextStep = async () => {
     // Define un mapeo de los esquemas al paso actual
@@ -78,19 +77,56 @@ const RegisterLayout = () => {
     }
   };
 
-  const onSubmit = (data: any) => {
-    alert("Datos enviados");
-    console.log("Finalizando registro con datos:", data);
-    setComplete(true);
-  };
+  const onSubmit = async (data: any) => {
+    // Construye el cuerpo de la petición
+    const requestBody = {
+      name: data.stepOne.name,
+      last_name: data.stepOne.last_name,
+      email: data.stepTwo.email,
+      identification_type: data.stepOne.identification_type,
+      identification_number: data.stepOne.identification_number,
+      phone: data.stepOne.phone,
+      is_active: true,
+      password: data.stepThree.password,
+    };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setFormValues({
-      ...formValues,
-      [e.target.name]: e.target.value,
+    const queryParams = new URLSearchParams({
+      rol_id: rolId,
+      acadeic_unit_id: data.stepTwo.academic_unit,
     });
+
+    console.log('url');
+    console.log(`http://localhost:8003/api/v1/user?${queryParams.toString()}`);
+    
+    console.log('requestBody');
+    console.log(requestBody);
+    
+
+    try {
+      const response = await fetch(
+        `http://localhost:8003/api/v1/user?${queryParams.toString()}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      console.log("Usuario creado con éxito:", result);
+      alert("Usuario creado con éxito");
+    } catch (error) {
+      console.error("Error al enviar los datos:", error);
+      alert(
+        "Hubo un error al crear el usuario. Revisa la consola para más detalles."
+      );
+    }
   };
 
   useEffect(() => {
@@ -131,9 +167,7 @@ const RegisterLayout = () => {
           {currentStep === 2 && (
             <RegisterUserInfo
               rolId={rolId}
-              // academicUnitId={academicUnitId}
               setRolId={setRolId}
-              // setAcademicUnitId={setAcademicUnitId}
               facultyObject={academicUnitData}
             />
           )}

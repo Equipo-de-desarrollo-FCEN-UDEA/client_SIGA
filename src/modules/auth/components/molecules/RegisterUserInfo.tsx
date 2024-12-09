@@ -40,7 +40,8 @@ const RegisterUserInfo = ({
     formState: { errors },
   } = useFormContext();
 
-  const vinculation = watch("stepTwo.vinculation", ""); // Sincroniza vinculation con el formulario
+  // Sincroniza vinculation con el formulario
+  const vinculation = watch("stepTwo.vinculation", ""); 
 
   useEffect(() => {
     // Actualiza el rolId basado en la vinculación seleccionada
@@ -81,7 +82,7 @@ const RegisterUserInfo = ({
         label="Vinculación:"
         {...register("stepTwo.vinculation", {
           onChange: (e) => {
-            setValue("stepTwo.vinculation", e.target.value); // Actualiza el formulario
+            setValue("stepTwo.vinculation", e.target.value);
           },
         })}
         error={(errors.stepTwo as any)?.vinculation?.message}

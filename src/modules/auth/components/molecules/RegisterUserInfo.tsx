@@ -41,13 +41,13 @@ const RegisterUserInfo = ({
   useEffect(() => {
     // Actualiza el rolId basado en la vinculación seleccionada
     if (vinculation === "PROFESOR") {
-      setRolId(process.env.ROL_PROFESOR || "");
+      setRolId(process.env.NEXT_PUBLIC_ROL_PROFESOR || "");
     } else if (vinculation === "ESTUDIANTE PREGRADO") {
-      setRolId(process.env.ROL_ESTUDIANTE_PREGRADO || "");
+      setRolId(process.env.NEXT_PUBLIC_ROL_ESTUDIANTE_PREGRADO || "");
     } else if (vinculation === "ESTUDIANTE POSGRADO") {
-      setRolId(process.env.ROL_ESTUDIANTE_POSGRADO || "");
+      setRolId(process.env.NEXT_PUBLIC_ROL_ESTUDIANTE_POSGRADO || "");
     } else if (vinculation === "ADMINISTRATIVO") {
-      setRolId(process.env.ROL_ADMINISTRATIVO || "");
+      setRolId(process.env.NEXT_PUBLIC_ROL_ADMINISTRATIVO || "");
     }
   }, [vinculation]);
 

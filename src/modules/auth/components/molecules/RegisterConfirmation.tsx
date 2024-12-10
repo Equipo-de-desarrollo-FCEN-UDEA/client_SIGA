@@ -1,26 +1,33 @@
 "use client"
 
 import TextInput from "@/components/atoms/inputs/TextInput";
-import { useState } from "react";
+import { StepThreeFormData } from "@/core/schemas/registerFormSchema";
+import { useFormContext } from "react-hook-form";
 
 const RegisterConfirmation = () => {
-  const [prueba, setPrueba] = useState("");
+
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<{
+    stepThree: StepThreeFormData;
+  }>();
 
   return (
     <div className="grid gap-4 my-7">
       <TextInput
         placeholder=""
-        value={prueba}
         type="password"
-        onChange={(e) => setPrueba(e.target.value)}
         label="Crear Contraseña:"
+        {...register("stepThree.password")}
+        error={errors.stepThree?.password?.message}
       />
       <TextInput
         placeholder=""
-        value={prueba}
         type="password"
-        onChange={(e) => setPrueba(e.target.value)}
         label="Confirmar Contraseña:"
+        {...register("stepThree.confirmPassword")}
+        error={errors.stepThree?.confirmPassword?.message}
       />
     </div>
   )

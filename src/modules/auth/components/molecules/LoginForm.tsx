@@ -31,7 +31,7 @@ function LoginForm() {
     e.preventDefault();
 
     try {
-      const response = await fetch(apiUrl+"/api/v1/auth/access-token", {
+      const response = await fetch(apiUrl+"/auth/access-token", {
         method: "POST",
         body: formData,
         credentials: "include",

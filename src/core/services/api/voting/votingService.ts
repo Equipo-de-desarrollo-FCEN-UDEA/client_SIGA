@@ -2,7 +2,7 @@ export const fetchVotingById = async (id: string | string[]) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     try {
         const voting_response = await fetch(
-        apiUrl+`/api/v1/voting/${id}`, {
+        apiUrl+`/voting/${id}`, {
             credentials: "include",
         }
         );

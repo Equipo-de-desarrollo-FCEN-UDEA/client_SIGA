@@ -47,7 +47,6 @@ const Paises:React.FC<PaisesProps> = ({register}) => {
 
     return (
         <div className="relative">
-            <label className="block text-sm font-medium text-gray-700">País destino</label>
             <input
             type="text"
             value={searchTerm}

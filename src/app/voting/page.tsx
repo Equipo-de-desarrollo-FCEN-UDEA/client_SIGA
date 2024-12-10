@@ -10,7 +10,7 @@ export default function Home() {
     const fetchUsers = async () => {
       try {
         setLoading(true); 
-        const response = await fetch(apiUrl+"/api/v1/voting", {
+        const response = await fetch(apiUrl+"/voting", {
           credentials: "include",
         });
         const data = await response.json();

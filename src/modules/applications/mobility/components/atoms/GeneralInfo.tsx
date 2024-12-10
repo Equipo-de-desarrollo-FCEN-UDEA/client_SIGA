@@ -56,14 +56,21 @@ const GeneralInfo: React.FC<Props> = ({register, onNext}) => {
         </Input>
 
         <Input
-        label="Institución de destino"
-        >
-            <InputText
-            {...register('destination_institution', { required: true })}
-            placeholder='ingrese la institución de destino'
-            name='destination_institution'
-            />
-        </Input>
+        label='Fecha de Inicio'>
+                <input
+                    {...register('date_start', { required: true })}
+                    type="date"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+            </Input>
+            <Input
+            label='Fecha de finalización'>
+                <input
+                    {...register('date_end', { required: true })}
+                    type="date"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+            </Input>
         <div>
             <button
                 onClick={onNext}

@@ -19,7 +19,7 @@ const FormMobility = () => {
         setStep(step - 1);
     };
 
-    const { register, handleSubmit, reset } = useForm<Mobility>();
+    const { register, setValue, handleSubmit, reset } = useForm<Mobility>();
     const onSubmit: SubmitHandler<Mobility> = async (data) => {
         console.log(data);
         //create(data);
@@ -30,7 +30,7 @@ const FormMobility = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 bg-white p-4 rounded-lg shadow-md max-w-lg mx-auto">
             {step === 1 && <GeneralInfo register={register} onNext={handleNext} />}
             {step === 2 && <Contact register={register} onBack={handleBack} onNext={handleNext} />}
-            {step === 3 && <Subjects register={register} onBack={handleBack} />}
+            {step === 3 && <Subjects register={register} setValue={setValue} onBack={handleBack} onSubmit={onSubmit} />}
         </form>
     )
 }

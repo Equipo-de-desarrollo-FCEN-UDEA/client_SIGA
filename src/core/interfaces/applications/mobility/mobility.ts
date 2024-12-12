@@ -1,13 +1,7 @@
 import ProcessEnum from "@/core/interfaces/applications/mobility/process";
 import MobilityType from "@/core/interfaces/applications/mobility/type";
 import MobilityPurpose from "@/core/interfaces/applications/mobility/purpose";
-
-interface Subject {
-    extern_code: string
-    extern_name: string
-    intern_code: string
-    intern_name: string
-}
+import Subject from "@/core/interfaces/applications/mobility/subject";
 
 interface Mobility {
     process: ProcessEnum;

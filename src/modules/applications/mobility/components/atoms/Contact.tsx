@@ -23,6 +23,15 @@ const Contact: React.FC<Props> = ({ register, onBack, onNext }) => {
                     name='destination_institution'
                 />
             </Input>
+            <Input
+                label="Programa Academico"
+            >
+                <InputText
+                    {...register('academic_program', { required: true })}
+                    placeholder='ingrese el programa academico em la institución de destino'
+                    name='academic_program'
+                />
+            </Input>
 
             <Input
                 label="Nombre"

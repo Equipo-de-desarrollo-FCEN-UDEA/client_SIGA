@@ -22,7 +22,7 @@ const FormMobility = () => {
     const { register, setValue, handleSubmit, reset } = useForm<Mobility>();
     const onSubmit: SubmitHandler<Mobility> = async (data) => {
         console.log(data);
-        //create(data);
+        create(data);
     };
 
     return (

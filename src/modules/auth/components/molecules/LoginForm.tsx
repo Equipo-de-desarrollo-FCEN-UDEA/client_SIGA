@@ -65,7 +65,7 @@ function LoginForm() {
       </div>
 
       <div className="w-full flex justify-between text-darkGreen underline mb-10">
-        <Link href="/">
+        <Link href="/auth/forgot-password">
           <p>¿Olvidaste tu contraseña?</p>
         </Link>
         <Link href="/auth/register">

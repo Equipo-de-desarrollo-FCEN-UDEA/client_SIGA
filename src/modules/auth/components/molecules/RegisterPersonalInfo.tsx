@@ -3,24 +3,25 @@
 import TextInput from "@components/atoms/inputs/TextInput";
 import SelectInput from "@components/atoms/inputs/SelectInput";
 import { useFormContext } from "react-hook-form";
+import { StepOneFormData } from "@/core/schemas/registerFormSchema";
 
 const RegisterPersonalInfo = () => {
 
-  const { register, formState: { errors } } = useFormContext();
+  const { register, formState: { errors } } = useFormContext<{
+    stepOne: StepOneFormData;
+  }>();
 
   const identificationType = [
     "CÉDULA DE CIUDADANÍA",
     "CÉDULA DE EXTRANJERÍA",
     "PASAPORTE",
     "TARJETA DE IDENTIDAD",
-    "DOC. IDENT. DE EXTRANJEROS",
   ];
   const identificationValue = [
-    "CEDULA_CIUDADANIA",
-    "CEDULA_EXTRANJERIA",
-    "PASAPORTE",
-    "TARJETA_IDENTIDAD",
-    "DOCUMENTO_IDENTIDAD_EXTRANJEROS",
+    "cedula_ciudadania",
+    "cedula_extranjeria",
+    "pasaporte",
+    "tarjeta_de_identidad",
   ];
 
   return (
@@ -29,32 +30,32 @@ const RegisterPersonalInfo = () => {
         placeholder=""
         {...register("stepOne.name")}
         label="Nombres:"
-        error={(errors.stepOne as any)?.name?.message}
+        error={errors.stepOne?.name?.message}
       />
       <TextInput
         placeholder=""
         label="Apellidos:"
         {...register("stepOne.last_name")}
-        error={(errors.stepOne as any)?.last_name?.message}
+        error={errors.stepOne?.last_name?.message}
       />
       <SelectInput
         options={identificationType}
         valueOptions={identificationValue}
         {...register("stepOne.identification_type")}
         label="Tipo de Identificación:"
-        error={(errors.stepOne as any)?.identification_type?.message}
+        error={errors.stepOne?.identification_type?.message}
       />
       <TextInput
         placeholder=""
         {...register("stepOne.identification_number")}
         label="Número de Identificación:"
-        error={(errors.stepOne as any)?.identification_number?.message}
+        error={errors.stepOne?.identification_number?.message}
       />
       <TextInput
         placeholder=""
         {...register("stepOne.phone")}
         label="Teléfono:"
-        error={(errors.stepOne as any)?.phone?.message}
+        error={errors.stepOne?.phone?.message}
       />
     </div>
   );

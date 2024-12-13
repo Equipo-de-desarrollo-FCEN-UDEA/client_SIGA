@@ -12,11 +12,10 @@ export const stepOneSchema = z.object({
     .refine(
       (identification_type) =>
         [
-          "CEDULA_CIUDADANIA",
-          "CEDULA_EXTRANJERIA",
-          "PASAPORTE",
-          "TARJETA_IDENTIDAD",
-          "DOCUMENTO_IDENTIDAD_EXTRANJEROS",
+          "cedula_ciudadania",
+          "cedula_extranjeria",
+          "pasaporte",
+          "tarjeta_de_identidad",
         ].includes(identification_type),
       {
         message: "Seleccione un tipo de identificación válido",
@@ -84,3 +83,7 @@ export const combinedSchema = z.object({
   stepTwo: stepTwoSchema,
   stepThree: stepThreeSchema,
 });
+
+export type StepOneFormData = z.infer<typeof stepOneSchema>;
+export type StepTwoFormData = z.infer<typeof stepTwoSchema>;
+export type StepThreeFormData = z.infer<typeof stepThreeSchema>;

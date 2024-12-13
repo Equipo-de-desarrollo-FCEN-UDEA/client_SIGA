@@ -78,19 +78,19 @@ const RegisterLayout = () => {
       identification_type: data.stepOne.identification_type,
       identification_number: data.stepOne.identification_number,
       phone: data.stepOne.phone,
-      is_active: true,
+      is_active: false,
       password: data.stepThree.password,
     };
 
     const queryParams = new URLSearchParams({
       rol_id: rolId,
-      acadeic_unit_id: data.stepTwo.academic_unit,
+      academic_unit_id: data.stepTwo.academic_unit,
     });
 
     try {
       const result = await createUser(requestBody, queryParams);
       alert("Usuario creado con éxito");
-      
+
       router.push("/auth");
     } catch {
       alert("Error al crear el usuario");

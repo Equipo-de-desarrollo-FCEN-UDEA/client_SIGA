@@ -89,6 +89,7 @@ const RegisterLayout = () => {
 
     try {
       const result = await createUser(requestBody, queryParams);
+      
       alert("Usuario creado con éxito");
 
       router.push("/auth");

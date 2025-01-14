@@ -2,7 +2,7 @@ export const activateAccount = async (token: string) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     try {
         const response = await fetch(
-            apiUrl+'/api/v1/auth/activate-account/', 
+            `${apiUrl}/auth/activate-account/`,
             {
                 method: 'POST',
                 // credentials: 'include',

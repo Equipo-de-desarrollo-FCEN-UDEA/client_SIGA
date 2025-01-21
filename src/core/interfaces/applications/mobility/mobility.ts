@@ -2,6 +2,7 @@ import ProcessEnum from "@/core/interfaces/applications/mobility/process";
 import MobilityType from "@/core/interfaces/applications/mobility/type";
 import MobilityPurpose from "@/core/interfaces/applications/mobility/purpose";
 import Subject from "@/core/interfaces/applications/mobility/subject";
+import UserApplicationStatus from "@/core/interfaces/applications/applicationsStatus";
 
 interface Mobility {
     process: ProcessEnum;
@@ -18,6 +19,7 @@ interface Mobility {
     total_time: number;
     date_report: string;
     subjects: Subject[];
+    statuses: UserApplicationStatus[];
 }
 
 export default Mobility;

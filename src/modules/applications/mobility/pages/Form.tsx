@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import { useForm, SubmitHandler } from "react-hook-form";
 import Mobility from "@/core/interfaces/applications/mobility/mobility";
 import GeneralInfo from '../components/atoms/GeneralInfo';
-import create from '@/core/services/api/applications/mobility';
+import UserCRUD from '@/core/services/api/applications/mobility';
 import Time from '../components/atoms/Time';
 import Contact from '../components/atoms/Contact';
 import Subjects from '../components/atoms/Subjects';
 
 const FormMobility = () => {
+
+    const userCRUD = new UserCRUD();
 
     const [step, setStep] = useState(1);
 
@@ -19,10 +21,12 @@ const FormMobility = () => {
         setStep(step - 1);
     };
 
+
+
     const { register, setValue, handleSubmit, reset } = useForm<Mobility>();
     const onSubmit: SubmitHandler<Mobility> = async (data) => {
-        console.log(data);
-        create(data);
+        // console.log(data);
+        await userCRUD.create({ ...data, statuses: [] });
     };
 
     return (

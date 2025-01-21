@@ -3,13 +3,33 @@ import { useEffect, useState } from 'react';
 export abstract class AbstractCRUD<T> {
   abstract apiUrl: string;
 
-  useFetchData(id: string) {
-    const [data, setData] = useState<T | null>(null);
+  async getById(id: string) {
+    try {
+      const response = await fetch(`${this.apiUrl}/${id}`, {
+        credentials: 'include',
+      });
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error('Resource not found');
+        }
+        throw new Error('Network response was not ok');
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  }
+
+  async getAll() {
+    const [data, setData] = useState<T[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await fetch(`${this.apiUrl}/${id}`);
+          const response = await fetch(this.apiUrl, {
+            credentials: 'include',
+          });
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
@@ -23,9 +43,7 @@ export abstract class AbstractCRUD<T> {
       };
 
       fetchData();
-    }, [id]);
-
-    return { data, loading };
+    }, []);
   }
 
   async create(data: T) {

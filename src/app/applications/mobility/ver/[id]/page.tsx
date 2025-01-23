@@ -1,9 +1,9 @@
-import Edit from "@modules/applications/mobility/pages/Edit";
+import View from "@modules/applications/mobility/pages/View";
 
 export default function Page({params}: {params: {id: string}}) {
   return (
     <>
-      <Edit id={params.id} />
+      <View id={params.id} />
     </>
   );
 }

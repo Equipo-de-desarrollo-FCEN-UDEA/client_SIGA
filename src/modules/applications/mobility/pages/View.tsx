@@ -16,16 +16,16 @@ export default function Page({ id }: { id: string }) {
 
     const fetchData = async () => {
       try {
-      const data = await mobilityCRUD.getById(id);
-      setMobility(data);
+        const data = await mobilityCRUD.getById(id);
+        setMobility(data);
       } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError(String(err));
-      }
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError(String(err));
+        }
       } finally {
-      setLoading(false);
+        setLoading(false);
       }
     };
     fetchData();
@@ -63,6 +63,11 @@ export default function Page({ id }: { id: string }) {
           </div>
         </div>
       </View>
+      {mobility?.status?.[mobility.status.length - 1]?.name === 'CREADA' && 
+        <>
+          <p>Enviar</p> {/* El usuario confirma la información antes de ser enviada al comite */}
+        </>
+      }
     </>
   );
 }

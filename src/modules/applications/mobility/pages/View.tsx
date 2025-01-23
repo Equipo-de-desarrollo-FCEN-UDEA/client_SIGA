@@ -31,6 +31,11 @@ export default function Page({ id }: { id: string }) {
     fetchData();
   }, [id]);
 
+  const sendToCommittee = async () => {
+    await new MobilityCRUD().sendToCommittee(id);
+    window.location.reload();
+  }
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -65,7 +70,7 @@ export default function Page({ id }: { id: string }) {
       </View>
       {mobility?.status?.[mobility.status.length - 1]?.name === 'CREADA' && 
         <>
-          <p>Enviar</p> {/* El usuario confirma la información antes de ser enviada al comite */}
+          <p onClick={sendToCommittee}>Enviar</p> {/* El usuario confirma la información antes de ser enviada al comite */}
         </>
       }
     </>

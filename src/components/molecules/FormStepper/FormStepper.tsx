@@ -31,7 +31,7 @@ const FormStepper: React.FC<FormStepperProps> = ({
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="w-full flex">
+        <div className="w-full flex justify-center">
           {steps?.map((step, i) => (
             <div
               key={i}

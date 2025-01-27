@@ -13,6 +13,8 @@ export const useStepperForm = ({ methods, combinedSchema }: UseStepperFormProps)
     const typeCombinedSchema = Object.keys(combinedSchema.shape);
     const isValid = await methods.trigger(typeCombinedSchema[currentStep - 1]);
 
+    console.log(isValid)
+
     if (isValid) {
       setCurrentStep((prev) => prev + 1);
     }

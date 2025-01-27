@@ -1,86 +1,80 @@
-import React from 'react'
-
-import { useForm, SubmitHandler } from "react-hook-form";
-import Mobility from "@/core/interfaces/applications/mobility/mobility";
+import React from "react";
 import ProcessEnum from "@/core/interfaces/applications/mobility/process";
 import MobilityType from "@/core/interfaces/applications/mobility/type";
-import EnumSelect from '@/components/atoms/inputs/EnumSelect';
-import MobilityPurpose from '@/core/interfaces/applications/mobility/purpose';
-import Paises from '@modules/applications/mobility/components/molecules/Paises';
-import Input from '@/components/atoms/inputs/Input';
-import InputText from '@/components/atoms/inputs/InputText';
+import EnumSelect from "@/components/atoms/inputs/EnumSelect";
+import MobilityPurpose from "@/core/interfaces/applications/mobility/purpose";
+import Input from "@/components/atoms/inputs/Input";
+import TextInput from "@/components/atoms/inputs/TextInput";
+import { StepOneFormData } from "@/core/schemas/mobilityCreateFormSchema";
+import { useFormContext } from "react-hook-form";
+import { processArray, typeArray, purposeArray } from "../../utils/selectOptions";
 
 import { UseFormRegister } from "react-hook-form";
+import SelectInput from "@/components/atoms/inputs/SelectInput";
+import { error } from "console";
 
 interface Props {
-    register: UseFormRegister<any>; 
-    onNext: () => void; 
+  register: UseFormRegister<any>;
+  onNext: () => void;
 }
 
-const GeneralInfo: React.FC<Props> = ({register, onNext}) => {
+const GeneralInfo: React.FC<Props> = ({ onNext }) => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<{
+    stepOne: StepOneFormData;
+  }>();
+
   return (
-    <div className='space-y-4'>
-        <Input
-        label = "Proceso"
-        >
-            <EnumSelect
-                register={register}
-                enumObject={ProcessEnum}
-                name='process'
-            />
-        </Input>
-        
-        <Input
-        label = "Tipo"
-        >
-            <EnumSelect
-                register={register}
-                enumObject={MobilityType}
-                name='type'
-            />
-        </Input>
+    <div className="space-y-4">
+      <SelectInput
+        options={processArray}
+        valueOptions={processArray}
+        label="Proceso:"
+        {...register("stepOne.process")}
+        error={errors.stepOne?.process?.message}
+      />
 
-        <Input
-        label = "Proposito"
-        >
-            <EnumSelect
-                register={register}
-                enumObject={MobilityPurpose}
-                name='purpose'
-            />
-        </Input> 
-        <Input
+      <SelectInput
+        options={typeArray}
+        valueOptions={typeArray}
+        label="Tipo:"
+        {...register("stepOne.type")}
+        error={errors.stepOne?.type?.message}
+      />
+      
+      <SelectInput
+        options={purposeArray}
+        valueOptions={purposeArray}
+        label="Propósito:"
+        {...register("stepOne.purpose")}
+        error={errors.stepOne?.purpose?.message}
+      />
+
+      <TextInput
         label="País de destino"
-        >
-            <Paises register={register} />
-        </Input>
+        placeholder="Escribe el nombre del país"
+        {...register("stepOne.destination_country")}
+        error={errors.stepOne?.destination_country?.message}
+      />
 
-        <Input
-        label='Fecha de Inicio'>
-                <input
-                    {...register('date_start', { required: true })}
-                    type="date"
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-            </Input>
-            <Input
-            label='Fecha de finalización'>
-                <input
-                    {...register('date_end', { required: true })}
-                    type="date"
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-            </Input>
-        <div>
-            <button
-                onClick={onNext}
-                className="w-full bg-green-btn-gradient text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-                Siguiente
-            </button>
-        </div>
+      <Input label="Fecha de Inicio">
+        <input
+          //   {...register("date_start", { required: true })}
+          type="date"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+        />
+      </Input>
+      <Input label="Fecha de finalización">
+        <input
+          //   {...register("date_end", { required: true })}
+          type="date"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+        />
+      </Input>
     </div>
-  )
-}
+  );
+};
 
-export default GeneralInfo
+export default GeneralInfo;

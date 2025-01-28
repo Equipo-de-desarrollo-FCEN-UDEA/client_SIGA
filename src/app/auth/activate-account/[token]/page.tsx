@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { activateAccount } from "src/core/services/api/auth/authService";
+import { activateAccount } from "src/core/services/api/auth/activateAccountService";
 
 export default function Page({ params }: { params: { token: string } }) {
 

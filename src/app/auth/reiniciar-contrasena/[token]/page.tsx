@@ -1,11 +1,11 @@
 import ResetPassword from "@/modules/auth/pages/ResetPassword";
 
-const page = () => {
+const Page = ({ params }: { params: { token: string } }) => {
   return (
-    <div className="grid place-items-center mt-10">
-      <ResetPassword params={{ token: "your-token-here", new_password: "your-new-password-here" }}/>
+    <div className="flex justify-center items-start min-h-screen pt-20">
+      <ResetPassword params={params} />
     </div>
   );
 };
 
-export default page;
+export default Page;

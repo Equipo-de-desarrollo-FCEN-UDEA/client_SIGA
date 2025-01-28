@@ -1,0 +1,73 @@
+"use client"
+
+import TextInput from "@/components/atoms/inputs/TextInput";
+import { ResetPasswordFormSchema } from "@/core/schemas/ResetPasswordFormSchema";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import SecondaryButton from "@/components/atoms/buttons/SecondaryButton";
+import MainButton from "@/components/atoms/buttons/MainButton";
+import { resetPasswordService } from "@/core/services/api/auth/resetPasswordService";
+
+// Definir la interfaz para las props
+interface ResetPasswordFormProps {
+  token: string;
+}
+
+const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token }) => {
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(ResetPasswordFormSchema),
+  });
+
+  const onSubmit = async (data: any) => {
+    if (!token) {
+      console.error('Token is missing');
+      return;
+    }
+
+    try {
+      const response = await resetPasswordService(data.new_password, token);
+      console.log('Password updated successfully', response);
+      // Redirigir o mostrar un mensaje de éxito
+    } catch (error) {
+      console.error('Error updating password', error);
+    }
+  };
+
+  return (
+    <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
+      <h1 className="mb-2 text-3xl font-bold text-center text-darkGreen">SIGA UdeA</h1>
+      <h1 className="mb-2 text-3xl font-bold text-center text-darkGreen">Cambiar contraseña</h1>
+      <TextInput
+        placeholder=""
+        type="password"
+        label="Nueva Contraseña:"
+        {...register("new_password")}
+        error={errors.new_password?.message?.toString() || undefined}
+      />
+      <TextInput
+        placeholder=""
+        type="password"
+        label="Confirmar Contraseña:"
+        {...register("confirmPassword")}
+        error={errors.confirmPassword?.message?.toString() || undefined}
+      />
+      <div className="flex mt-6 gap-2">
+        <SecondaryButton
+          text="Cancelar"
+          onClick={() => router.push("/auth")}
+        />
+        <MainButton text="Enviar" buttonType="submit" />
+      </div>
+    </form>
+  );
+};
+
+export default ResetPasswordForm;

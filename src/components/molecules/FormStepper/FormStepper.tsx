@@ -65,7 +65,7 @@ const FormStepper: React.FC<FormStepperProps> = ({
             />
           )}
           {currentStep === steps.length && (
-            <MainButton buttonType={"submit"} text={"Terminar"} />
+            <MainButton buttonType="submit" text="Terminar" />
           )}
         </div>
       </form>

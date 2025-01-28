@@ -1,17 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import Mobility from "@/core/interfaces/applications/mobility/mobility";
 import GeneralInfo from "../components/atoms/GeneralInfo";
 import MobilityCRUD from "@/core/services/api/applications/mobility";
-import Time from "../components/atoms/Time";
 import Contact from "../components/atoms/Contact";
 import Subjects from "../components/atoms/Subjects";
 import { useStepperForm } from "@/core/hooks/useStepperForm";
-import {
-  StepOneFormData,
-  StepTwoFormData,
-  combinedSchema,
-} from "@/core/schemas/mobilityCreateFormSchema";
+import { combinedSchema } from "@/core/schemas/mobilityCreateFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormStepper from "@/components/molecules/FormStepper/FormStepper";
 
@@ -23,23 +18,18 @@ const FormMobility = () => {
     methods,
     combinedSchema,
   });
-  const steps = ["Info. Personal", "Info. Usuario", "Confirmación"];
+  const steps = ["Info. general", "Info. Contacto", "Materias"];
 
   const mobilityCRUD = new MobilityCRUD();
 
-  const [step, setStep] = useState(1);
+  // const onSubmit: SubmitHandler<Mobility> = async (data) => {
+  //   console.log("data", data);
+  //   await mobilityCRUD.create({ ...data, status: [] });
+  // };
 
-  const handleNext = () => {
-    setStep(step + 1);
-  };
-
-  const handleBack = () => {
-    setStep(step - 1);
-  };
-
-  const onSubmit: SubmitHandler<Mobility> = async (data) => {
-    // console.log(data);
-    await mobilityCRUD.create({ ...data, status: [] });
+  const onSubmit = (data: any) => {
+    console.log("errors", methods);
+    console.log("data", data);
   };
 
   return (
@@ -54,50 +44,18 @@ const FormMobility = () => {
           onSubmit={onSubmit}
           handleSubmit={methods.handleSubmit}
         >
-          {currentStep === 1 && (
-            <GeneralInfo register={methods.register} onNext={handleNext} />
-          )}
-          {currentStep === 2 && (
-            <Contact
-              register={methods.register}
-              onBack={handleBack}
-              onNext={handleNext}
-            />
-          )}
+          {currentStep === 1 && <GeneralInfo />}
+          {currentStep === 2 && <Contact />}
           {currentStep === 3 && (
             <Subjects
               register={methods.register}
               setValue={methods.setValue}
-              onBack={handleBack}
-              onSubmit={onSubmit}
+              // onSubmit={onSubmit}
             />
           )}
         </FormStepper>
       </FormProvider>
     </div>
-    // <form
-    //   onSubmit={methods.handleSubmit(onSubmit)}
-    //   className="space-y-4 bg-white p-4 rounded-lg shadow-md max-w-lg mx-auto"
-    // >
-    //   {step === 1 && (
-    //     <GeneralInfo register={methods.register} onNext={handleNext} />
-    //   )}
-    //   {step === 2 && (
-    //     <Contact
-    //       register={methods.register}
-    //       onBack={handleBack}
-    //       onNext={handleNext}
-    //     />
-    //   )}
-    //   {step === 3 && (
-    //     <Subjects
-    //       register={methods.register}
-    //       setValue={methods.setValue}
-    //       onBack={handleBack}
-    //       onSubmit={onSubmit}
-    //     />
-    //   )}
-    // </form>
   );
 };
 

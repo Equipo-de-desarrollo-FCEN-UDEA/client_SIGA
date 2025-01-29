@@ -36,7 +36,7 @@ function LoginForm() {
         body: formData,
         credentials: "include",
       });
-      
+
       console.log("REsponse", response);
       if (response.status === 200) {
         router.push("/admin/user");
@@ -65,7 +65,7 @@ function LoginForm() {
       </div>
 
       <div className="w-full flex justify-between text-darkGreen underline mb-10">
-        <Link href="/auth/forgot-password">
+        <Link href="/auth/olvido-contrasena">
           <p>¿Olvidaste tu contraseña?</p>
         </Link>
         <Link href="/auth/register">

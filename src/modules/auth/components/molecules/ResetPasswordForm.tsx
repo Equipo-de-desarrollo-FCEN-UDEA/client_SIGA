@@ -33,10 +33,15 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token }) => {
 
     try {
       const response = await resetPasswordService(data.new_password, token);
-      console.log('Password updated successfully', response);
-      // Redirigir o mostrar un mensaje de éxito
+      if (response && response.success) {
+        alert('Contraseña actualizada con éxito');
+        // Redirigir o mostrar un mensaje de éxito
+      } else {
+        console.error('Error al actualizar la contraseña', response?.message || 'Error desconocido');
+      }
     } catch (error) {
-      console.error('Error updating password', error);
+      alert('Error al actualizar la contraseña');
+      console.error('Error al actualizar la contraseña', error);
     }
   };
 

@@ -20,7 +20,6 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token }) => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(resetPasswordFormSchema),

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Subject from "@/core/interfaces/applications/mobility/subject";
 import Modal from "@/components/templates/Modal";
 import { CiSquarePlus } from "react-icons/ci";
+import { MdDelete } from "react-icons/md";
 import MainButton from "@/components/atoms/buttons/MainButton";
 import TextInput from "@/components/atoms/inputs/TextInput";
 
@@ -12,7 +13,6 @@ const Subjects = ({
   subjects: Subject[];
   setSubjects: React.Dispatch<React.SetStateAction<Subject[]>>;
 }) => {
-
   const [modal, setModal] = useState(false);
   const [newSubject, setNewSubject] = useState<Subject>({
     extern_code: "",
@@ -37,53 +37,75 @@ const Subjects = ({
     });
   };
 
+  const deleteSubject = (index: number) => {
+    const updatedSubjects = subjects.filter((_, i) => i !== index);
+    setSubjects(updatedSubjects);
+  };
+
   return (
-    <div>
-      <table className="min-w-full divide-y divide-gray-200">
+    <div className="w-full">
+      <table className="divide-y divide-gray-200 mt-6">
         <thead className="bg-gray-50">
           <tr>
             <th
               colSpan={2}
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
             >
               Materias por cursar en el país de destino
             </th>
             <th
               colSpan={2}
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
             >
               Materias reconocidas en la UdeA
             </th>
+            <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"></th>
           </tr>
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
               Código
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
               Nombre
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
               Código
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
               Nombre
+            </th>
+            <th className="px-3 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+              Borrar
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-blue-600">
+        <tbody className="bg-white divide-y divide-gray-300">
           {subjects.map((subject, index) => (
-            <tr key={index}>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <tr
+              key={index}
+              className={`border-b border-x border-gray-700 ${
+                index % 2 === 0 ? "bg-white" : "bg-gray-100"
+              }`}
+            >
+              <td className="px-6 py-4 text-left text-sm text-gray-700">
                 {subject.extern_code}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-6 py-4 text-left text-sm text-gray-700">
                 {subject.extern_name}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-6 py-4 text-left text-sm text-gray-700">
                 {subject.intern_code}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-6 py-4 text-left text-sm text-gray-700">
                 {subject.intern_name}
+              </td>
+              <td className="px-3 py-4 flex justify-center items-center text-sm text-gray-700">
+                <MdDelete
+                  color="#e84848eb"
+                  size="20px"
+                  className="cursor-pointer"
+                  onClick={() => deleteSubject(index)}
+                />
               </td>
             </tr>
           ))}

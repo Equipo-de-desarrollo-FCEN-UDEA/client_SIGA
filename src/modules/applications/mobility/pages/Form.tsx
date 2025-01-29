@@ -33,6 +33,7 @@ const FormMobility = () => {
     stepOne: StepOneFormData;
     stepTwo: StepTwoFormData;
   }) => {
+    const currentDate = new Date();
     const requestBody: Mobility = {
       process: data.stepOne.process,
       type: data.stepOne.type,
@@ -47,17 +48,15 @@ const FormMobility = () => {
       date_end: data.stepOne.date_end,
       subjects: subjects,
       total_time: 0,
-      date_report: "2025-01-28T22:53:51.085Z",
+      date_report: currentDate.toString(),
       status: [],
     };
 
-    console.log("data", data);
-    const res = await mobilityCRUD.create({ ...requestBody });
-    console.log("res", res);  
+    await mobilityCRUD.create({ ...requestBody });
   };
 
   return (
-    <div className="max-w-xl border shadow-lg p-10 rounded-md mx-auto mt-3">
+    <div className="max-w-4xl border shadow-lg p-10 rounded-md mx-auto mt-3">
       <FormProvider {...methods}>
         <FormStepper
           complete={complete}

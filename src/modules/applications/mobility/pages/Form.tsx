@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import Mobility from "@/core/interfaces/applications/mobility/mobility";
 import GeneralInfo from "../components/atoms/GeneralInfo";
@@ -6,30 +6,54 @@ import MobilityCRUD from "@/core/services/api/applications/mobility";
 import Contact from "../components/atoms/Contact";
 import Subjects from "../components/atoms/Subjects";
 import { useStepperForm } from "@/core/hooks/useStepperForm";
-import { combinedSchema } from "@/core/schemas/mobilityCreateFormSchema";
+import {
+  combinedSchema,
+  StepOneFormData,
+  StepTwoFormData,
+} from "@/core/schemas/mobilityCreateFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormStepper from "@/components/molecules/FormStepper/FormStepper";
+import Subject from "@/core/interfaces/applications/mobility/subject";
 
 const FormMobility = () => {
   const methods = useForm<Mobility>({
     resolver: zodResolver(combinedSchema),
   });
+  const steps = ["Info. general", "Info. Contacto", "Materias"];
   const { currentStep, complete, nextStep, previusStep } = useStepperForm({
     methods,
     combinedSchema,
   });
-  const steps = ["Info. general", "Info. Contacto", "Materias"];
+
+  const [subjects, setSubjects] = useState<Subject[]>([]);
 
   const mobilityCRUD = new MobilityCRUD();
 
-  // const onSubmit: SubmitHandler<Mobility> = async (data) => {
-  //   console.log("data", data);
-  //   await mobilityCRUD.create({ ...data, status: [] });
-  // };
+  const onSubmit = async (data: {
+    stepOne: StepOneFormData;
+    stepTwo: StepTwoFormData;
+  }) => {
+    const requestBody: Mobility = {
+      process: data.stepOne.process,
+      type: data.stepOne.type,
+      purpose: data.stepOne.purpose,
+      destination_country: data.stepOne.destination_country,
+      destination_institution: data.stepTwo.destination_institution,
+      academic_program: data.stepTwo.academic_program,
+      name_contact_person: data.stepTwo.name_contact_person,
+      cellphone_contact_person: data.stepTwo.cellphone_contact_person,
+      email_contact_person: data.stepTwo.email_contact_person,
+      date_start: data.stepOne.date_start,
+      date_end: data.stepOne.date_end,
+      subjects: subjects,
+      total_time: 0,
+      date_report: "2025-01-28T22:53:51.085Z",
+      status: [],
+    };
 
-  const onSubmit = (data: any) => {
-    console.log("errors", methods);
     console.log("data", data);
+    const res = await mobilityCRUD.create({ ...requestBody });
+    console.log("res", res);  
   };
 
   return (
@@ -47,11 +71,7 @@ const FormMobility = () => {
           {currentStep === 1 && <GeneralInfo />}
           {currentStep === 2 && <Contact />}
           {currentStep === 3 && (
-            <Subjects
-              register={methods.register}
-              setValue={methods.setValue}
-              // onSubmit={onSubmit}
-            />
+            <Subjects subjects={subjects} setSubjects={setSubjects} />
           )}
         </FormStepper>
       </FormProvider>

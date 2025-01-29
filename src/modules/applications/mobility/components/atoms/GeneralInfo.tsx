@@ -9,6 +9,9 @@ import {
 } from "../../utils/selectOptions";
 import SelectInput from "@/components/atoms/inputs/SelectInput";
 import DateInput from "@/components/atoms/inputs/DateInput";
+import ProcessEnum from '@/core/interfaces/applications/mobility/process';
+import TypeEnum from '@/core/interfaces/applications/mobility/type';
+import PurposeEnum from '@/core/interfaces/applications/mobility/purpose';
 
 const GeneralInfo = () => {
   const {
@@ -21,22 +24,22 @@ const GeneralInfo = () => {
   return (
     <div className="space-y-4">
       <SelectInput
-        options={processArray}
-        valueOptions={processArray}
+        options={Object.values(ProcessEnum)}
+        valueOptions={Object.values(ProcessEnum)}
         label="Proceso:"
         {...register("stepOne.process")}
         error={errors.stepOne?.process?.message}
       />
       <SelectInput
-        options={typeArray}
-        valueOptions={typeArray}
+        options={Object.values(TypeEnum)}
+        valueOptions={Object.values(TypeEnum)}
         label="Tipo:"
         {...register("stepOne.type")}
         error={errors.stepOne?.type?.message}
       />
       <SelectInput
-        options={purposeArray}
-        valueOptions={purposeArray}
+        options={Object.values(PurposeEnum)}
+        valueOptions={Object.values(PurposeEnum)}
         label="Propósito:"
         {...register("stepOne.purpose")}
         error={errors.stepOne?.purpose?.message}

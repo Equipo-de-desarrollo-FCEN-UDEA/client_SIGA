@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const ResetPasswordFormSchema = z.object({
+export const resetPasswordFormSchema = z.object({
     new_password: z.string().min(6, {
         message: "La contraseña debe tener al menos 6 caracteres",
     }),
@@ -12,4 +12,4 @@ export const ResetPasswordFormSchema = z.object({
     path: ["confirmPassword"],
 });
 
-export type ResetPasswordFormData = z.infer<typeof ResetPasswordFormSchema>;
+export type ResetPasswordFormData = z.infer<typeof resetPasswordFormSchema>;

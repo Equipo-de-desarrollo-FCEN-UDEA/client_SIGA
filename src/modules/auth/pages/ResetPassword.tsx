@@ -1,6 +1,5 @@
 " use client";
 
-import LoginHeader from "../components/molecules/LoginHeader";
 import ResetPasswordForm from "../components/molecules/ResetPasswordForm";
 
 const ResetPasswordPage = ({ params }: { params: { token: string } }) => {

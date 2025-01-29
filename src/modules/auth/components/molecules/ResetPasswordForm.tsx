@@ -1,7 +1,7 @@
 "use client"
 
 import TextInput from "@/components/atoms/inputs/TextInput";
-import { ResetPasswordFormSchema } from "@/core/schemas/ResetPasswordFormSchema";
+import { resetPasswordFormSchema } from "@/core/schemas/resetPasswordFormSchema";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -23,7 +23,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token }) => {
     watch,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(ResetPasswordFormSchema),
+    resolver: zodResolver(resetPasswordFormSchema),
   });
 
   const onSubmit = async (data: any) => {
@@ -44,7 +44,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token }) => {
   return (
     <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
       <h1 className="mb-2 text-3xl font-bold text-center text-darkGreen">SIGA UdeA</h1>
-      <h1 className="mb-2 text-3xl font-bold text-center text-darkGreen">Cambiar contraseña</h1>
+      <h1 className="mb-2 text-3xl font-bold text-center text-dark">Cambiar Contraseña</h1>
       <TextInput
         placeholder=""
         type="password"

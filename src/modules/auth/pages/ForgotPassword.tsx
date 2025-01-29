@@ -19,8 +19,7 @@ const ForgotPassword = () => {
     resolver: zodResolver(forgotPasswordFormSchema),
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
   };
 
   return (

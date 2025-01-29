@@ -6,7 +6,7 @@ export const activateAccount = async (token: string) => {
             {
                 method: 'POST',
                 // credentials: 'include',
-                headers: { 
+                headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify( token )

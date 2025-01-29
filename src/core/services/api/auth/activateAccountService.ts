@@ -12,7 +12,6 @@ export const activateAccount = async (token: string) => {
                 body: JSON.stringify( token )
             }
         );
-        console.log("ACTIVATE: ", response)
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }

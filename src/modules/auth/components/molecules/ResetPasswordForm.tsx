@@ -16,7 +16,6 @@ interface ResetPasswordFormProps {
 
 const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token }) => {
   const router = useRouter();
-
   const {
     register,
     handleSubmit,
@@ -32,16 +31,10 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token }) => {
     }
 
     try {
-      const response = await resetPasswordService(data.new_password, token);
-      if (response && response.success) {
-        alert('Contraseña actualizada con éxito');
-        // Redirigir o mostrar un mensaje de éxito
-      } else {
-        console.error('Error al actualizar la contraseña', response?.message || 'Error desconocido');
-      }
-    } catch (error) {
+      const result = await resetPasswordService(data.new_password, token);
+      alert('Contraseña actualizada con éxito');
+      } catch (error) {
       alert('Error al actualizar la contraseña');
-      console.error('Error al actualizar la contraseña', error);
     }
   };
 

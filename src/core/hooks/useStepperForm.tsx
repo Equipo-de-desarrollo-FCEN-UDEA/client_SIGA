@@ -7,7 +7,7 @@ type UseStepperFormProps = {
 
 export const useStepperForm = ({ methods, combinedSchema }: UseStepperFormProps) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [complete, setComplete] = useState(false);
+  const complete = false;
 
   const nextStep = async () => {
     const typeCombinedSchema = Object.keys(combinedSchema.shape);

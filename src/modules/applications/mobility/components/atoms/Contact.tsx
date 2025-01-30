@@ -1,7 +1,4 @@
 import React from "react";
-
-import Input from "@/components/atoms/inputs/Input";
-import InputText from "@/components/atoms/inputs/InputText";
 import TextInput from "@/components/atoms/inputs/TextInput";
 import { useFormContext } from "react-hook-form";
 import { StepTwoFormData } from "@/core/schemas/mobilityCreateFormSchema";

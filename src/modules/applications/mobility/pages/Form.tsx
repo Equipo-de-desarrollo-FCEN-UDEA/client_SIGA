@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import Mobility from "@/core/interfaces/applications/mobility/mobility";
 import GeneralInfo from "../components/atoms/GeneralInfo";
 import MobilityCRUD from "@/core/services/api/applications/mobility";

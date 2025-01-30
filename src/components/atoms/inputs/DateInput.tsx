@@ -40,7 +40,7 @@ const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
             {error && <span className="text-red-500 text-sm">{error}</span>}
           </>
         ) : (
-          <>
+          
             <label className="flex flex-col">
               <span>{label}</span>
               <input
@@ -57,7 +57,7 @@ const DateInput = React.forwardRef<HTMLInputElement, DateInputProps>(
               />
               {error && <span className="text-red-500 text-sm">{error}</span>}
             </label>
-          </>
+          
         )}
       </>
     );

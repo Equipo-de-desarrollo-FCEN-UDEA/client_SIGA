@@ -2,11 +2,6 @@ import React from "react";
 import TextInput from "@/components/atoms/inputs/TextInput";
 import { StepOneFormData } from "@/core/schemas/mobilityCreateFormSchema";
 import { useFormContext } from "react-hook-form";
-import {
-  processArray,
-  typeArray,
-  purposeArray,
-} from "../../utils/selectOptions";
 import SelectInput from "@/components/atoms/inputs/SelectInput";
 import DateInput from "@/components/atoms/inputs/DateInput";
 import ProcessEnum from '@/core/interfaces/applications/mobility/process';

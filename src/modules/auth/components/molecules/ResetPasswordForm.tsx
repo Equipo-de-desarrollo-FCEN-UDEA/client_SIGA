@@ -31,9 +31,9 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token }) => {
     }
 
     try {
-      const result = await resetPasswordService(data.new_password, token);
+      await resetPasswordService(data.new_password, token);
       alert('Contraseña actualizada con éxito');
-      } catch (error) {
+    } catch (error) {
       alert('Error al actualizar la contraseña');
     }
   };

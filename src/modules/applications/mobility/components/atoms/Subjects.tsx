@@ -114,7 +114,13 @@ const Subjects = ({
 
       <div
         onClick={() => setModal(true)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+        setModal(true);
+          }
+        }}
         role="button"
+        tabIndex={0}
         className="bg-green-500 text-white cursor-pointer mt-16 px-4 py-2 rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 flex items-center justify-center"
       >
         Agregar Materia <CiSquarePlus className="ml-2 text-lg" />

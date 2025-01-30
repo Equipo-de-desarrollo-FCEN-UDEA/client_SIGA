@@ -34,7 +34,6 @@ const RegisterUserInfo = ({
     formState: { errors },
   } = useFormContext<{stepTwo: StepTwoFormData}>();
 
-
   // Sincroniza vinculation con el formulario
   const vinculation = watch("stepTwo.vinculation", ""); 
 

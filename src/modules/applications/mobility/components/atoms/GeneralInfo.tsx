@@ -1,86 +1,62 @@
-import React from 'react'
+import React from "react";
+import TextInput from "@/components/atoms/inputs/TextInput";
+import { StepOneFormData } from "@/core/schemas/mobilityCreateFormSchema";
+import { useFormContext } from "react-hook-form";
+import SelectInput from "@/components/atoms/inputs/SelectInput";
+import DateInput from "@/components/atoms/inputs/DateInput";
+import ProcessEnum from '@/core/interfaces/applications/mobility/process';
+import TypeEnum from '@/core/interfaces/applications/mobility/type';
+import PurposeEnum from '@/core/interfaces/applications/mobility/purpose';
 
-import { useForm, SubmitHandler } from "react-hook-form";
-import Mobility from "@/core/interfaces/applications/mobility/mobility";
-import ProcessEnum from "@/core/interfaces/applications/mobility/process";
-import MobilityType from "@/core/interfaces/applications/mobility/type";
-import EnumSelect from '@/components/atoms/inputs/EnumSelect';
-import MobilityPurpose from '@/core/interfaces/applications/mobility/purpose';
-import Paises from '@modules/applications/mobility/components/molecules/Paises';
-import Input from '@/components/atoms/inputs/Input';
-import InputText from '@/components/atoms/inputs/InputText';
+const GeneralInfo = () => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<{
+    stepOne: StepOneFormData;
+  }>();
 
-import { UseFormRegister } from "react-hook-form";
-
-interface Props {
-    register: UseFormRegister<any>; 
-    onNext: () => void; 
-}
-
-const GeneralInfo: React.FC<Props> = ({register, onNext}) => {
   return (
-    <div className='space-y-4'>
-        <Input
-        label = "Proceso"
-        >
-            <EnumSelect
-                register={register}
-                enumObject={ProcessEnum}
-                name='process'
-            />
-        </Input>
-        
-        <Input
-        label = "Tipo"
-        >
-            <EnumSelect
-                register={register}
-                enumObject={MobilityType}
-                name='type'
-            />
-        </Input>
-
-        <Input
-        label = "Proposito"
-        >
-            <EnumSelect
-                register={register}
-                enumObject={MobilityPurpose}
-                name='purpose'
-            />
-        </Input> 
-        <Input
-        label="País de destino"
-        >
-            <Paises register={register} />
-        </Input>
-
-        <Input
-        label='Fecha de Inicio'>
-                <input
-                    {...register('date_start', { required: true })}
-                    type="date"
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-            </Input>
-            <Input
-            label='Fecha de finalización'>
-                <input
-                    {...register('date_end', { required: true })}
-                    type="date"
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-            </Input>
-        <div>
-            <button
-                onClick={onNext}
-                className="w-full bg-green-btn-gradient text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-                Siguiente
-            </button>
-        </div>
+    <div className="space-y-4">
+      <SelectInput
+        options={Object.values(ProcessEnum)}
+        valueOptions={Object.values(ProcessEnum)}
+        label="Proceso:"
+        {...register("stepOne.process")}
+        error={errors.stepOne?.process?.message}
+      />
+      <SelectInput
+        options={Object.values(TypeEnum)}
+        valueOptions={Object.values(TypeEnum)}
+        label="Tipo:"
+        {...register("stepOne.type")}
+        error={errors.stepOne?.type?.message}
+      />
+      <SelectInput
+        options={Object.values(PurposeEnum)}
+        valueOptions={Object.values(PurposeEnum)}
+        label="Propósito:"
+        {...register("stepOne.purpose")}
+        error={errors.stepOne?.purpose?.message}
+      />
+      <TextInput
+        label="País de destino:"
+        placeholder="Escribe el nombre del país"
+        {...register("stepOne.destination_country")}
+        error={errors.stepOne?.destination_country?.message}
+      />
+      <DateInput
+        label="Fecha de Inicio:"
+        {...register("stepOne.date_start")}
+        error={errors.stepOne?.date_start?.message}
+      />
+      <DateInput
+        label="Fecha de finalización:"
+        {...register("stepOne.date_end")}
+        error={errors.stepOne?.date_end?.message}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default GeneralInfo
+export default GeneralInfo;

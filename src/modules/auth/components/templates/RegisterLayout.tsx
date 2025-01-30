@@ -16,29 +16,23 @@ import {
 import { fetchAcademicUnitsSorted } from "@/core/services/api/academicUnitSorted";
 import { createUser } from "@/core/services/api/createUserService";
 import { useRouter } from "next/navigation";
-
+import { useStepperForm } from "@/core/hooks/useStepperForm";
 
 type TypeAcademicUnit = { name: string; id: string }[];
 
 const RegisterLayout = () => {
-
   const router = useRouter();
-
-  const steps = ["Info. Personal", "Info. Usuario", "Confirmación"];
-  const [currentStep, setCurrentStep] = useState(1);
-  const [complete, setComplete] = useState(false);
 
   const methods = useForm<{
     stepOne: StepOneFormData;
     stepTwo: StepTwoFormData;
     stepThree: StepThreeFormData;
-  }>({
-    resolver: zodResolver(combinedSchema),
-    defaultValues: {
-      stepOne: {},
-      stepTwo: {},
-      stepThree: {},
-    },
+  }>({ resolver: zodResolver(combinedSchema) });
+
+  const steps = ["Info. Personal", "Info. Usuario", "Confirmación"];
+  const { currentStep, complete, nextStep, previusStep } = useStepperForm({
+    methods,
+    combinedSchema,
   });
 
   const [academicUnitData, setAcademicUnitData] = useState<{
@@ -52,19 +46,6 @@ const RegisterLayout = () => {
   });
 
   const [rolId, setRolId] = useState("");
-
-  const nextStep = async () => {
-    const schemaKeys: ("stepOne" | "stepTwo" | "stepThree")[] = [
-      "stepOne",
-      "stepTwo",
-      "stepThree",
-    ];
-    const isValid = await methods.trigger(schemaKeys[currentStep - 1]);
-
-    if (isValid) {
-      setCurrentStep((prev) => prev + 1);
-    }
-  };
 
   const onSubmit = async (data: {
     stepOne: StepOneFormData;
@@ -89,7 +70,7 @@ const RegisterLayout = () => {
 
     try {
       const result = await createUser(requestBody, queryParams);
-      
+
       alert("Usuario creado con éxito");
 
       router.push("/auth");
@@ -118,7 +99,8 @@ const RegisterLayout = () => {
           complete={complete}
           currentStep={currentStep}
           steps={steps}
-          onClick={nextStep}
+          onNext={nextStep}
+          onPrevius={previusStep}
           onSubmit={onSubmit}
           handleSubmit={methods.handleSubmit}
         >

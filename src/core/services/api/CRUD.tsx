@@ -47,7 +47,7 @@ export abstract class AbstractCRUD<T> {
   }
 
   async create(data: T) {
-    console.log('create', JSON.stringify(data));
+    console.log('create', data);
     try {
       const response = await fetch(this.apiUrl+'/create', {
         method: 'POST',

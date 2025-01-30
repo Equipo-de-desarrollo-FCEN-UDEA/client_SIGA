@@ -1,42 +1,81 @@
-import React, { useState } from 'react'
-import { useForm, SubmitHandler } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm, FormProvider } from "react-hook-form";
 import Mobility from "@/core/interfaces/applications/mobility/mobility";
-import GeneralInfo from '../components/atoms/GeneralInfo';
-import MobilityCRUD from '@/core/services/api/applications/mobility';
-import Time from '../components/atoms/Time';
-import Contact from '../components/atoms/Contact';
-import Subjects from '../components/atoms/Subjects';
+import GeneralInfo from "../components/atoms/GeneralInfo";
+import MobilityCRUD from "@/core/services/api/applications/mobility";
+import Contact from "../components/atoms/Contact";
+import Subjects from "../components/atoms/Subjects";
+import { useStepperForm } from "@/core/hooks/useStepperForm";
+import {
+  combinedSchema,
+  StepOneFormData,
+  StepTwoFormData,
+} from "@/core/schemas/mobilityCreateFormSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import FormStepper from "@/components/molecules/FormStepper/FormStepper";
+import Subject from "@/core/interfaces/applications/mobility/subject";
 
 const FormMobility = () => {
+  const methods = useForm<Mobility>({
+    resolver: zodResolver(combinedSchema),
+  });
+  const steps = ["Info. general", "Info. Contacto", "Materias"];
+  const { currentStep, complete, nextStep, previusStep } = useStepperForm({
+    methods,
+    combinedSchema,
+  });
 
-    const mobilityCRUD = new MobilityCRUD();
+  const [subjects, setSubjects] = useState<Subject[]>([]);
 
-    const [step, setStep] = useState(1);
+  const mobilityCRUD = new MobilityCRUD();
 
-    const handleNext = () => {
-        setStep(step + 1);
+  const onSubmit = async (data: {
+    stepOne: StepOneFormData;
+    stepTwo: StepTwoFormData;
+  }) => {
+    const currentDate = new Date();
+    const requestBody: Mobility = {
+      process: data.stepOne.process,
+      type: data.stepOne.type,
+      purpose: data.stepOne.purpose,
+      destination_country: data.stepOne.destination_country,
+      destination_institution: data.stepTwo.destination_institution,
+      academic_program: data.stepTwo.academic_program,
+      name_contact_person: data.stepTwo.name_contact_person,
+      cellphone_contact_person: data.stepTwo.cellphone_contact_person,
+      email_contact_person: data.stepTwo.email_contact_person,
+      date_start: data.stepOne.date_start,
+      date_end: data.stepOne.date_end,
+      subjects: subjects,
+      total_time: 0,
+      date_report: currentDate.toString(),
+      status: [],
     };
 
-    const handleBack = () => {
-        setStep(step - 1);
-    };
+    await mobilityCRUD.create({ ...requestBody });
+  };
 
+  return (
+    <div className="max-w-4xl border shadow-lg p-10 rounded-md mx-auto mt-3">
+      <FormProvider {...methods}>
+        <FormStepper
+          complete={complete}
+          currentStep={currentStep}
+          steps={steps}
+          onNext={nextStep}
+          onPrevius={previusStep}
+          onSubmit={onSubmit}
+          handleSubmit={methods.handleSubmit}
+        >
+          {currentStep === 1 && <GeneralInfo />}
+          {currentStep === 2 && <Contact />}
+          {currentStep === 3 && (
+            <Subjects subjects={subjects} setSubjects={setSubjects} />
+          )}
+        </FormStepper>
+      </FormProvider>
+    </div>
+  );
+};
 
-
-    const { register, setValue, handleSubmit, reset } = useForm<Mobility>();
-    const onSubmit: SubmitHandler<Mobility> = async (data) => {
-        // console.log(data);
-        await mobilityCRUD.create({ ...data, status: [] });
-    };
-
-    return (
-
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 bg-white p-4 rounded-lg shadow-md max-w-lg mx-auto">
-            {step === 1 && <GeneralInfo register={register} onNext={handleNext} />}
-            {step === 2 && <Contact register={register} onBack={handleBack} onNext={handleNext} />}
-            {step === 3 && <Subjects register={register} setValue={setValue} onBack={handleBack} onSubmit={onSubmit} />}
-        </form>
-    )
-}
-
-export default FormMobility
+export default FormMobility;

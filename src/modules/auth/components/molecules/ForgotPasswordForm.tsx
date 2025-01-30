@@ -9,33 +9,28 @@ import MainButton from "@/components/atoms/buttons/MainButton";
 import SecondaryButton from "@/components/atoms/buttons/SecondaryButton";
 import { forgotPasswordService } from "@/core/services/api/auth/forgotPasswordService";
 
-const ForgotPassword = () => {
-  const router = useRouter();
+const ForgotPasswordForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<{ email_or_id: string }>({
+    formState: { errors }} =
+    useForm<{ email_or_id: string }>({
     resolver: zodResolver(forgotPasswordFormSchema),
   });
 
-  const onSubmit = async (data: { email_or_id: string }) => {
+  const router = useRouter();
+
+  const onSubmit = async (data: any) => {
     if (!data.email_or_id) {
         console.error("Email or id is missing");
         return;
         };
+
     try {
-        const response = await forgotPasswordService(data.email_or_id);
-        if (response && response.success) {
-            alert("Se ha enviado un correo con las instrucciones para recuperar la contraseña");
-            router.push("/auth");
-        } else {
-            console.error("Error al solicitar el cambio de contraseña", response?.message || "Error desconocido");
-        }
+      await forgotPasswordService(data.email_or_id);
+      alert("Se ha enviado un correo con las instrucciones para recuperar la contraseña");
         } catch (error) {
-            alert("Error al solicitar el cambio de contraseña");
-            console.error("Error al solicitar el cambio de contraseña", error);
-        }
+          alert("Error al solicitar el cambio de contraseña");}
   };
 
     return (
@@ -46,8 +41,9 @@ const ForgotPassword = () => {
         <hr className="mt-3 mb-6" />
 
         <TextInput
-          label="Correo Institucional o cédula"
           placeholder="ejemplo@udea.edu.co"
+          type="text"
+          label="Correo Institucional o cédula"
           {...register("email_or_id")}
           error={errors.email_or_id?.message?.toString() || undefined}
         />
@@ -62,4 +58,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ForgotPasswordForm;

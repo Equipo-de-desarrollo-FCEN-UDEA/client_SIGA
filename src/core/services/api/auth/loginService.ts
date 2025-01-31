@@ -1,4 +1,4 @@
-export const login = async (credentials: { username: string; password: string }) => {
+export const auth = async (credentials: { username: string; password: string }) => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     const formData = new FormData();
     formData.append("username", credentials.username);
@@ -11,5 +11,6 @@ export const login = async (credentials: { username: string; password: string })
         return response.json();
     } catch (error) {
         console.error("Error:", error);
+        return null;
     }
 }

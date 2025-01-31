@@ -5,7 +5,8 @@ import Link from "next/link";
 import TextInput from "@components/atoms/inputs/TextInput";
 import MainButton from "@components/atoms/buttons/MainButton";
 import { useRouter } from "next/navigation";
-import { login } from "@/core/services/api/auth/loginService";
+import { useSession } from "@/components/organisms/providers/SessionProvider";
+import { auth } from "@/core/services/api/auth/loginService";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -14,6 +15,8 @@ function LoginForm() {
     username: "",
     password: "",
   });
+
+  // const { login } = useSession();
 
   const router = useRouter();
 
@@ -26,7 +29,7 @@ function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = login(credentials);
+    const res = auth(credentials);
   };
 
   return (

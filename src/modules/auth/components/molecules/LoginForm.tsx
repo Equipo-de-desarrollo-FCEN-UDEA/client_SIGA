@@ -5,6 +5,7 @@ import Link from "next/link";
 import TextInput from "@components/atoms/inputs/TextInput";
 import MainButton from "@components/atoms/buttons/MainButton";
 import { useRouter } from "next/navigation";
+import { login } from "@/core/services/api/auth/loginService";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -13,10 +14,6 @@ function LoginForm() {
     username: "",
     password: "",
   });
-
-  const formData = new FormData();
-  formData.append('username', credentials.username);
-  formData.append('password', credentials.password);
 
   const router = useRouter();
 
@@ -29,21 +26,7 @@ function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch(apiUrl+"/auth/access-token", {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
-      
-      console.log("REsponse", response);
-      if (response.status === 200) {
-        router.push("/admin/user");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    const res = login(credentials);
   };
 
   return (

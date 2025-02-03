@@ -9,19 +9,18 @@ export const resetPasswordService = async (new_password: string, token: string) 
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify( {token, new_password} )
-
+                body: JSON.stringify({ token, new_password })
             });
 
         if (!response.ok) {
             const errorData = await response.json();
-            console.error("Error details: ", errorData);
+            alert("Error details: " + JSON.stringify(errorData));
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-            return data;
-        }catch (error) {
-        console.error("Error al resetear la contraseña: ", error);
+        return data;
+    } catch (error) {
+        alert("Error al resetear la contraseña: " + error);
         throw error;
     }
 };

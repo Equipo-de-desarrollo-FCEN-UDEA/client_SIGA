@@ -38,7 +38,7 @@ const ForgotPasswordForm = () => {
 
       <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="mb-2 text-3xl font-bold text-center text-darkGreen">SIGA UdeA</h1>
-        <h1 className="mb-2 text-3xl font-bold text-center text-dark">Recuperar Contraseña</h1>
+        <h2 className="mb-2 text-1xl font-bold text-center text-dark">Recuperar Contraseña</h2>
         <hr className="mt-3 mb-6" />
 
         <TextInput
@@ -46,7 +46,7 @@ const ForgotPasswordForm = () => {
           type="text"
           label="Correo Institucional o cédula"
           {...register("email_or_id")}
-          error={errors.email_or_id?.message?.toString() || undefined}
+          error={errors.email_or_id?.message}
         />
         <div className="flex mt-6 gap-2">
           <SecondaryButton

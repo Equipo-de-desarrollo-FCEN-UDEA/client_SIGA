@@ -20,8 +20,8 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(resetPasswordFormSchema),
+  } = useForm<{ new_password: string, confirmPassword:string }>({
+      resolver: zodResolver(resetPasswordFormSchema),
   });
 
   const onSubmit = async (data: any) => {
@@ -47,14 +47,14 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token }) => {
         type="password"
         label="Nueva Contraseña:"
         {...register("new_password")}
-        error={errors.new_password?.message?.toString() || undefined}
+        error={errors.new_password?.message}
       />
       <TextInput
         placeholder=""
         type="password"
         label="Confirmar Contraseña:"
         {...register("confirmPassword")}
-        error={errors.confirmPassword?.message?.toString() || undefined}
+        error={errors.confirmPassword?.message}
       />
       <div className="flex mt-6 gap-2">
         <SecondaryButton

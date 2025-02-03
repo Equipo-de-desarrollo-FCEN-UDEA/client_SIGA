@@ -16,13 +16,12 @@ interface ResetPasswordFormProps {
 
 const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token }) => {
   const router = useRouter();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(resetPasswordFormSchema),
+  } = useForm<{ new_password: string, confirmPassword:string }>({
+      resolver: zodResolver(resetPasswordFormSchema),
   });
 
   const onSubmit = async (data: any) => {
@@ -32,16 +31,10 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token }) => {
     }
 
     try {
-      const response = await resetPasswordService(data.new_password, token);
-      if (response && response.success) {
-        alert('Contraseña actualizada con éxito');
-        // Redirigir o mostrar un mensaje de éxito
-      } else {
-        console.error('Error al actualizar la contraseña', response?.message || 'Error desconocido');
-      }
+      await resetPasswordService(data.new_password, token);
+      alert('Contraseña actualizada con éxito');
     } catch (error) {
       alert('Error al actualizar la contraseña');
-      console.error('Error al actualizar la contraseña', error);
     }
   };
 
@@ -54,14 +47,14 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token }) => {
         type="password"
         label="Nueva Contraseña:"
         {...register("new_password")}
-        error={errors.new_password?.message?.toString() || undefined}
+        error={errors.new_password?.message}
       />
       <TextInput
         placeholder=""
         type="password"
         label="Confirmar Contraseña:"
         {...register("confirmPassword")}
-        error={errors.confirmPassword?.message?.toString() || undefined}
+        error={errors.confirmPassword?.message}
       />
       <div className="flex mt-6 gap-2">
         <SecondaryButton

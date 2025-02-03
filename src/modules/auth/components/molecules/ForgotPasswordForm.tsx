@@ -8,7 +8,7 @@ import { forgotPasswordFormSchema } from "@/core/schemas/forgotPasswordFormSchem
 import MainButton from "@/components/atoms/buttons/MainButton";
 import SecondaryButton from "@/components/atoms/buttons/SecondaryButton";
 import { forgotPasswordService } from "@/core/services/api/auth/forgotPasswordService";
-import { FaRegCheckCircle } from "react-icons/fa";
+import AlertModal from '@/components/templates/alertModal'
 
 const ForgotPasswordForm = () => {
   const {
@@ -55,9 +55,7 @@ const ForgotPasswordForm = () => {
           />
           <MainButton text="Enviar" buttonType="submit" />
         </div>
-
-        <FaRegCheckCircle size="200px" color="darkGreen" />
-
+        <AlertModal.Success />
       </form>
   );
 };

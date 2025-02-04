@@ -1,6 +1,9 @@
 "use client";
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { auth } from "@/core/services/api/auth/loginService";
+import { getSession } from "@/core/services/api/user/userService";
+import { set } from "zod";
+import Cookies from "js-cookie";
 
 interface User {
   name: string;
@@ -23,19 +26,17 @@ const SessionContext = createContext<SessionContextType | undefined>(undefined);
 export const SessionProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const login = (credentials: Credentials) => {
-    const res = auth(credentials)
-    if (res != null) {
-        const token = document.cookie
-          .split("; ")
-          .find(row => row.startsWith("access-token="))
-          ?.split("=")[1];
+  useEffect(() => {
+    const fetchSession = async () => {
+      const res =  await getSession();
+    };
+    fetchSession();
+  }, []);
 
-        if (token) {
-          console.log("token", token);
-        }
-        
-    }
+  const login = (credentials: Credentials) => {
+    auth(credentials).then(res => {
+      setUser(res.user);
+    });
   };
 
   const logout = () => {

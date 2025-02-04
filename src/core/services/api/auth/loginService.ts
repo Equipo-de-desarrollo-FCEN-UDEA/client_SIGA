@@ -7,6 +7,7 @@ export const auth = async (credentials: { username: string; password: string }) 
         const response = await fetch(`${apiUrl}/auth/access-token`, {
             method: "POST",
             body: formData,
+            credentials: "include",
         });
         return response.json();
     } catch (error) {

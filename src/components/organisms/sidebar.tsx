@@ -1,6 +1,6 @@
 "use client";
 import React from 'react'
-import { useSession } from '@/components/organisms/providers/SessionProvider'
+import { useSession } from '@/core/providers/SessionProvider'
 
 const Sidebar = () => {
     const { user, login, logout } = useSession();

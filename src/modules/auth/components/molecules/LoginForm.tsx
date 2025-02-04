@@ -5,7 +5,7 @@ import Link from "next/link";
 import TextInput from "@components/atoms/inputs/TextInput";
 import MainButton from "@components/atoms/buttons/MainButton";
 import { useRouter } from "next/navigation";
-import { useSession } from "@/components/organisms/providers/SessionProvider";
+import { useSession } from "@/core/providers/SessionProvider";
 import { auth } from "@/core/services/api/auth/loginService";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -29,7 +29,10 @@ function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = auth(credentials);
+    const res = await auth(credentials);
+    if (res.ok) {
+      console.log("Todo Ok");
+    }
   };
 
   return (

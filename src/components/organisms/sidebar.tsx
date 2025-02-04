@@ -4,12 +4,12 @@ import { useSession } from '@/core/providers/SessionProvider'
 
 const Sidebar = () => {
     const { user, login, logout } = useSession();
-
-    if (user) {
+    if (user != null) {
         return (
             <div className='flex bg-gray w-[350px] shadow-sm shadow-gray-600'>
                 <aside className="flex-1 h-screen sticky top-0">
-                    Sidebar
+                    {user.name}
+                    <p>{user.last_name}</p>
                 </aside>
             </div>
           )

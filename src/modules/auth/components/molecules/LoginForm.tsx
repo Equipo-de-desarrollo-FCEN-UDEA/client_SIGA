@@ -4,9 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import TextInput from "@components/atoms/inputs/TextInput";
 import MainButton from "@components/atoms/buttons/MainButton";
-import { useRouter } from "next/navigation";
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { useSession } from "@/core/providers/SessionProvider";
 
 function LoginForm() {
   const [credentials, setCredentials] = useState({
@@ -14,11 +12,7 @@ function LoginForm() {
     password: "",
   });
 
-  const formData = new FormData();
-  formData.append('username', credentials.username);
-  formData.append('password', credentials.password);
-
-  const router = useRouter();
+  const {login} = useSession();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials({
@@ -29,21 +23,7 @@ function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch(apiUrl+"/auth/access-token", {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
-      
-      console.log("REsponse", response);
-      if (response.status === 200) {
-        router.push("/admin/user");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    login(credentials);
   };
 
   return (
@@ -65,7 +45,7 @@ function LoginForm() {
       </div>
 
       <div className="w-full flex justify-between text-darkGreen underline mb-10">
-        <Link href="/auth/forgot-password">
+        <Link href="/auth/olvido-contrasena">
           <p>¿Olvidaste tu contraseña?</p>
         </Link>
         <Link href="/auth/register">

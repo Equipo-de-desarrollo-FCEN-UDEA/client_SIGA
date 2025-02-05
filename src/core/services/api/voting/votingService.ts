@@ -16,3 +16,28 @@ export const fetchVotingById = async (id: string | string[]) => {
         console.error("Error al obtener la votación: ", error);
     }
 };
+
+import Voting from '@/core/interfaces/voting/voting';
+import {AbstractCRUD} from '@/core/services/api/CRUD';
+
+class VotingService extends AbstractCRUD<Voting> {
+    apiUrl = process.env.NEXT_PUBLIC_API_URL+'/voting';
+
+    async closeVoting(id: string) {
+        try {
+            const response = await fetch(`${this.apiUrl}/close/${id}`, {
+                method: 'PATCH',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        }
+        catch (error) {
+            console.error('Error fetching data:', error);
+            throw error
+        }
+    }
+}
+
+export default VotingService;

@@ -1,0 +1,20 @@
+"use client";
+import React from 'react'
+import { useSession } from '@/core/providers/SessionProvider'
+
+const Sidebar = () => {
+    const { user, login, logout } = useSession();
+    if (user != null) {
+        return (
+            <div className='flex bg-gray w-[350px] shadow-sm shadow-gray-600'>
+                <aside className="flex-1 h-screen sticky top-0">
+                    {user.name}
+                    <p>{user.last_name}</p>
+                </aside>
+            </div>
+          )
+    }
+  
+}
+
+export default Sidebar

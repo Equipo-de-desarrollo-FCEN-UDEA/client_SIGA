@@ -1,11 +1,8 @@
 "use client";
-import { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import { createContext, useContext, useState, ReactNode, useEffect, useMemo } from "react";
 import { auth } from "@/core/services/api/auth/loginService";
 import { getSession } from "@/core/services/api/user/userService";
 import { useRouter } from "next/navigation";
-
-import { set } from "zod";
-import Cookies from "js-cookie";
 
 interface User {
   name: string;
@@ -49,8 +46,10 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
     console.log("logout");
   };
 
+  const contextValue = useMemo(() => ({ user, login, logout }), [user]);
+
   return (
-    <SessionContext.Provider value={{ user, login, logout }}>
+    <SessionContext.Provider value={contextValue}>
       {children}
     </SessionContext.Provider>
   );

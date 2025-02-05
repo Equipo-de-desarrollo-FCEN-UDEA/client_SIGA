@@ -11,7 +11,7 @@ export const getSession = async () => {
             let errorMessage = `Error HTTP ${response.status}`;
             
             // Verificar si la respuesta es JSON antes de leerla
-            const contentType = response.headers.get("content-type") || "";
+            const contentType = response.headers.get("content-type") ?? "";
             if (contentType.includes("application/json")) {
                 const errorData = await response.json();
                 errorMessage = errorData.detail || errorData.message || errorMessage;

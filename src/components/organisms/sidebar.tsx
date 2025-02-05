@@ -3,7 +3,7 @@ import React from 'react'
 import { useSession } from '@/core/providers/SessionProvider'
 
 const Sidebar = () => {
-    const { user, login, logout } = useSession();
+    const { user } = useSession();
     if (user != null) {
         return (
             <div className='flex bg-gray w-[350px] shadow-sm shadow-gray-600'>

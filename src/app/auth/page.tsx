@@ -20,9 +20,7 @@ const Page = () => {
 
   if (loading) {
     return (
-      <>
         <p>Cargando...</p>
-      </>
     ); // O puedes mostrar un spinner de carga aquí
   }
   else {

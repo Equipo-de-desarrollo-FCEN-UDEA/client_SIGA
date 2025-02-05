@@ -23,7 +23,7 @@ function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = login(credentials);
+    login(credentials);
   };
 
   return (

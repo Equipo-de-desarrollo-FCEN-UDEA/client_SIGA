@@ -2,6 +2,8 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { auth } from "@/core/services/api/auth/loginService";
 import { getSession } from "@/core/services/api/user/userService";
+import { useRouter } from "next/navigation";
+
 import { set } from "zod";
 import Cookies from "js-cookie";
 
@@ -25,18 +27,22 @@ const SessionContext = createContext<SessionContextType | undefined>(undefined);
 
 export const SessionProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-
+  const router = useRouter();
   useEffect(() => {
     const fetchSession = async () => {
       const res =  await getSession();
+      if (res) setUser(res);
     };
     fetchSession();
   }, []);
 
-  const login = (credentials: Credentials) => {
-    auth(credentials).then(res => {
-      setUser(res.user);
-    });
+  const login = async (credentials: Credentials) => {
+    const res = await auth(credentials)
+    if (res?.ok){
+      const data = await res.json();
+      setUser(data.User);
+      router.push("/");
+    }
   };
 
   const logout = () => {

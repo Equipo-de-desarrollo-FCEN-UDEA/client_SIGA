@@ -4,11 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import TextInput from "@components/atoms/inputs/TextInput";
 import MainButton from "@components/atoms/buttons/MainButton";
-import { useRouter } from "next/navigation";
 import { useSession } from "@/core/providers/SessionProvider";
-import { auth } from "@/core/services/api/auth/loginService";
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 function LoginForm() {
   const [credentials, setCredentials] = useState({
@@ -16,9 +12,7 @@ function LoginForm() {
     password: "",
   });
 
-  // const { login } = useSession();
-
-  const router = useRouter();
+  const {login} = useSession();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials({
@@ -29,10 +23,7 @@ function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await auth(credentials);
-    if (res.ok) {
-      console.log("Todo Ok");
-    }
+    const res = login(credentials);
   };
 
   return (

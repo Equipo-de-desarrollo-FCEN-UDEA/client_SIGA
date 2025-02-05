@@ -9,7 +9,7 @@ export const auth = async (credentials: { username: string; password: string }) 
             body: formData,
             credentials: "include",
         });
-        return response.json();
+        return response;
     } catch (error) {
         console.error("Error:", error);
         return null;

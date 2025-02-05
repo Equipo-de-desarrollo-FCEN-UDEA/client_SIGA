@@ -90,9 +90,12 @@ function VotingDetail({ id }: { id: string | string[] }) {
                     <div>
                         <VotingChart votes={voting.votes} />
                     </div>
-                    <MainButton text="Votar" onClick={() => setModal(true)} />
 
-                    {user?.scopes.includes("representante") && (
+                    {voting.info_voting.statuses.at(-1)?.result == "PENDIENTE" && (
+                    <MainButton text="Votar" onClick={() => setModal(true)} />
+                    )}
+
+                    {user?.scopes.includes("representante") && voting.info_voting.statuses.at(-1)?.result == "PENDIENTE" &&(
                     <div className="mt-2">
                         <SecondaryButton text="Cerrar votación" onClick={() => closeVoting()} />
                     </div>

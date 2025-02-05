@@ -8,9 +8,14 @@ import { forgotPasswordFormSchema } from "@/core/schemas/forgotPasswordFormSchem
 import MainButton from "@/components/atoms/buttons/MainButton";
 import SecondaryButton from "@/components/atoms/buttons/SecondaryButton";
 import { forgotPasswordService } from "@/core/services/api/auth/forgotPasswordService";
-import AlertModal from '@/components/templates/alertModal'
+import { useState } from "react";
+import Modal from "@/components/templates/Modal";
+import alertModal from "@/components/templates/alertModal";
 
 const ForgotPasswordForm = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [responseMessage, setResponseMessage] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -23,40 +28,50 @@ const ForgotPasswordForm = () => {
 
   const onSubmit = async (data: any) => {
     if (!data.email_or_id) {
-        console.error("Email or id is missing");
-        return;
-        };
+      console.error("Email or id is missing");
+      return;
+    }
 
     try {
       await forgotPasswordService(data.email_or_id);
-      alert("Se ha enviado un correo con las instrucciones para recuperar la contraseña");
-        } catch (error) {
-          alert("Error al solicitar el cambio de contraseña");}
+      setResponseMessage("Se ha enviado un correo con las instrucciones para recuperar la contraseña");
+      setShowModal(true);
+    } catch (error) {
+      setResponseMessage("Error al solicitar el cambio de contraseña");
+      setShowModal(true);
+    }
   };
 
-    return (
+  return (
+    <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+      <h1 className="mb-2 text-3xl font-bold text-center text-darkGreen">SIGA UdeA</h1>
+      <h2 className="mb-2 text-1xl font-bold text-center text-dark">Recuperar Contraseña</h2>
+      <hr className="mt-3 mb-6" />
 
-      <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
-        <h1 className="mb-2 text-3xl font-bold text-center text-darkGreen">SIGA UdeA</h1>
-        <h2 className="mb-2 text-1xl font-bold text-center text-dark">Recuperar Contraseña</h2>
-        <hr className="mt-3 mb-6" />
-
-        <TextInput
-          placeholder="ejemplo@udea.edu.co"
-          type="text"
-          label="Correo Institucional o cédula"
-          {...register("email_or_id")}
-          error={errors.email_or_id?.message}
+      <TextInput
+        placeholder="ejemplo@udea.edu.co"
+        type="text"
+        label="Correo Institucional o cédula"
+        {...register("email_or_id")}
+        error={errors.email_or_id?.message}
+      />
+      <div className="flex mt-6 gap-2">
+        <SecondaryButton
+          text="Cancelar"
+          onClick={() => router.push("/auth")}
         />
-        <div className="flex mt-6 gap-2">
-          <SecondaryButton
-            text="Cancelar"
-            onClick={() => router.push("/auth")}
-          />
-          <MainButton text="Enviar" buttonType="submit" />
-        </div>
-        <AlertModal.Success />
-      </form>
+        <MainButton text="Enviar" buttonType="submit" />
+      </div>
+
+      {showModal && (
+        <Modal setModal={() => setShowModal(false)}>
+          <alertModal.Success/>
+
+
+          <p>{responseMessage}</p>
+        </Modal>
+      )}
+    </form>
   );
 };
 

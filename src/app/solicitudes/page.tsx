@@ -1,3 +1,4 @@
+"use client"
 import { useState, useEffect } from "react";
 import UsersTable from '@modules/admin/pages/UsersTable';
 

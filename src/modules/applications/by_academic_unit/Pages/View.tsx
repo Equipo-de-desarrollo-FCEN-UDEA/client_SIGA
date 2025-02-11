@@ -6,8 +6,8 @@ import Table from "@/components/organisms/Table";
 
 type list = string[];
 
-function Page({ id }: { id: string }) {
-    const [userApplicationsAcademicUnit, setUserApplicationAcademicUnit] = useState<UserApplicationAcademicUnit[] | null>(null);
+function Page({ id }: Readonly<{ id: string }>) {
+    const [userApplicationsAcademicUnit, setUserApplicationsAcademicUnit] = useState<UserApplicationAcademicUnit[] | null>(null);
     const [rows, setRows] = useState<list[]>([]);
     const headers = ['Solicitante', 'Tipo', 'Estado', ''];
 
@@ -16,7 +16,7 @@ function Page({ id }: { id: string }) {
         const fetchData = async () => {
             try {
                 const data = await us_app_academic_unit.getUserApplicationAcademicUnitByAcademicUnit(id);
-                setUserApplicationAcademicUnit(data);
+                setUserApplicationsAcademicUnit(data);
             } catch (err) {
                 console.error("Error fetching data", err);
             }

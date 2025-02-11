@@ -5,6 +5,7 @@ import Vote from "./vote";
 
 interface Voting {
   id: UUID;
+  academic_unit_id: UUID;
   created_at: Date;
   updated_at: Date;
   user_application: UserApplication;

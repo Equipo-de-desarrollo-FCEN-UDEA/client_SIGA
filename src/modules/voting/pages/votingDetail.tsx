@@ -95,7 +95,7 @@ function VotingDetail({ id }: { id: string | string[] }) {
                     <MainButton text="Votar" onClick={() => setModal(true)} />
                     )}
 
-                    {user?.scopes.includes("representante") && voting.info_voting.statuses.at(-1)?.result == "PENDIENTE" &&(
+                    {user?.scopes.includes("representante:"+voting.academic_unit_id) && voting.info_voting.statuses.at(-1)?.result == "PENDIENTE" &&(
                     <div className="mt-2">
                         <SecondaryButton text="Cerrar votación" onClick={() => closeVoting()} />
                     </div>

@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 export abstract class AbstractCRUD<T> {
   abstract apiUrl: string;
 
@@ -22,34 +20,24 @@ export abstract class AbstractCRUD<T> {
   }
 
   async getAll() {
-    const [data, setData] = useState<T[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await fetch(this.apiUrl, {
-            credentials: 'include',
-          });
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          const result = await response.json();
-          setData(result);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        } finally {
-          setLoading(false);
-        }
-      };
+    try {
+      const response = await fetch(this.apiUrl, {
+        credentials: 'include',
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
 
-      fetchData();
-    }, []);
   }
 
   async create(data: T) {
-    console.log('create', data);
     try {
-      const response = await fetch(this.apiUrl+'/create', {
+      const response = await fetch(this.apiUrl + '/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

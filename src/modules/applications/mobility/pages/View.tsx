@@ -92,16 +92,37 @@ export default function Page({ id }: { id: string }) {
       {
       mobility?.status?.[mobility.status.length - 1]?.name === 'CREADA' && 
         <>
-          <p onClick={sendToCommittee}>Enviar</p> {/* El usuario confirma la información antes de ser enviada al comite */}
+          <p 
+            onClick={sendToCommittee} 
+            onKeyPress={(e) => { if (e.key === 'Enter') sendToCommittee(); }} 
+            tabIndex={0}
+            role="button"
+          >
+            Enviar
+          </p> {/* El usuario confirma la información antes de ser enviada al comite */}
         </>
       }
       {statuses.length == 3 && user?.scopes && user.scopes.includes("representante:1a67f570-cede-4ae6-9cb6-2230eede37a1") &&(
-        <p onClick={sendToCommittee}>Aprovar</p>
+        <p 
+          onClick={sendToCommittee} 
+          onKeyPress={(e) => { if (e.key === 'Enter') sendToCommittee(); }} 
+          tabIndex={0}
+          role="button"
+        >
+          Aprovar
+        </p>
       )
       }
       {
         statuses.length == 4 && user?.scopes && user.scopes.includes("representante:"+userApplicationAcademicUnit?.academic_unit_id) &&(
-          <p onClick={sendToCommittee}>Rechazar</p>
+            <p 
+            onClick={sendToCommittee} 
+            onKeyPress={(e) => { if (e.key === 'Enter') sendToCommittee(); }} 
+            tabIndex={0}
+            role="button"
+            >
+            Rechazar
+            </p>
         )
       }
     </>

@@ -3,8 +3,10 @@ import MobilityType from "@/core/interfaces/applications/mobility/type";
 import MobilityPurpose from "@/core/interfaces/applications/mobility/purpose";
 import Subject from "@/core/interfaces/applications/mobility/subject";
 import UserApplicationStatus from "@/core/interfaces/applications/applicationsStatus";
+import { UUID } from "crypto";
 
 interface Mobility {
+    id: UUID;
     process: ProcessEnum;
     type: MobilityType;
     purpose: MobilityPurpose;

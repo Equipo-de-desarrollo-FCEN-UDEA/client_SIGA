@@ -6,9 +6,12 @@ import MobilityCRUD from '@/core/services/api/applications/mobility'
 import View from '@/components/molecules/applications/View';
 import UserApplicationStatus from '@/core/interfaces/applications/applicationsStatus';
 import { useSession } from '@/core/providers/SessionProvider'
+import UserApplicationAcademicUnitService from '@/core/services/api/applications/user_application_academic_unit';
+import UserApplicationAcademicUnit from '@/core/interfaces/applications/userApplicationAcademicUnit';
 
 export default function Page({ id }: { id: string }) {
   const [mobility, setMobility] = useState<Mobility | null>(null);
+  const [userApplicationAcademicUnit, setUserApplicationAcademicUnit] = useState<UserApplicationAcademicUnit | null>(null);
   const [statuses, setStatuses] = useState<UserApplicationStatus[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -16,7 +19,6 @@ export default function Page({ id }: { id: string }) {
 
   useEffect(() => {
     const mobilityCRUD = new MobilityCRUD();
-
     const fetchData = async () => {
       try {
         const data = await mobilityCRUD.getById(id);
@@ -35,10 +37,19 @@ export default function Page({ id }: { id: string }) {
   }, [id]);
 
   useEffect(() => {
+    const userApplicationAcademicUnitService = new  UserApplicationAcademicUnitService();
     if (mobility) {
       setStatuses(mobility.status);
+      const fetchData = async () => {
+        try {
+          const data = await userApplicationAcademicUnitService.getActive(mobility.id);
+          setUserApplicationAcademicUnit(data);
+        } catch (err) {
+          console.error("Error fetching data", err);
+        }
+      };
+      fetchData();
     }
-    console.log(user?.scopes);
   }, [mobility]);
 
   const sendToCommittee = async () => {
@@ -89,7 +100,7 @@ export default function Page({ id }: { id: string }) {
       )
       }
       {
-        statuses.length == 4 && user?.scopes && user.scopes.includes("representante:adb1ea44-189f-47a7-b763-e0aae6e7c07e") &&(
+        statuses.length == 4 && user?.scopes && user.scopes.includes("representante:"+userApplicationAcademicUnit?.academic_unit_id) &&(
           <p onClick={sendToCommittee}>Rechazar</p>
         )
       }

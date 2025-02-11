@@ -1,6 +1,5 @@
 "use client";
-import React from 'react'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Mobility from '@/core/interfaces/applications/mobility/mobility'
 import MobilityCRUD from '@/core/services/api/applications/mobility'
 import View from '@/components/molecules/applications/View';
@@ -9,7 +8,7 @@ import { useSession } from '@/core/providers/SessionProvider'
 import UserApplicationAcademicUnitService from '@/core/services/api/applications/user_application_academic_unit';
 import UserApplicationAcademicUnit from '@/core/interfaces/applications/userApplicationAcademicUnit';
 
-export default function Page({ id }: { id: string }) {
+export default function Page({ id }: { readonly id: string }) {
   const [mobility, setMobility] = useState<Mobility | null>(null);
   const [userApplicationAcademicUnit, setUserApplicationAcademicUnit] = useState<UserApplicationAcademicUnit | null>(null);
   const [statuses, setStatuses] = useState<UserApplicationStatus[]>([]);
@@ -92,37 +91,37 @@ export default function Page({ id }: { id: string }) {
       {
       mobility?.status?.[mobility.status.length - 1]?.name === 'CREADA' && 
         <>
-          <p 
+          <button 
             onClick={sendToCommittee} 
             onKeyPress={(e) => { if (e.key === 'Enter') sendToCommittee(); }} 
             tabIndex={0}
             role="button"
           >
             Enviar
-          </p> {/* El usuario confirma la información antes de ser enviada al comite */}
+          </button> {/* El usuario confirma la información antes de ser enviada al comite */}
         </>
       }
       {statuses.length == 3 && user?.scopes && user.scopes.includes("representante:1a67f570-cede-4ae6-9cb6-2230eede37a1") &&(
-        <p 
+        <button 
           onClick={sendToCommittee} 
           onKeyPress={(e) => { if (e.key === 'Enter') sendToCommittee(); }} 
           tabIndex={0}
           role="button"
         >
           Aprovar
-        </p>
+        </button>
       )
       }
       {
         statuses.length == 4 && user?.scopes && user.scopes.includes("representante:"+userApplicationAcademicUnit?.academic_unit_id) &&(
-            <p 
+            <button 
             onClick={sendToCommittee} 
             onKeyPress={(e) => { if (e.key === 'Enter') sendToCommittee(); }} 
             tabIndex={0}
             role="button"
             >
             Rechazar
-            </p>
+            </button>
         )
       }
     </>

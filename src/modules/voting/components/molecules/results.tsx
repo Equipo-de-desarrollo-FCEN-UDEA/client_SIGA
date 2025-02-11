@@ -1,6 +1,5 @@
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
-import Voting from '@/core/interfaces/voting/voting';
 
 import Vote from "@/core/interfaces/voting/vote";
 

@@ -1,7 +1,17 @@
-import View from "@modules/applications/mobility/pages/View";
+"use client";
 
-export default function Page({ params }: Readonly<{ params: { id: string } }>) {
-  return (
-    <View id={params.id} />
-  );
+import View from "@modules/applications/mobility/pages/View";
+import { useParams } from "next/navigation";
+
+import React from 'react'
+
+
+
+const Page = () => {
+  const { id } = useParams();
+  return(
+    <View id={id as string} />
+);
 }
+
+export default Page;

@@ -21,7 +21,7 @@ const Response = ({user_application_id, academic_unit_id}: ResponseProps) => {
             academic_unit_id, 
             result
         );
-        //  window.location.reload();
+        window.location.reload();
     }
     return (
         modal && (

@@ -8,7 +8,8 @@ import { useSession } from '@/core/providers/SessionProvider'
 import UserApplicationAcademicUnitService from '@/core/services/api/applications/user_application_academic_unit';
 import UserApplicationAcademicUnit from '@/core/interfaces/applications/userApplicationAcademicUnit';
 
-export default function Page({ id }: { readonly id: string }) {
+const Page = ({ id }: { id: string }) => {
+
   const [mobility, setMobility] = useState<Mobility | null>(null);
   const [userApplicationAcademicUnit, setUserApplicationAcademicUnit] = useState<UserApplicationAcademicUnit | null>(null);
   const [statuses, setStatuses] = useState<UserApplicationStatus[]>([]);
@@ -44,7 +45,11 @@ export default function Page({ id }: { readonly id: string }) {
           const data = await userApplicationAcademicUnitService.getActive(mobility.id);
           setUserApplicationAcademicUnit(data);
         } catch (err) {
-          console.error("Error fetching data", err);
+          if (err instanceof Error) {
+            setError(err.message);
+          } else {
+            setError(String(err));
+          }
         }
       };
       fetchData();
@@ -127,3 +132,5 @@ export default function Page({ id }: { readonly id: string }) {
     </>
   );
 }
+
+export default Page

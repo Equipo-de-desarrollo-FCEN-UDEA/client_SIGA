@@ -37,7 +37,7 @@ const VotingChart: React.FC<VotingChartProps> = ({ votes }) => {
                     label
                 >
                     {processedVotes.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        <Cell key={`cell-${entry.name}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                 </Pie>
                 <Tooltip />

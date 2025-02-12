@@ -61,6 +61,14 @@ const Page = ({ id }: { id: string }) => {
     window.location.reload();
   }
 
+  const response = async () => {
+    await new UserApplicationAcademicUnitService().response(
+      mobility?.id || '', 
+      userApplicationAcademicUnit?.academic_unit_id || '', 'RECHAZADA');
+    window.location.reload();
+  }
+
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -118,9 +126,9 @@ const Page = ({ id }: { id: string }) => {
       )
       }
       {
-        statuses.length == 4 && user?.scopes && user.scopes.includes("representante:"+userApplicationAcademicUnit?.academic_unit_id) &&(
+        statuses.length == 3 && user?.scopes && user.scopes.includes("representante:"+userApplicationAcademicUnit?.academic_unit_id) &&(
             <button 
-            onClick={sendToCommittee} 
+            onClick={response} 
             onKeyPress={(e) => { if (e.key === 'Enter') sendToCommittee(); }} 
             tabIndex={0}
             role="button"

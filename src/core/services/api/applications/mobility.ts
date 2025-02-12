@@ -15,13 +15,12 @@ class MobilityCRUD extends AbstractCRUD<Mobility> {
                 },
             });
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Network response was not ok: ${response.statusText}`);
             }
             return response.json
         }
         catch (error) {
-            console.error('Error fetching data:', error);
-            throw error
+            throw error;
         }
     }
 }

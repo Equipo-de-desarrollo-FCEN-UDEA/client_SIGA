@@ -15,7 +15,25 @@ class UserApplicationAcademicUnitService {
             }
             return await response.json();
         } catch (error) {
-            console.error('Error fetching data:', error);
+            throw error;
+        }
+    }
+
+    async response(user_application_id: string, academic_unit_id: string, result: string) {
+        try {
+            const response = await fetch(`${this.apiUrl}/response/${user_application_id}/${academic_unit_id}`, {
+                method: 'PATCH',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ result }),
+            });
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.statusText}`);
+            }
+            return response.json;
+        } catch (error) {
             throw error;
         }
     }
@@ -33,10 +51,10 @@ class UserApplicationAcademicUnitService {
             }
             return await response.json();
         } catch (error) {
-            console.error('Error fetching data:', error);
             throw error;
         }
     }
+    
 }
 
 

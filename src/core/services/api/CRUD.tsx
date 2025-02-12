@@ -10,11 +10,10 @@ export abstract class AbstractCRUD<T> {
         if (response.status === 404) {
           throw new Error('Resource not found');
         }
-        throw new Error('Network response was not ok');
+        throw new Error(`Network response was not ok: ${response.statusText}`);
       }
       return await response.json();
     } catch (error) {
-      console.error('Error fetching data:', error);
       throw error;
     }
   }
@@ -30,7 +29,7 @@ export abstract class AbstractCRUD<T> {
       const result = await response.json();
       return result;
     } catch (error) {
-      console.error('Error fetching data:', error);
+      throw error;
     }
 
   }
@@ -50,7 +49,7 @@ export abstract class AbstractCRUD<T> {
       }
       return await response.json();
     } catch (error) {
-      console.error('Error fetching data:', error);
+      throw error;
     }
   }
 
@@ -68,7 +67,7 @@ export abstract class AbstractCRUD<T> {
       }
       return await response.json();
     } catch (error) {
-      console.error('Error fetching data:', error);
+      throw error;
     }
   }
 
@@ -82,7 +81,7 @@ export abstract class AbstractCRUD<T> {
       }
       return await response.json();
     } catch (error) {
-      console.error('Error fetching data:', error);
+      throw error;
     }
   }
 }

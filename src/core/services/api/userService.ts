@@ -3,7 +3,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 export const fetchUserById = async (id: string | string[]) => {
   try {
     const user_response = await fetch(
-      apiUrl+`/api/v1/user/${id}`
+      apiUrl+`/user/${id}`
     );
     const data_user = await user_response.json();
 
@@ -16,7 +16,7 @@ export const fetchUserById = async (id: string | string[]) => {
 export const assignRoleToUser = async (userData: string) => {
   try {
     const response = await fetch(
-      apiUrl+"/api/v1/user_rol_academic_unit",
+      apiUrl+"/user_rol_academic_unit",
       {
         method: "POST",
         headers: {

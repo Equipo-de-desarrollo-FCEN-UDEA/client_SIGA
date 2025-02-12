@@ -1,6 +1,11 @@
 import React from 'react';
-import { PieChart, Pie, Cell, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
-import Voting from '@/core/interfaces/voting/voting';
+import { PieChart, Pie, Cell, Tooltip} from "recharts";
+
+import Vote from "@/core/interfaces/voting/vote";
+
+interface VotingChartProps {
+    votes: Vote[];
+}
 
 const processData = (data: { vote_type: { name: string } }[]) => {
     const voteCounts: Record<string, number> = {};
@@ -13,7 +18,7 @@ const processData = (data: { vote_type: { name: string } }[]) => {
     return Object.entries(voteCounts).map(([name, value]) => ({ name, value }));
 };
 
-const VotingChart: React.FC<Voting> = ({ votes }) => {
+const VotingChart: React.FC<VotingChartProps> = ({ votes }) => {
     const processedVotes = processData(votes);
     const COLORS = ["#068a14", "#df0101"];
 
@@ -32,7 +37,7 @@ const VotingChart: React.FC<Voting> = ({ votes }) => {
                     label
                 >
                     {processedVotes.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        <Cell key={`cell-${entry.name}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                 </Pie>
                 <Tooltip />

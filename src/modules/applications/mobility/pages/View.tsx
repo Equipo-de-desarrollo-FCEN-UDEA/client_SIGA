@@ -1,0 +1,114 @@
+"use client";
+import React, { useState, useEffect } from 'react'
+import Mobility from '@/core/interfaces/applications/mobility/mobility'
+import MobilityCRUD from '@/core/services/api/applications/mobility'
+import View from '@/components/molecules/applications/View';
+import UserApplicationStatus from '@/core/interfaces/applications/applicationsStatus';
+import { useSession } from '@/core/providers/SessionProvider'
+import UserApplicationAcademicUnitService from '@/core/services/api/applications/user_application_academic_unit';
+import UserApplicationAcademicUnit from '@/core/interfaces/applications/userApplicationAcademicUnit';
+import Response from '@/modules/applications/components/molecules/Response';
+import MainButton from '@/components/atoms/buttons/MainButton';
+
+const Page = ({ id }: { id: string }) => {
+  const [modal, setModal] = useState<boolean>(false);
+  const [mobility, setMobility] = useState<Mobility | null>(null);
+  const [userApplicationAcademicUnit, setUserApplicationAcademicUnit] = useState<UserApplicationAcademicUnit | null>(null);
+  const [statuses, setStatuses] = useState<UserApplicationStatus[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const { user } = useSession();
+
+  useEffect(() => {
+    const mobilityCRUD = new MobilityCRUD();
+    const fetchData = async () => {
+      try {
+        const data = await mobilityCRUD.getById(id);
+        setMobility(data);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError(String(err));
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [id]);
+
+  useEffect(() => {
+    const userApplicationAcademicUnitService = new UserApplicationAcademicUnitService();
+    if (mobility) {
+      setStatuses(mobility.status);
+      const fetchData = async () => {
+        try {
+          const data = await userApplicationAcademicUnitService.getActive(mobility.id);
+          setUserApplicationAcademicUnit(data);
+        } catch {
+          setUserApplicationAcademicUnit(null);
+        }
+      };
+      fetchData();
+    }
+  }, [mobility]);
+
+  const sendToCommittee = async () => {
+    await new MobilityCRUD().sendToCommittee(id);
+    window.location.reload();
+  }
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  return (
+    <>
+      <View title="Movilidad" statuses={statuses || []}>
+        <div>
+          <div>
+            <h5>Proceso</h5>
+            <p>{mobility?.process}</p>
+          </div>
+          <div>
+            <h5>Tipo</h5>
+            <p>{mobility?.type}</p>
+          </div>
+          <div>
+            <h5>Objetivo</h5>
+            <p>{mobility?.purpose}</p>
+          </div>
+        </div>
+        <div>
+          <h4>Destino</h4>
+          <div>
+            <h5>País</h5>
+            <p>{mobility?.destination_country}</p>
+          </div>
+          <div>
+            <h5>Institución</h5>
+            <p>{mobility?.destination_institution}</p>
+          </div>
+        </div>
+      </View>
+
+      {
+      mobility?.status?.[mobility.status.length - 1]?.name === 'CREADA' && 
+        <MainButton text="Enviar" onClick={sendToCommittee} />
+      }
+
+      { userApplicationAcademicUnit && user?.scopes && user.scopes.includes("representante:" + userApplicationAcademicUnit?.academic_unit_id) && (
+      <MainButton text="Responder" onClick={() => setModal(true)} />
+      )}
+
+      {modal &&(
+        <Response
+          user_application_id={mobility?.id as string}
+          academic_unit_id={userApplicationAcademicUnit?.academic_unit_id as string}
+        />
+      )}
+    </>
+  );
+}
+
+export default Page

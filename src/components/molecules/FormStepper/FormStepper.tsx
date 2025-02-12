@@ -5,13 +5,15 @@ import { TiTick } from "react-icons/ti";
 import MainButton from "@components/atoms/buttons/MainButton";
 import "./FormStepper.css";
 import { UseFormHandleSubmit, FieldValues } from "react-hook-form";
+import SecondaryButton from "@/components/atoms/buttons/SecondaryButton";
 
 type FormStepperProps = {
   children: ReactNode;
   steps: string[];
   currentStep: number;
   complete: boolean;
-  onClick: () => void;
+  onNext: () => void;
+  onPrevius: () => void;
   onSubmit: (data: any) => void;
   handleSubmit: UseFormHandleSubmit<FieldValues>;
 };
@@ -21,16 +23,14 @@ const FormStepper: React.FC<FormStepperProps> = ({
   steps,
   currentStep,
   complete,
-  onClick,
+  onNext,
+  onPrevius,
   onSubmit,
   handleSubmit,
 }) => {
   return (
-    <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <div className="w-full flex">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="w-full flex justify-center">
           {steps?.map((step, i) => (
             <div
               key={i}
@@ -52,21 +52,22 @@ const FormStepper: React.FC<FormStepperProps> = ({
 
         {children}
 
-        {currentStep < steps.length && (
-          <MainButton
-            onClick={onClick}
-            buttonType={"button"}
-            text={"Siguiente"}
-          />
-        )}
-        {currentStep === steps.length && (
-          <MainButton
-            buttonType={"submit"}
-            text={"Terminar"}
-          />
-        )}
+        <div className="flex justify-between mt-5 gap-3">
+          {currentStep > 1 && (
+            <SecondaryButton text="Atrás" buttonType="button" onClick={onPrevius} />
+          )}
+          {currentStep < steps.length && (
+            <MainButton
+              onClick={onNext}
+              buttonType={"button"}
+              text={"Siguiente"}
+            />
+          )}
+          {currentStep === steps.length && (
+            <MainButton buttonType="submit" text="Terminar" />
+          )}
+        </div>
       </form>
-    </>
   );
 };
 

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 interface User {
   name: string;
   last_name: string;
+  scopes: string[];
 }
 
 interface Credentials {

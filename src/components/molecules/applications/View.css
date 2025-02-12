@@ -1,0 +1,7 @@
+view {
+    @apply w-1/2;
+}
+
+h5{
+    @apply text-lg font-semibold;
+}

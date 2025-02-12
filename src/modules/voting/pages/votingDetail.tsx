@@ -1,31 +1,35 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
-import { fetchVotingById } from "@/core/services/api/voting/votingService";
+import VotingService, { fetchVotingById } from "@/core/services/api/voting/votingService";
 import { fetchVoteTypes, assignUserVoteToVoting } from "@/core/services/api/voting/voteService";
 import InfoUserItem from "@modules/admin/components/atoms/InfoUserItem";
-import Statuses from "../components/molecules/statuses";
+import Statuses from "@/modules/voting/components/molecules/statuses";
 
 import Voting from "@/core/interfaces/voting/voting";
 import MainButton from "@/components/atoms/buttons/MainButton";
 import Modal from "@/components/templates/Modal";
 import SelectInput from "@/components/atoms/inputs/SelectInput";
 
-import VotingChart from "../components/molecules/results";
-import vote from "@/core/interfaces/voting/vote";
-import { toast } from "react-toastify";
+import VotingChart from "@/modules/voting/components/molecules/results";
 
 import Error from "@/components/atoms/errors/ErrorCode";
 import Loading from "@/components/atoms/loading/Loading";
+import SecondaryButton from "@/components/atoms/buttons/SecondaryButton";
+import { useSession } from "@/core/providers/SessionProvider";
 
 
-function VotingDetail({ id }: { id: string | string[] }) {
+const VotingDetail = ({ id }: { id: string}) => {
     const [voting, setVoting] = useState<Voting | null>(null);
     const [modal, setModal] = useState(false);
     const [vote_types, setVoteTypes] = useState([]);
     const [vote_type_id, setVote] = useState("");
     const [voting_id, setVotingId] = useState("");
     const [error, setError] = useState<number | null>(null);
+
+    const {user} = useSession();
+
+    const votingService = new VotingService();
     
     useEffect(() => {
         const fetchData = async () => {
@@ -51,6 +55,11 @@ function VotingDetail({ id }: { id: string | string[] }) {
         };
 
         assignUserVoteToVoting(JSON.stringify(votingData));
+    };
+
+    const closeVoting = async () => {
+        votingService.closeVoting(voting_id);
+        window.location.reload();
     };
 
     if (error) {
@@ -79,7 +88,17 @@ function VotingDetail({ id }: { id: string | string[] }) {
                     <div>
                         <VotingChart votes={voting.votes} />
                     </div>
+
+                    {voting.info_voting.statuses.at(-1)?.result == "PENDIENTE" && (
                     <MainButton text="Votar" onClick={() => setModal(true)} />
+                    )}
+
+                    {user?.scopes.includes("representante:"+voting.academic_unit_id) && voting.info_voting.statuses.at(-1)?.result == "PENDIENTE" &&(
+                    <div className="mt-2">
+                        <SecondaryButton text="Cerrar votación" onClick={() => closeVoting()} />
+                    </div>
+                    )}
+                    
                 </div>
             </div>
             {modal && (
@@ -95,6 +114,7 @@ function VotingDetail({ id }: { id: string | string[] }) {
                             placeholder="Seleccione una opción...."
                         />
                     </form>
+                    
                     <div className="mt-16">
                         <MainButton text="Guardar" onClick={handleSubmit} />
                     </div>

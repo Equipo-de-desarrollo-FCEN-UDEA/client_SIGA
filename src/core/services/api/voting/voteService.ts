@@ -1,4 +1,4 @@
-const apiUrl = process.env.NEXT_PUBLIC_API_URL+"/api/v1";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchVoteTypes= async () => {
     try {

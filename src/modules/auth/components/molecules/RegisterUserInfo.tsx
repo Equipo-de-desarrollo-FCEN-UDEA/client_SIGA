@@ -34,7 +34,6 @@ const RegisterUserInfo = ({
     formState: { errors },
   } = useFormContext<{stepTwo: StepTwoFormData}>();
 
-
   // Sincroniza vinculation con el formulario
   const vinculation = watch("stepTwo.vinculation", ""); 
 
@@ -53,6 +52,7 @@ const RegisterUserInfo = ({
 
   return (
     <div className="grid gap-4 my-7">
+      {/* Correo Institucional */}
       <TextInput
         placeholder=""
         label="Correo Institucional:"

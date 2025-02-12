@@ -7,9 +7,11 @@ import UserApplicationStatus from '@/core/interfaces/applications/applicationsSt
 import { useSession } from '@/core/providers/SessionProvider'
 import UserApplicationAcademicUnitService from '@/core/services/api/applications/user_application_academic_unit';
 import UserApplicationAcademicUnit from '@/core/interfaces/applications/userApplicationAcademicUnit';
+import Response from '@/modules/applications/components/molecules/Response';
+import MainButton from '@/components/atoms/buttons/MainButton';
 
 const Page = ({ id }: { id: string }) => {
-
+  const [modal, setModal] = useState<boolean>(false);
   const [mobility, setMobility] = useState<Mobility | null>(null);
   const [userApplicationAcademicUnit, setUserApplicationAcademicUnit] = useState<UserApplicationAcademicUnit | null>(null);
   const [statuses, setStatuses] = useState<UserApplicationStatus[]>([]);
@@ -37,19 +39,15 @@ const Page = ({ id }: { id: string }) => {
   }, [id]);
 
   useEffect(() => {
-    const userApplicationAcademicUnitService = new  UserApplicationAcademicUnitService();
+    const userApplicationAcademicUnitService = new UserApplicationAcademicUnitService();
     if (mobility) {
       setStatuses(mobility.status);
       const fetchData = async () => {
         try {
           const data = await userApplicationAcademicUnitService.getActive(mobility.id);
           setUserApplicationAcademicUnit(data);
-        } catch (err) {
-          if (err instanceof Error) {
-            setError(err.message);
-          } else {
-            setError(String(err));
-          }
+        } catch {
+          setUserApplicationAcademicUnit(null);
         }
       };
       fetchData();
@@ -60,14 +58,6 @@ const Page = ({ id }: { id: string }) => {
     await new MobilityCRUD().sendToCommittee(id);
     window.location.reload();
   }
-
-  const response = async () => {
-    await new UserApplicationAcademicUnitService().response(
-      mobility?.id || '', 
-      userApplicationAcademicUnit?.academic_unit_id || '', 'RECHAZADA');
-    window.location.reload();
-  }
-
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -101,42 +91,22 @@ const Page = ({ id }: { id: string }) => {
           </div>
         </div>
       </View>
+
       {
       mobility?.status?.[mobility.status.length - 1]?.name === 'CREADA' && 
-        <>
-          <button 
-            onClick={sendToCommittee} 
-            onKeyPress={(e) => { if (e.key === 'Enter') sendToCommittee(); }} 
-            tabIndex={0}
-            role="button"
-          >
-            Enviar
-          </button> {/* El usuario confirma la información antes de ser enviada al comite */}
-        </>
+        <MainButton text="Enviar" onClick={sendToCommittee} />
       }
-      {statuses.length == 3 && user?.scopes && user.scopes.includes("representante:1a67f570-cede-4ae6-9cb6-2230eede37a1") &&(
-        <button 
-          onClick={sendToCommittee} 
-          onKeyPress={(e) => { if (e.key === 'Enter') sendToCommittee(); }} 
-          tabIndex={0}
-          role="button"
-        >
-          Aprovar
-        </button>
-      )
-      }
-      {
-        statuses.length == 3 && user?.scopes && user.scopes.includes("representante:"+userApplicationAcademicUnit?.academic_unit_id) &&(
-            <button 
-            onClick={response} 
-            onKeyPress={(e) => { if (e.key === 'Enter') sendToCommittee(); }} 
-            tabIndex={0}
-            role="button"
-            >
-            Rechazar
-            </button>
-        )
-      }
+
+      { userApplicationAcademicUnit && user?.scopes && user.scopes.includes("representante:" + userApplicationAcademicUnit?.academic_unit_id) && (
+      <MainButton text="Responder" onClick={() => setModal(true)} />
+      )}
+
+      {modal &&(
+        <Response
+          user_application_id={mobility?.id as string}
+          academic_unit_id={userApplicationAcademicUnit?.academic_unit_id as string}
+        />
+      )}
     </>
   );
 }

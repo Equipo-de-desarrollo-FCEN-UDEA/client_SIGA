@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import Mobility from "@/core/interfaces/applications/mobility/mobility";
-import GeneralInfo from "../components/atoms/GeneralInfo";
+import GeneralInfo from "@/modules/applications/mobility/components/atoms/GeneralInfo";
 import MobilityCRUD from "@/core/services/api/applications/mobility";
-import Contact from "../components/atoms/Contact";
-import Subjects from "../components/atoms/Subjects";
+import Contact from "@/modules/applications/mobility/components/atoms/Contact";
+import Subjects from "@/modules/applications/mobility/components/atoms/Subjects";
 import { useStepperForm } from "@/core/hooks/useStepperForm";
 import {
   combinedSchema,
@@ -16,6 +17,7 @@ import FormStepper from "@/components/molecules/FormStepper/FormStepper";
 import Subject from "@/core/interfaces/applications/mobility/subject";
 
 const FormMobility = () => {
+  const router = useRouter();
   const methods = useForm<Mobility>({
     resolver: zodResolver(combinedSchema),
   });
@@ -52,7 +54,10 @@ const FormMobility = () => {
       status: [],
     };
 
-    await mobilityCRUD.create({ ...requestBody });
+    const response = await mobilityCRUD.create({ ...requestBody });
+    if (response) {
+      router.push(`/solicitudes/mobility/ver/${response.id}`);
+    }
   };
 
   return (

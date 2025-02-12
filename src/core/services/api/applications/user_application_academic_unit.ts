@@ -21,13 +21,12 @@ class UserApplicationAcademicUnitService {
 
     async response(user_application_id: string, academic_unit_id: string, result: string) {
         try {
-            const response = await fetch(`${this.apiUrl}/response/${user_application_id}/${academic_unit_id}`, {
+            const response = await fetch(`${this.apiUrl}/response/${user_application_id}/${academic_unit_id}?result=${result}`, {
                 method: 'PATCH',
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ result }),
             });
             if (!response.ok) {
                 throw new Error(`Network response was not ok: ${response.statusText}`);

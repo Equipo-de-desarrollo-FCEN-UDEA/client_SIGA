@@ -4,16 +4,14 @@ import React, { useEffect, useState } from "react";
 import VotingService, { fetchVotingById } from "@/core/services/api/voting/votingService";
 import { fetchVoteTypes, assignUserVoteToVoting } from "@/core/services/api/voting/voteService";
 import InfoUserItem from "@modules/admin/components/atoms/InfoUserItem";
-import Statuses from "../components/molecules/statuses";
+import Statuses from "@/modules/voting/components/molecules/statuses";
 
 import Voting from "@/core/interfaces/voting/voting";
 import MainButton from "@/components/atoms/buttons/MainButton";
 import Modal from "@/components/templates/Modal";
 import SelectInput from "@/components/atoms/inputs/SelectInput";
 
-import VotingChart from "../components/molecules/results";
-import vote from "@/core/interfaces/voting/vote";
-import { toast } from "react-toastify";
+import VotingChart from "@/modules/voting/components/molecules/results";
 
 import Error from "@/components/atoms/errors/ErrorCode";
 import Loading from "@/components/atoms/loading/Loading";
@@ -21,7 +19,7 @@ import SecondaryButton from "@/components/atoms/buttons/SecondaryButton";
 import { useSession } from "@/core/providers/SessionProvider";
 
 
-function VotingDetail({ id }: { id: string | string[] }) {
+const VotingDetail = ({ id }: { id: string}) => {
     const [voting, setVoting] = useState<Voting | null>(null);
     const [modal, setModal] = useState(false);
     const [vote_types, setVoteTypes] = useState([]);

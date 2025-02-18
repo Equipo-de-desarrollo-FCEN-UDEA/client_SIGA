@@ -63,9 +63,9 @@ const Page = ({ id }: { id: string }) => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <>
-      <View title="Movilidad" statuses={statuses || []}>
-        <div>
+    <div className='max-w-2xl border shadow-lg p-10 rounded-md mx-auto mt-3'>
+      <View title="Ver Movilidad" statuses={statuses || []}>
+        <div className='grid grid-cols-3 grid-rows-2 gap-4 mb-6'>
           <div>
             <h5>Proceso</h5>
             <p>{mobility?.process}</p>
@@ -78,9 +78,6 @@ const Page = ({ id }: { id: string }) => {
             <h5>Objetivo</h5>
             <p>{mobility?.purpose}</p>
           </div>
-        </div>
-        <div>
-          <h4>Destino</h4>
           <div>
             <h5>País</h5>
             <p>{mobility?.destination_country}</p>
@@ -107,7 +104,7 @@ const Page = ({ id }: { id: string }) => {
           academic_unit_id={userApplicationAcademicUnit?.academic_unit_id as string}
         />
       )}
-    </>
+    </div>
   );
 }
 

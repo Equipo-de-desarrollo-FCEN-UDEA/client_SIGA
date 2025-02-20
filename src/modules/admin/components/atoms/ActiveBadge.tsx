@@ -6,7 +6,7 @@ const ActiveBadge = ({ isActive }: { isActive: boolean }) => {
           <p>Activo</p>
         </div>
       ) : (
-        <div className="w-20 h-7 border-2 border-red-800 text-red-800 text-center rounded-lg font-bold">
+        <div className="w-24 h-7 border-2 border-red-800 text-red-800 text-center rounded-lg font-bold">
           <p>No Activo</p>
         </div>
       )}

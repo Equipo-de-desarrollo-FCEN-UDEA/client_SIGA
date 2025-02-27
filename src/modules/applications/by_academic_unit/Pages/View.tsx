@@ -29,7 +29,7 @@ const Page = ({ id }: Readonly<{ id: string }>) => {
                 userApplicationAcademicUnit.user_application.user.name,
                 userApplicationAcademicUnit.user_application.application.name,
                 userApplicationAcademicUnit.is_active ? 'Activo' : 'Inactivo',
-                `/Solicitudes/${type}/ver/${userApplicationAcademicUnit.user_application.id}`,
+                `/solicitudes/${type}/ver/${userApplicationAcademicUnit.user_application.id}`,
 
             ])});
             setRows(newRows);

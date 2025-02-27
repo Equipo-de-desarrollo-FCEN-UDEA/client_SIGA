@@ -1,0 +1,60 @@
+/* eslint-disable no-unused-vars */
+import UserApplicationStatus from "@/core/interfaces/applications/applicationsStatus";
+import { UUID } from "crypto";
+
+interface AnnualPlan {
+    is_true: boolean;
+    code: string;
+}
+
+interface BankConsultation {
+    is_true: boolean;
+    code: string;
+}
+
+export interface PriorConsultation {
+    annual_plan: AnnualPlan | null;
+    bank_consultation: BankConsultation | null;
+    contract: string | null;
+}
+
+export interface Material {
+    id: UUID;
+    name: string;
+    quantity: number;
+    unit_price: string;
+}
+
+export interface Provider {
+    id: UUID;
+    name: string;
+    email: string;
+    phone: string;
+}
+
+export enum PurchaseType {
+    SMALL = 'Menor cuantía',
+    MeDIUM = 'Mediana cuantía',
+    LARGE = 'Mayor cuantía',
+}
+
+export enum PurchaseScope {
+    NATIONAL = 'Nacional',
+    INTERNATIONAL = 'Internacional',
+}
+
+export interface Purchase {
+    id: UUID | null;
+    type: PurchaseType;
+    scope: PurchaseScope;
+    need: string;
+    description: string;
+    responsible_condition: string | null;
+    estimated_budget: number;
+    marco_agreement: boolean | null;
+    status: UserApplicationStatus[];
+    prior_consultation: PriorConsultation | null;
+    selected_provider: Provider | null;
+    materials: Material[] | null;
+}
+

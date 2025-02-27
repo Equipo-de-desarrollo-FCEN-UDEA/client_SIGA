@@ -4,21 +4,19 @@ import React from "react";
 import Head from "@/components/molecules/table/Head";
 import Body from "@/components/molecules/table/Body";
 
-type list = string[];
 interface TableProps {
   headers: string[];
-  rows: list[];
+  rows: string[][];
+  link?: boolean;
 }
 
-const Table: React.FC<TableProps> = ({ headers, rows }) => {
-  return (
-    <div className="overflow-x-auto rounded-lg shadow-md">
+const Table = ({ headers, rows, link }: TableProps) => (
+    <div className="overflow-x-auto shadow-md mx-5">
       <table className="min-w-full bg-white border border-gray-200">
         <Head headers={headers} />
-        <Body rows={rows} />
+        <Body rows={rows} link={link} />
       </table>
     </div>
   );
-};
 
 export default Table;

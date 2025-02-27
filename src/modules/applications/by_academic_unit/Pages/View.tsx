@@ -4,22 +4,17 @@ import UserApplicationAcademicUnitService from "@/core/services/api/applications
 import { useEffect, useState } from "react";
 import Table from "@/components/organisms/Table";
 
-type list = string[];
-
-function Page({ id }: Readonly<{ id: string }>) {
+const Page = ({ id }: Readonly<{ id: string }>) => {
     const [userApplicationsAcademicUnit, setUserApplicationsAcademicUnit] = useState<UserApplicationAcademicUnit[] | null>(null);
-    const [rows, setRows] = useState<list[]>([]);
-    const headers = ['Solicitante', 'Tipo', 'Estado', ''];
+    const [rows, setRows] = useState<string[][]>([]);
+    const headers = ['Solicitante', 'Tipo', 'Estado', 'Acción'];
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const us_app_academic_unit = new UserApplicationAcademicUnitService();
         const fetchData = async () => {
-            try {
-                const data = await us_app_academic_unit.getUserApplicationAcademicUnitByAcademicUnit(id);
-                setUserApplicationsAcademicUnit(data);
-            } catch (err) {
-                console.error("Error fetching data", err);
-            }
+            const data = await us_app_academic_unit.getUserApplicationAcademicUnitByAcademicUnit(id);
+            setUserApplicationsAcademicUnit(data);
         };
         fetchData();
     }, [id]);
@@ -27,21 +22,30 @@ function Page({ id }: Readonly<{ id: string }>) {
     // Nuevo useEffect que se activa cuando userApplicationsAcademicUnit cambia
     useEffect(() => {
         if (userApplicationsAcademicUnit) {
-            const newRows = userApplicationsAcademicUnit.map((userApplicationAcademicUnit) => [
+
+            const newRows = userApplicationsAcademicUnit.map((userApplicationAcademicUnit) => {
+            const type = userApplicationAcademicUnit.user_application.application.name.toLowerCase();
+            return ([
                 userApplicationAcademicUnit.user_application.user.name,
                 userApplicationAcademicUnit.user_application.application.name,
                 userApplicationAcademicUnit.is_active ? 'Activo' : 'Inactivo',
-                ""
-            ]);
+                `/solicitudes/${type}/ver/${userApplicationAcademicUnit.user_application.id}`,
+
+            ])});
             setRows(newRows);
         }
+        setLoading(false);
     }, [userApplicationsAcademicUnit]);
+
+    if (!userApplicationsAcademicUnit && !rows && loading) {
+        return <h1>Cargando...</h1>;
+    }
 
     return (
         <>
             <h1>userApplications</h1>
             <div>
-                <Table headers={headers} rows={rows} />
+                <Table headers={headers} rows={rows} link={true} />
             </div>
         </>
     );

@@ -1,5 +1,5 @@
 "use client"
-import {Purchase} from '@/core/interfaces/applications/purchases/Purchase';
+import {AcademicsUnit, Purchase} from '@/core/interfaces/applications/purchases/Purchase';
 import { combinedSchema, StepOneFormData } from '@/core/schemas/PurchaseCreateFormSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
@@ -9,7 +9,10 @@ import { useStepperForm } from "@/core/hooks/useStepperForm";
 import PurchaseService from '@/core/services/api/applications/purchases';
 import FormStepper from '@/components/molecules/FormStepper/FormStepper';
 import GeneralInfo from '@/modules/applications/purchase/components/molecules/GeneralInfo';
+import Confirm from '@/modules/applications/purchase/components/molecules/Confirm';
+
 import UploadFiles from '@/components/organisms/UploadFiles';
+import { UUID } from 'crypto';
 
 
 
@@ -19,7 +22,7 @@ const Create = () => {
         resolver: zodResolver(combinedSchema),
     });
     const [files, setFiles] = useState<File[]>([]);
-    const steps = ['Info. general', 'Cargar Archivos'];
+    const steps = ['Info. general', 'Cotizaciones', 'Confirmar'];
     const { currentStep, complete, nextStep, previusStep } = useStepperForm({
         methods,
         combinedSchema,
@@ -30,7 +33,6 @@ const Create = () => {
     const onSubmit = async (data: {
         stepOne: StepOneFormData;
     }) => {
-        console.log('vamos a guardar');
         const requestBody: Purchase = {
             type: data.stepOne.type,
             scope: data.stepOne.scope,
@@ -46,7 +48,9 @@ const Create = () => {
             materials: null
         };
 
-        const response = await puchaseService.create({ ...requestBody });
+        const academicUnitId = AcademicsUnit[data.stepOne.academicUnit as keyof typeof AcademicsUnit];
+
+        const response = await puchaseService.create({ ...requestBody }, academicUnitId as UUID);
         if (response) {
             router.push(`/solicitudes/compras/ver/${response.id}`);
         }
@@ -66,6 +70,7 @@ const Create = () => {
         >
           {currentStep === 1 && <GeneralInfo />}
           {currentStep === 2 && <UploadFiles files={files} setFiles={setFiles} />}
+          {currentStep === 3 && <Confirm/>}
         </FormStepper>
       </FormProvider>
     </div>

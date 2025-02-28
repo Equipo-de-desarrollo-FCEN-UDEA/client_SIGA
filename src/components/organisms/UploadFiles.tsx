@@ -8,7 +8,15 @@ interface UploadFilesProps {
 const UploadFiles = ({ files, setFiles }: UploadFilesProps) => {
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!event.target.files) return;
-        setFiles([...files, ...Array.from(event.target.files)]);
+
+        const selectedFiles = Array.from(event.target.files);
+        const validFiles = selectedFiles.filter((file) => file.type === "application/pdf");
+
+        if (validFiles.length !== selectedFiles.length) {
+            alert("Solo se permiten archivos en formato PDF.");
+        }
+
+        setFiles([...files, ...validFiles]);
     };
 
     const removeFile = (index: number) => {
@@ -16,16 +24,25 @@ const UploadFiles = ({ files, setFiles }: UploadFilesProps) => {
     };
     return (
         <div>
-            <h2 className="text-xl font-semibold mb-4">Subir Archivos</h2>
-
-            <input
-                type="file"
-                multiple
-                onChange={handleFileChange}
-                className="mb-4 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-blue-100"
-                aria-label="Seleccionar archivos"
-                title="Seleccionar archivos"
-            />
+            <h2 className="text-xl font-semibold mb-4">Cotizaciones</h2>
+            <p>Debe ingresar minimo 2 cotizaciones</p>
+            <div className='mb-4 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-blue-100'>
+            </div>
+            <div className='mb-3'>
+                <input
+                    type="file"
+                    multiple
+                    onChange={handleFileChange}
+                    className="hidden"
+                    id="file-upload"
+                />
+                <label
+                    htmlFor="file-upload"
+                    className="mb-4 w-full text-sm mr-4 py-2 px-4 rounded-lg border-0 font-semibold bg-green-50 text-green-700 hover:bg-blue-100"
+                >
+                    Seleccionar Archivos
+                </label>
+            </div>
 
             {files.length > 0 && (
                 <ul className="mb-4">

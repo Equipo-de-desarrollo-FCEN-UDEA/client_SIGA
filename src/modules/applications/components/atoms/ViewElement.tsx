@@ -2,7 +2,7 @@ import React from 'react'
 
 interface ViewElementProps {
     label: string;
-    body: string;
+    body: string | null;
 }
 
 const ViewElement = ({ label, body }: ViewElementProps) =>(

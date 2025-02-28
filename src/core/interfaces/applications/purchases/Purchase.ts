@@ -38,6 +38,16 @@ export enum PurchaseType {
     LARGE = 'Mayor cuantía',
 }
 
+const EXTENSION = process.env.NEXT_PUBLIC_EXTENSION_ID as string;
+const CIEN = process.env.NEXT_PUBLIC_CIEN_ID as string;
+const DECANATURA = process.env.NEXT_PUBLIC_FCEN_ID as string;
+
+export const AcademicsUnit = {
+    "Centro de Extensión": EXTENSION ,
+    "CIEN": CIEN,
+    "Decanatura": DECANATURA,
+  } as const;
+
 export enum PurchaseScope {
     NATIONAL = 'Nacional',
     INTERNATIONAL = 'Internacional',

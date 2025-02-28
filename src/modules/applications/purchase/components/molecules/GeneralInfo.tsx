@@ -2,7 +2,7 @@ import { StepOneFormData } from '@/core/schemas/PurchaseCreateFormSchema';
 import React from 'react'
 import { useFormContext } from 'react-hook-form';
 import SelectInput from "@/components/atoms/inputs/SelectInput";
-import { PurchaseScope, PurchaseType } from '@/core/interfaces/applications/purchases/Purchase';
+import { PurchaseScope, PurchaseType, AcademicsUnit } from '@/core/interfaces/applications/purchases/Purchase';
 import TextInput from '@/components/atoms/inputs/TextInput';
 
 const GeneralInfo = () => {
@@ -14,6 +14,13 @@ const GeneralInfo = () => {
     }>();
   return (
     <div>
+        <SelectInput
+            options={Object.keys(AcademicsUnit)}
+            valueOptions={Object.keys(AcademicsUnit)}
+            label="Unidad Academica:"
+            {...register("stepOne.academicUnit")}
+            error={errors.stepOne?.academicUnit?.message}
+        />
         <SelectInput
             options={Object.values(PurchaseType)}
             valueOptions={Object.values(PurchaseType)}

@@ -1,7 +1,8 @@
 import { z } from "zod";
-import { PurchaseType, PurchaseScope } from '@/core/interfaces/applications/purchases/Purchase';
+import { PurchaseType, PurchaseScope, AcademicsUnit } from '@/core/interfaces/applications/purchases/Purchase';
 
 export const stepOneSchema = z.object({
+    academicUnit: z.enum(Object.keys(AcademicsUnit) as [string, ...string[]], { message: "Seleccione una unidad académica válida" }),
     type: z.nativeEnum(PurchaseType, { message: "Seleccione un tipo válido" }),
     scope: z.nativeEnum(PurchaseScope, { message: "Seleccione un alcance válido" }),
     need: z.string().min(1, { message: "Este campo no puede estar vacío" }),

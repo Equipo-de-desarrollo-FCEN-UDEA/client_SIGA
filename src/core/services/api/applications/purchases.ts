@@ -21,6 +21,22 @@ class PurchaseService extends AbstractCRUD<Purchase> {
         }
         return await response.json();
     }
+
+    async uploadFiles(files: File[], purchaseId: UUID) {
+        const formData = new FormData();
+        files.forEach((file) => {
+            formData.append('files', file);
+        });
+        const response = await fetch(this.apiUrl + `/upload/${purchaseId}`, {
+            method: 'POST',
+            credentials: 'include',
+            body: formData,
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return await response.json();
+    }
 }
 
 export default PurchaseService;

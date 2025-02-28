@@ -13,7 +13,7 @@ const GeneralInfo = () => {
         stepOne: StepOneFormData;
     }>();
   return (
-    <div>
+    <div className='flex flex-col gap-5'>
         <SelectInput
             options={Object.keys(AcademicsUnit)}
             valueOptions={Object.keys(AcademicsUnit)}

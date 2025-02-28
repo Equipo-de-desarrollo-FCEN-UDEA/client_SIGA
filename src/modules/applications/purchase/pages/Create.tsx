@@ -52,7 +52,10 @@ const Create = () => {
 
         const response = await puchaseService.create({ ...requestBody }, academicUnitId as UUID);
         if (response) {
-            router.push(`/solicitudes/compras/ver/${response.id}`);
+            const responseFiles = await puchaseService.uploadFiles(files, response.id as UUID);
+            if (responseFiles) {
+                router.push(`/solicitudes/compras/ver/${response.id}`);
+            }
         }
     }
 

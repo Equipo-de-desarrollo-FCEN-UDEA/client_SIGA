@@ -1,13 +1,21 @@
 import React from "react";
 import FormStepper from "@/components/molecules/FormStepper/FormStepper";
-import { combinedSchema } from "@/core/schemas/mobilityCreateFormSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStepperForm } from "@/core/hooks/useStepperForm";
-import Place from "../components/Place";
 import { useForm, FormProvider } from "react-hook-form";
+import { Commission } from "@/core/interfaces/applications/comission/commission";
+import { 
+  combinedSchema, 
+  StepOneFormData, 
+  StepTwoFormData, 
+  StepThreeFormData 
+} from "@/core/schemas/commissionCreateFormSchema";
+import Date from "../components/Date";
+import Place from "../components/Place";
+import Justification from "../components/Justification";
 
 const FormCommission = () => {
-  const methods = useForm<any>({
+  const methods = useForm<Commission>({
     resolver: zodResolver(combinedSchema),
   });
   const steps = ["Lugar", "Fechas", "Justificación", "Documentos"];
@@ -16,8 +24,11 @@ const FormCommission = () => {
       combinedSchema,
   });
   
-  const onSubmit = async (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: {  
+    stepOne: StepOneFormData;
+    stepTwo: StepTwoFormData;
+    stepThree: StepThreeFormData}) => {
+
   };
 
   return (
@@ -33,6 +44,8 @@ const FormCommission = () => {
           handleSubmit={methods.handleSubmit}
         >
           {currentStep === 1 && <Place />}
+          {currentStep === 2 && <Date />}
+          {currentStep === 3 && <Justification />}
         </FormStepper>
       </FormProvider>
     </div>

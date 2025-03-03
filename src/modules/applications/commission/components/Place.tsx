@@ -20,8 +20,8 @@ const Place = () => {
         error={errors.stepOne?.country?.message}
       />
       <TextInput
-        label="Estado/Departamento/Rergión"
-        placeholder="Escribe el nombre del estado/departamento/región"
+        label="Estado / Departamento / Región"
+        placeholder="Escribe el nombre del estado"
         {...register("stepOne.state")}
         error={errors.stepOne?.state?.message}
       />

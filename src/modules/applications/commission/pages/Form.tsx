@@ -4,9 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useStepperForm } from "@/core/hooks/useStepperForm";
 import { useForm, FormProvider } from "react-hook-form";
 import { Commission } from "@/core/interfaces/applications/comission/commission";
-import { combinedSchema, StepTwoFormData } from "@/core/schemas/commissionCreateFormSchema";
-import { StepOneFormData } from "@/core/schemas/commissionCreateFormSchema";
-import { StepThreeFormData } from "@/core/schemas/registerFormSchema";
+import { 
+  combinedSchema, 
+  StepOneFormData, 
+  StepTwoFormData, 
+  StepThreeFormData 
+} from "@/core/schemas/commissionCreateFormSchema";
 import Date from "../components/Date";
 import Place from "../components/Place";
 import Justification from "../components/Justification";

@@ -1,4 +1,4 @@
-import { date, z } from "zod";
+import { z } from "zod";
 
 export const stepOneSchema = z.object({
   country: z.string().min(3, {

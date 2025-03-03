@@ -32,8 +32,9 @@ const View = ({ id }: { id: string }) => {
 
     return (
         <div className='max-w-4xl border shadow-lg p-10 rounded-md mx-auto mt-3'>
-            <div className='grid justify-items-stretch grid-flow-row md:grid-cols-3 grid-cols-1 gap-4 my-4'>
+            <h1 className='text-2xl font-bold mb-3'>Información de la Compra</h1>
 
+            <div className='grid justify-items-stretch grid-flow-row md:grid-cols-3 grid-cols-1 gap-4 my-4'>
             <ViewElement
                 label="Tipo"
                 body={purchase?.type ?? ''}
@@ -42,6 +43,10 @@ const View = ({ id }: { id: string }) => {
                 label="Procedencia"
                 body={purchase?.scope ?? ''}
             />
+             <ViewElement
+                    label="Valor o presupuesto estimado"
+                    body={purchase?.estimated_budget ? purchase.estimated_budget.toString() : null}
+                />
             <div className='grid gap-4 col-span-full'>
                 <ViewElement
                     label="Necesidad y conveniencia de la contratación"
@@ -50,10 +55,6 @@ const View = ({ id }: { id: string }) => {
                 <ViewElement
                     label="Descripción del objeto del contrato"
                     body={purchase?.description ?? null}
-                />
-                <ViewElement
-                    label="Valor o presupuesto estimado"
-                    body={purchase?.estimated_budget ? purchase.estimated_budget.toString() : null}
                 />
             </div>
 

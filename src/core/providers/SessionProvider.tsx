@@ -44,7 +44,8 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    console.log("logout");
+    setUser(null);
+    router.push("/auth");
   };
 
   const contextValue = useMemo(() => ({ user, login, logout }), [user]);

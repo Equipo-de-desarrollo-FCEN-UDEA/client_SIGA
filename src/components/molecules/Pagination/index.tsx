@@ -15,8 +15,7 @@ type PaginationProps = {
   updateActivePage: (pageNumber: number | false) => void;
 };
 
-const Pagination = ({ pageNumbers, updateActivePage }: PaginationProps) => {
-  return (
+const Pagination = ({ pageNumbers, updateActivePage }: PaginationProps) => (
     <nav className="mt-4" role="navigation" aria-label="Pagination Navigation">
       <ul className="pagination">
         <PaginationItem
@@ -106,6 +105,5 @@ const Pagination = ({ pageNumbers, updateActivePage }: PaginationProps) => {
       </ul>
     </nav>
   );
-};
 
 export default Pagination;

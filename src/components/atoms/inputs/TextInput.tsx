@@ -16,8 +16,7 @@ const TextInput = React.forwardRef<HTMLInputElement, InputProps>(
   (
     { label, type = "text", name = "", placeholder, value, onChange, error },
     ref
-  ) => {
-    return (
+  ) => (
       <>
         {!label ? (
           <>
@@ -52,8 +51,9 @@ const TextInput = React.forwardRef<HTMLInputElement, InputProps>(
           </label>
         )}
       </>
-    );
-  }
+    )
 );
+
+TextInput.displayName = "TextInput";
 
 export default TextInput;

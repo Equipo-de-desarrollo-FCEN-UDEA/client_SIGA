@@ -10,7 +10,7 @@ type InputProps = {
   options: string[];
   valueOptions: string[];
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  error?: any;
+  error?: React.ReactNode;
 };
 
 const SelectInput = React.forwardRef<HTMLSelectElement, InputProps>(
@@ -26,8 +26,7 @@ const SelectInput = React.forwardRef<HTMLSelectElement, InputProps>(
       error,
     },
     ref
-  ) => {
-    return (
+  ) => (
       <>
         {!label ? (
           <>
@@ -72,8 +71,7 @@ const SelectInput = React.forwardRef<HTMLSelectElement, InputProps>(
           </label>
         )}
       </>
-    );
-  }
+    )
 );
 
 // Opcional: Añadir displayName para facilitar la depuración

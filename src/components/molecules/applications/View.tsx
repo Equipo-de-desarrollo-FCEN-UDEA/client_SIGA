@@ -8,8 +8,7 @@ interface Props {
   children: ReactNode;
 }
 
-const View: FC<Props> = ({ title, statuses, children }) => {
-  return (
+const View: FC<Props> = ({ title, statuses, children }) => (
     <div>
       <h1 className='text-2xl font-bold mb-3'>{title}</h1>
       <div>
@@ -35,6 +34,5 @@ const View: FC<Props> = ({ title, statuses, children }) => {
       </div>
     </div>
   )
-}
 
 export default View

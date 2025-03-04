@@ -1,9 +1,10 @@
 import VotingDetail from "@/modules/voting/pages/votingDetail";
 
-export default function Page({ params }: { params: { id: string } }) {
-  return (
-    <>
-      <VotingDetail id={params.id} />
-    </>
-  );
-}
+const Page = ({ params }: { params: { id: string } }) => (
+  <>
+    <VotingDetail id={params.id} />
+  </>
+);
+
+
+export default Page;

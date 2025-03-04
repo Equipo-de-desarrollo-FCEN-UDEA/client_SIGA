@@ -4,9 +4,9 @@ import SelectInput from "@components/atoms/inputs/SelectInput";
 import MainButton from "@components/atoms/buttons/MainButton";
 import SecondaryButton from "@components/atoms/buttons/SecondaryButton";
 import Modal from "@components/templates/Modal";
-import InfoUserItem from "../components/atoms/InfoUserItem";
+import InfoUserItem from "@/modules/admin/components/atoms/InfoUserItem";
 import InputDisable from "@/modules/admin/components/molecules/InputDisable";
-import ActiveBadge from "../components/atoms/ActiveBadge";
+import ActiveBadge from "@/modules/admin/components/atoms/ActiveBadge";
 
 import User from "@/core/interfaces/user";
 import {
@@ -17,7 +17,7 @@ import { fetchAcademicUnits } from "@/core/services/api/academicUnitService";
 import { fetchRoles } from "@/core/services/api/rolService";
 import Link from "next/link";
 
-export default function UserDetail({ id }: { id: string | string[] }) {
+const UserDetail = ({ id }: { id: string | string[] }) => {
   const [user, setUser] = useState<User | null>(null);
   const [academicUnits, setAcademicUnits] = useState([]);
   const [roles, setRoles] = useState([]);
@@ -130,3 +130,5 @@ export default function UserDetail({ id }: { id: string | string[] }) {
     </div>
   );
 }
+
+export default UserDetail;

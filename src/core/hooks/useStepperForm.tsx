@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { UseFormReturn } from "react-hook-form";
+import { ZodObject, ZodRawShape } from "zod";
 
 type UseStepperFormProps = {
-  methods: any;
-  combinedSchema: any;
+  methods: UseFormReturn;
+  combinedSchema: ZodObject<ZodRawShape>;
 };
 
-export const useStepperForm = ({ methods, combinedSchema }: UseStepperFormProps) => {
+const useStepperForm = ({ methods, combinedSchema }: UseStepperFormProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const complete = false;
 
@@ -13,7 +15,6 @@ export const useStepperForm = ({ methods, combinedSchema }: UseStepperFormProps)
     const typeCombinedSchema = Object.keys(combinedSchema.shape);
     const isValid = await methods.trigger(typeCombinedSchema[currentStep - 1]);
 
-    console.log(isValid)
 
     if (isValid) {
       setCurrentStep((prev) => prev + 1);
@@ -31,4 +32,6 @@ export const useStepperForm = ({ methods, combinedSchema }: UseStepperFormProps)
     previusStep
   };
 };
+
+export { useStepperForm };
 

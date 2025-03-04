@@ -2,10 +2,8 @@
 
 import RegisterLayout from '../components/templates/RegisterLayout'
 
-const Register = () => {
-  return (
+const Register = () => (
     <RegisterLayout></RegisterLayout>
   )
-}
 
 export default Register

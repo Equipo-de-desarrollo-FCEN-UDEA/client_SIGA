@@ -1,22 +1,24 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { activateAccount } from "src/core/services/api/auth/activateAccountService";
 
-export default function Page({ params }: { params: { token: string } }) {
+const Page = ({ params }: { params: { token: string } }) => {
+  const [error, setError] = useState<string | null>(null);
 
   const handleActivateAccount = async () => {
     try {
-      const response = await activateAccount(params.token);
-      console.log("Cuenta activada:", response);
+      await activateAccount(params.token);
     } catch (error) {
-      console.error("Error al activar la cuenta:", error);
+      setError((error as Error).message);
     }
   };
 
   useEffect(() => {
     handleActivateAccount();
-  }, []);
+  }, );
+
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div>
@@ -24,3 +26,5 @@ export default function Page({ params }: { params: { token: string } }) {
     </div>
   );
 }
+
+export default Page;

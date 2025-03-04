@@ -8,8 +8,7 @@ type InputProps = {
   value: string;
 };
 
-const TextInput: React.FC<InputProps> = ({ label, type = "text", value }) => {
-  return (
+const TextInput: React.FC<InputProps> = ({ label, type = "text", value }) => (
     <>
       {/* <label className="flex flex-col mb-2">
         <strong>{label}</strong>
@@ -44,6 +43,5 @@ const TextInput: React.FC<InputProps> = ({ label, type = "text", value }) => {
       </div>
     </>
   );
-};
 
 export default TextInput;

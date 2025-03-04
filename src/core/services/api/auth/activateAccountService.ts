@@ -18,6 +18,6 @@ export const activateAccount = async (token: string) => {
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error("Error al activar la cuenta: ", error);
+        throw new Error(`Error al activar la cuenta: ${(error as Error).message}`);
     }
 };

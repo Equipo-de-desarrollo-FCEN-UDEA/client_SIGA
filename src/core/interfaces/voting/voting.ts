@@ -1,5 +1,5 @@
 import {UUID} from "crypto";
-import UserApplication from "../userApplication";
+import UserApplication from "@/core/interfaces/applications/userApplication";
 import InfoVoting from "./infoVoting";
 import Vote from "./vote";
 

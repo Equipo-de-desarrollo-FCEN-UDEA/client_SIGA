@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import UsersTable from '@/modules/admin/pages/UsersTable';
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const Home = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,7 +14,7 @@ const Home = () => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:8003/api/v1/user?skip=0&limit=286", {
+        const response = await fetch(`${apiUrl}/user?skip=0&limit=286`, {
           credentials: "include",
         });
         const data = await response.json();

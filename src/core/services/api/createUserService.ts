@@ -2,9 +2,10 @@ export const createUser = async (
   requestBody: Record<string, unknown>,
   queryParams: URLSearchParams
 ) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   try {
     const response = await fetch(
-      `http://localhost:8003/api/v1/user?${queryParams.toString()}`,
+      `${apiUrl}/user?${queryParams.toString()}`,
       {
         method: "POST",
         headers: {

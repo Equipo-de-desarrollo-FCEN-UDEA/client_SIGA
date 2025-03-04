@@ -13,7 +13,7 @@ export const fetchVotingById = async (id: string | string[]) => {
     
         return data_voting;
     } catch (error) {
-        console.error("Error al obtener la votación: ", error);
+        throw new Error(`Error al obtener la votación: ${error}`);
     }
 };
 
@@ -38,8 +38,8 @@ class VotingService extends AbstractCRUD<Voting> {
             return response.json
         }
         catch (error) {
-            console.error('Error fetching data:', error);
-            throw error
+            // Handle the error appropriately
+            throw new Error(`Error fetching data: ${(error as Error).message}`);
         }
     }
 }

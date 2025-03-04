@@ -7,7 +7,7 @@ import Pagination from "@components/molecules/Pagination/index";
 
 const UsersTable = ({ users }: { users: User[] }) => {
   // Hook to handle pagination
-  const { records, pageNumbers, setActivePage, setRecordsPerPage } =
+  const { records, pageNumbers, setActivePage } =
     usePagination({
       activePage: 1,
       recordsPerPage: 7,
@@ -20,7 +20,9 @@ const UsersTable = ({ users }: { users: User[] }) => {
 
   // Function to update the active page in the paginator
   function updateActivePage(pageNumber: number | false) {
-    pageNumber && setActivePage(pageNumber);
+    if (pageNumber) {
+      setActivePage(pageNumber);
+    }
   }
 
   return (

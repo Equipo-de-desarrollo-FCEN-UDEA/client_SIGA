@@ -14,16 +14,14 @@ const MainButton: React.FC<MainButtonProps> = ({
   textColor = "text-white",
   buttonType = "submit",
   onClick,
-}) => {
-  return (
-    <button
-      className={`w-full h-9 rounded-md ${bgColor} ${textColor}`}
-      type={buttonType}
-      onClick={onClick}
-    >
-      {text}
-    </button>
-  );
-};
+}) => (
+  <button
+    className={`w-full h-9 rounded-md ${bgColor} ${textColor}`}
+    type={buttonType}
+    onClick={onClick}
+  >
+    {text}
+  </button>
+);
 
 export default MainButton;

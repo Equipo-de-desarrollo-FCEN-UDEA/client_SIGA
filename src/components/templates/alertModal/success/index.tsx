@@ -1,7 +1,5 @@
-function Success() {
-  return (
+const Success = () => (
     <div>Success</div>
   )
-}
 
 export default Success

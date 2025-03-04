@@ -9,9 +9,12 @@ import UserApplicationAcademicUnitService from '@/core/services/api/applications
 import UserApplicationAcademicUnit from '@/core/interfaces/applications/userApplicationAcademicUnit';
 import Response from '@/modules/applications/components/molecules/Response';
 import MainButton from '@/components/atoms/buttons/MainButton';
+import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
+import Modal from '@/components/templates/Modal';
 
 const Page = ({ id }: { id: string }) => {
   const [modal, setModal] = useState<boolean>(false);
+  const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const [mobility, setMobility] = useState<Mobility | null>(null);
   const [userApplicationAcademicUnit, setUserApplicationAcademicUnit] = useState<UserApplicationAcademicUnit | null>(null);
   const [statuses, setStatuses] = useState<UserApplicationStatus[]>([]);
@@ -63,9 +66,9 @@ const Page = ({ id }: { id: string }) => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <>
-      <View title="Movilidad" statuses={statuses || []}>
-        <div>
+    <div className='max-w-2xl border shadow-lg p-10 rounded-md mx-auto mt-3'>
+      <View title="Ver Movilidad" statuses={statuses || []}>
+        <div className='grid grid-cols-3 grid-rows-2 gap-4 my-6'>
           <div>
             <h5>Proceso</h5>
             <p>{mobility?.process}</p>
@@ -78,9 +81,6 @@ const Page = ({ id }: { id: string }) => {
             <h5>Objetivo</h5>
             <p>{mobility?.purpose}</p>
           </div>
-        </div>
-        <div>
-          <h4>Destino</h4>
           <div>
             <h5>País</h5>
             <p>{mobility?.destination_country}</p>
@@ -92,22 +92,35 @@ const Page = ({ id }: { id: string }) => {
         </div>
       </View>
 
-      {
-      mobility?.status?.[mobility.status.length - 1]?.name === 'CREADA' && 
-        <MainButton text="Enviar" onClick={sendToCommittee} />
-      }
+      <div className='flex gap-4'>
+        <SecondaryButton text='Editar' />  
+        {
+        mobility?.status?.[mobility.status.length - 1]?.name === 'CREADA' && 
+          <MainButton text="Enviar" onClick={() => setConfirmModal(true)} />
+        }
 
-      { userApplicationAcademicUnit && user?.scopes && user.scopes.includes("representante:" + userApplicationAcademicUnit?.academic_unit_id) && (
-      <MainButton text="Responder" onClick={() => setModal(true)} />
-      )}
+        { userApplicationAcademicUnit && user?.scopes && user.scopes.includes("representante:" + userApplicationAcademicUnit?.academic_unit_id) && (
+        <MainButton text="Responder" onClick={() => setModal(true)} />
+        )}
+      </div>
 
-      {modal &&(
+      {modal && (
         <Response
           user_application_id={mobility?.id as string}
           academic_unit_id={userApplicationAcademicUnit?.academic_unit_id as string}
         />
       )}
-    </>
+
+      {confirmModal && (
+        <Modal setModal={() => setConfirmModal(false)}>
+          <h3 className="text-lg font-bold mb-4">¿Estás seguro de que deseas enviar esta solicitud?</h3>
+          <div className="flex justify-end gap-4">
+            <SecondaryButton text="Cancelar" onClick={() => setConfirmModal(false)} />
+            <MainButton text="Confirmar" onClick={sendToCommittee} />
+          </div>
+        </Modal>
+      )}
+    </div>
   );
 }
 

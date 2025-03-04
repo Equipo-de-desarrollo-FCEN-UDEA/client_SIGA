@@ -8,6 +8,6 @@ export const fetchAcademicUnits = async () => {
 
     return data_academic_unit;
   } catch (error) {
-    console.error("Error obteniendo las unidades académicas: " + error);
+    throw new Error((error as Error).message);
   }
 };

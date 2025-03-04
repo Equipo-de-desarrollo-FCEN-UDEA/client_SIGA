@@ -4,7 +4,7 @@ import TextInput from "@/components/atoms/inputs/TextInput";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { forgotPasswordFormSchema } from "@/core/schemas/forgotPasswordFormSchema";
+import { forgotPasswordFormSchema,ForgotPasswordFormData } from "@/core/schemas/forgotPasswordFormSchema";
 import MainButton from "@/components/atoms/buttons/MainButton";
 import SecondaryButton from "@/components/atoms/buttons/SecondaryButton";
 import { forgotPasswordService } from "@/core/services/api/auth/forgotPasswordService";
@@ -21,16 +21,16 @@ const ForgotPasswordForm = () => {
 
   const router = useRouter();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: ForgotPasswordFormData) => {
     if (!data.email_or_id) {
-        console.error("Email or id is missing");
+        alert("Por favor, ingrese su correo institucional o cédula");
         return;
         };
 
     try {
       await forgotPasswordService(data.email_or_id);
       alert("Se ha enviado un correo con las instrucciones para recuperar la contraseña");
-        } catch (error) {
+        } catch  {
           alert("Error al solicitar el cambio de contraseña");}
   };
 

@@ -1,11 +1,9 @@
 "use client"
 
-import RegisterLayout from '../components/templates/RegisterLayout'
+import RegisterLayout from '@/modules/auth/components/templates/RegisterLayout'
 
-const Register = () => {
-  return (
+const Register = () => (
     <RegisterLayout></RegisterLayout>
   )
-}
 
 export default Register

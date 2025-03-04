@@ -1,4 +1,4 @@
-import Faculty from "@/core/interfaces/faculty"; '@/core/interfaces/faculty';
+import Faculty from "@/core/interfaces/faculty";
 
 function getFilteredAcademicUnits(faculty: Faculty, filterWord: string): { name: string; id: string }[] {
   return faculty.academic_units

@@ -1,6 +1,7 @@
-import { UUID } from 'crypto';
+import { UUID } from "crypto";
 
 interface VoteType {
+    id: UUID
     name: string;
 }
 

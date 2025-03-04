@@ -23,7 +23,6 @@ export const getSession = async () => {
         return await response.json();
     } catch (error) {
         // Mostrar un mensaje de advertencia en vez de error en consola para evitar logs excesivos
-        console.warn("No se pudo recuperar la sesión. Inténtalo más tarde.");
-        return null;
+        throw new Error(`Error al obtener la sesión del usuario: ${error}`);
     }
 };

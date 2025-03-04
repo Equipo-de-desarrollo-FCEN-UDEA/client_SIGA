@@ -8,8 +8,8 @@ export const fetchUserById = async (id: string | string[]) => {
     const data_user = await user_response.json();
 
     return data_user;
-  } catch (error) {
-    console.error("Error al obtener al usuario: ", error);
+  } catch {
+    throw new Error(`Error al obtener al usuario`);
   }
 };
 
@@ -27,13 +27,13 @@ export const assignRoleToUser = async (userData: string) => {
     );
     
     if (response.ok) {
-      const responseData = await response.json();
-      console.log("Datos enviados con éxito: ", responseData);
+      await response.json();
+      // console.log("Datos enviados con éxito: ", responseData);
       window.location.reload();
     }
 
     return response;
   } catch (error) {
-    console.error("Error al asignar rol al usuario: ", error);
+    throw new Error(`Error al asignar rol al usuario: ${(error as Error).message}`);
   }
 };

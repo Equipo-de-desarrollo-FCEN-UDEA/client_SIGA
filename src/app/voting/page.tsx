@@ -2,9 +2,10 @@
 import { useState, useEffect } from "react";
 import VotingTable from '@modules/voting/pages/VotingTable';
 
-export default function Home() {
+const  Home = () => {
   const [votings, setVotings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null)
   const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -16,25 +17,25 @@ export default function Home() {
         const data = await response.json();
         setVotings(data);
       } catch (error) {
-        console.error("Error fetching users:", error);
+        setError((error as Error).message);
       } finally {
         setLoading(false); 
       }
     };
 
     fetchUsers();
-  }, []);
+  }, [apiUrl]);
+
+  if (loading) return <div>Cargando...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="flex flex-col items-center justify-center">
-      {loading ? (
-        <p>Cargando usuarios...</p>
-      ) : (
         <div className="md:w-2/3">
           <VotingTable votings={votings} />
         </div>
-        
-      )}
     </div>
   );
 }
+
+export default Home;

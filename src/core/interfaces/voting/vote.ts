@@ -1,4 +1,3 @@
-import { UUID } from 'crypto';
 import VoteType from './voteType';
 
 interface Vote {

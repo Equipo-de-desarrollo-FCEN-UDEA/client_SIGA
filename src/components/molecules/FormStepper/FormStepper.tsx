@@ -14,6 +14,7 @@ type FormStepperProps = {
   complete: boolean;
   onNext: () => void;
   onPrevius: () => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSubmit: (data: any) => void;
   handleSubmit: UseFormHandleSubmit<FieldValues>;
 };
@@ -27,8 +28,7 @@ const FormStepper: React.FC<FormStepperProps> = ({
   onPrevius,
   onSubmit,
   handleSubmit,
-}) => {
-  return (
+}) => (
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full flex justify-center">
           {steps?.map((step, i) => (
@@ -69,6 +69,5 @@ const FormStepper: React.FC<FormStepperProps> = ({
         </div>
       </form>
   );
-};
 
 export default FormStepper;

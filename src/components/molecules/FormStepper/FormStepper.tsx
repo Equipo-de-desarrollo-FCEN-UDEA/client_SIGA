@@ -14,7 +14,8 @@ type FormStepperProps = {
   complete: boolean;
   onNext: () => void;
   onPrevius: () => void;
-  onSubmit: (data: unknown) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onSubmit: (data: any) => void;
   handleSubmit: UseFormHandleSubmit<FieldValues>;
 };
 

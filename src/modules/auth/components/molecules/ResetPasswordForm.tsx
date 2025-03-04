@@ -26,14 +26,14 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token }) => {
 
   const onSubmit = async (data: any) => {
     if (!token) {
-      console.error('Token is missing');
+      alert('Token is missing');
       return;
     }
 
     try {
       await resetPasswordService(data.new_password, token);
       alert('Contraseña actualizada con éxito');
-    } catch (error) {
+    } catch  {
       alert('Error al actualizar la contraseña');
     }
   };

@@ -1,6 +1,6 @@
 "use client";
 
-import ForgotPasswordForm from "../components/molecules/ForgotPasswordForm";
+import ForgotPasswordForm from "@/modules/auth/components/molecules/ForgotPasswordForm";
 
 
 const ForgotPasswordPage = () => (

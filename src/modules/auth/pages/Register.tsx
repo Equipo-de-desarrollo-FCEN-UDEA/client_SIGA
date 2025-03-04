@@ -1,6 +1,6 @@
 "use client"
 
-import RegisterLayout from '../components/templates/RegisterLayout'
+import RegisterLayout from '@/modules/auth/components/templates/RegisterLayout'
 
 const Register = () => (
     <RegisterLayout></RegisterLayout>

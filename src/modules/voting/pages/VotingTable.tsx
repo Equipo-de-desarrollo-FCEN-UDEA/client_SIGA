@@ -19,7 +19,9 @@ const VotingTable = ({ votings }: { votings: Voting[] }) => {
 
     // Function to update the active page in the paginator
     function updateActivePage(pageNumber: number | false) {
-        pageNumber && setActivePage(pageNumber);
+        if (pageNumber) {
+            setActivePage(pageNumber);
+        }
     }
 
     return (

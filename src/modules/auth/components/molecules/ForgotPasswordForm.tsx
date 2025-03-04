@@ -23,14 +23,14 @@ const ForgotPasswordForm = () => {
 
   const onSubmit = async (data: any) => {
     if (!data.email_or_id) {
-        console.error("Email or id is missing");
+        alert("Por favor, ingrese su correo institucional o cédula");
         return;
         };
 
     try {
       await forgotPasswordService(data.email_or_id);
       alert("Se ha enviado un correo con las instrucciones para recuperar la contraseña");
-        } catch (error) {
+        } catch  {
           alert("Error al solicitar el cambio de contraseña");}
   };
 

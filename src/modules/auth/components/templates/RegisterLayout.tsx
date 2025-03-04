@@ -1,9 +1,9 @@
 "use client";
 
 import FormStepper from "@components/molecules/FormStepper/FormStepper";
-import RegisterPersonalInfo from "../molecules/RegisterPersonalInfo";
-import RegisterUserInfo from "../molecules/RegisterUserInfo";
-import RegisterConfirmation from "../molecules/RegisterConfirmation";
+import RegisterPersonalInfo from "@/modules/auth/components/molecules/RegisterPersonalInfo";
+import RegisterUserInfo from "@/modules/auth/components/molecules/RegisterUserInfo";
+import RegisterConfirmation from "@/modules/auth/components/molecules/RegisterConfirmation";
 import { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -69,7 +69,7 @@ const RegisterLayout = () => {
     });
 
     try {
-      const result = await createUser(requestBody, queryParams);
+      await createUser(requestBody, queryParams);
 
       alert("Usuario creado con éxito");
 

@@ -1,7 +1,7 @@
 "use client"
 
 import TextInput from "@/components/atoms/inputs/TextInput";
-import { resetPasswordFormSchema } from "@/core/schemas/resetPasswordFormSchema";
+import { resetPasswordFormSchema, ResetPasswordFormData } from "@/core/schemas/resetPasswordFormSchema";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -9,7 +9,6 @@ import SecondaryButton from "@/components/atoms/buttons/SecondaryButton";
 import MainButton from "@/components/atoms/buttons/MainButton";
 import { resetPasswordService } from "@/core/services/api/auth/resetPasswordService";
 
-import {ResetPasswordFormData} from "@/core/schemas/resetPasswordFormSchema";
 
 // Definir la interfaz para las props
 interface ResetPasswordFormProps {

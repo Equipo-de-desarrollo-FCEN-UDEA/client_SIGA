@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { Path, UseFormReturn } from "react-hook-form";
+import { Path, UseFormReturn, FieldValues } from "react-hook-form";
 import { ZodObject, ZodRawShape } from "zod";
-
-import { FieldValues } from "react-hook-form";
 
 type UseStepperFormProps<T extends FieldValues> = {
   methods: UseFormReturn<T>;

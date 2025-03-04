@@ -1,4 +1,4 @@
-import InfoStatus from "../atoms/status";
+import InfoStatus from "@/modules/voting/components/atoms/status";
 import Status from "@/core/interfaces/status";
 
 interface StatusesProps {

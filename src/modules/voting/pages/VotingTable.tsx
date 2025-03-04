@@ -6,7 +6,7 @@ import Pagination from "@components/molecules/Pagination/index";
 
 const VotingTable = ({ votings }: { votings: Voting[] }) => {
     // Hook to handle pagination
-    const { records, pageNumbers, setActivePage, setRecordsPerPage } =
+    const { records, pageNumbers, setActivePage } =
         usePagination({
             activePage: 1,
             recordsPerPage: 7,

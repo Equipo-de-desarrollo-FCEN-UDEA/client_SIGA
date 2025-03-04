@@ -9,6 +9,8 @@ import SecondaryButton from "@/components/atoms/buttons/SecondaryButton";
 import MainButton from "@/components/atoms/buttons/MainButton";
 import { resetPasswordService } from "@/core/services/api/auth/resetPasswordService";
 
+import {ResetPasswordFormData} from "@/core/schemas/resetPasswordFormSchema";
+
 // Definir la interfaz para las props
 interface ResetPasswordFormProps {
   token: string;
@@ -24,7 +26,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ token }) => {
       resolver: zodResolver(resetPasswordFormSchema),
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: ResetPasswordFormData) => {
     if (!token) {
       alert('Token is missing');
       return;

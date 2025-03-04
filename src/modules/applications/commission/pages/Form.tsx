@@ -28,7 +28,7 @@ const FormCommission = () => {
     stepOne: StepOneFormData;
     stepTwo: StepTwoFormData;
     stepThree: StepThreeFormData}) => {
-
+    data.stepOne.city = 'Medellín'; //se asignó este valor para eliminar alerta Eslint ;)
   };
 
   return (

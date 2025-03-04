@@ -8,7 +8,6 @@ type TypeAcademicUnit = { name: string; id: string }[];
 
 const RegisterUserInfo = ({
   facultyObject,
-  rolId,
   setRolId,
 }: {
   facultyObject: {

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { forgotPasswordFormSchema } from "@/core/schemas/forgotPasswordFormSchema";
+import { ForgotPasswordFormData } from "@/core/schemas/forgotPasswordFormSchema";
 import MainButton from "@/components/atoms/buttons/MainButton";
 import SecondaryButton from "@/components/atoms/buttons/SecondaryButton";
 import { forgotPasswordService } from "@/core/services/api/auth/forgotPasswordService";
@@ -21,7 +22,7 @@ const ForgotPasswordForm = () => {
 
   const router = useRouter();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: ForgotPasswordFormData) => {
     if (!data.email_or_id) {
         alert("Por favor, ingrese su correo institucional o cédula");
         return;

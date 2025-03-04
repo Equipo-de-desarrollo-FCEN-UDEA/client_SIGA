@@ -17,6 +17,7 @@ import Error from "@/components/atoms/errors/ErrorCode";
 import Loading from "@/components/atoms/loading/Loading";
 import SecondaryButton from "@/components/atoms/buttons/SecondaryButton";
 import { useSession } from "@/core/providers/SessionProvider";
+import VoteType from "@/core/interfaces/voting/voteType";
 
 
 const VotingDetail = ({ id }: { id: string}) => {
@@ -108,8 +109,8 @@ const VotingDetail = ({ id }: { id: string}) => {
                         <SelectInput
                             value={vote_type_id}
                             onChange={(e) => setVote(e.target.value)}
-                            options={vote_types.map((vote_type: any) => vote_type.name)}
-                            valueOptions={vote_types.map((vote_type: any) => vote_type.id)}
+                            options={vote_types.map((vote_type: VoteType) => vote_type.name)}
+                            valueOptions={vote_types.map((vote_type: VoteType) => vote_type.id)}
                             label="Seleccionar un tipo de voto:"
                             placeholder="Seleccione una opción...."
                         />

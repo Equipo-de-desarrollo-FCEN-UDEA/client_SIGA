@@ -5,6 +5,7 @@ interface UserApplication {
     id: string;
     application: Application;
     user: User;
+    created_at: Date;
 }
 
 export default UserApplication;

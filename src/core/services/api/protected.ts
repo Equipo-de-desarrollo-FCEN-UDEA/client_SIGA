@@ -11,5 +11,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(200).json(response.data);
   } catch (error) {
     res.status(401).json({ message: "Unauthorized" });
+    throw new Error((error as Error).message);
   }
 }

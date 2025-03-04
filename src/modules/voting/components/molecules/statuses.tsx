@@ -1,12 +1,11 @@
-import InfoStatus from "../atoms/status";
+import InfoStatus from "@/modules/voting/components/atoms/status";
 import Status from "@/core/interfaces/status";
 
 interface StatusesProps {
   statuses: Status[];
 }
 
-const Statuses: React.FC<StatusesProps> = ({ statuses }) => {
-    return (
+const Statuses: React.FC<StatusesProps> = ({ statuses }) => (
       <div className="p-4 md:p-6 lg:p-8">
         <h2 className="text-lg font-bold mb-3">Historial de estados</h2>
         {statuses.map((status, index) => (
@@ -16,6 +15,5 @@ const Statuses: React.FC<StatusesProps> = ({ statuses }) => {
         ))}
       </div>
     );
-  };
   
   export default Statuses;

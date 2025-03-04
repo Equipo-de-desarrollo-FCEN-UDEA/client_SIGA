@@ -1,5 +1,4 @@
-const ActiveBadge = ({ isActive }: { isActive: boolean }) => {
-  return (
+const ActiveBadge = ({ isActive }: { isActive: boolean }) => (
     <>
       {isActive ? (
         <div className="w-14 h-7 border-2 border-green-800 text-green-800 text-center rounded-lg font-bold">
@@ -12,6 +11,5 @@ const ActiveBadge = ({ isActive }: { isActive: boolean }) => {
       )}
     </>
   );
-};
 
 export default ActiveBadge;

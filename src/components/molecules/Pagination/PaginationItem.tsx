@@ -12,8 +12,7 @@ const PaginationItem = ({
   active,
   onClick,
   rel,
-}: PaginationItemProps) => {
-  return (
+}: PaginationItemProps) => (
     <li
       className={[
         "pagination-item",
@@ -29,6 +28,5 @@ const PaginationItem = ({
       {children}
     </li>
   );
-};
 
 export default PaginationItem;

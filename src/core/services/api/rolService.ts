@@ -8,6 +8,6 @@ export const fetchRoles = async () => {
 
     return data_roles;
   } catch (error) {
-    console.error("Error obteniendo los roles: " + error);
+    throw new Error((error as Error).message);
   }
 };

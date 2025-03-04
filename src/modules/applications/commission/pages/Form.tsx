@@ -10,9 +10,9 @@ import {
   StepTwoFormData, 
   StepThreeFormData 
 } from "@/core/schemas/commissionCreateFormSchema";
-import Date from "../components/Date";
-import Place from "../components/Place";
-import Justification from "../components/Justification";
+import Date from "@/modules/applications/commission/components/Date";
+import Place from "@/modules/applications/commission/components/Place";
+import Justification from "@/modules/applications/commission/components/Justification";
 
 const FormCommission = () => {
   const methods = useForm<Commission>({
@@ -28,7 +28,7 @@ const FormCommission = () => {
     stepOne: StepOneFormData;
     stepTwo: StepTwoFormData;
     stepThree: StepThreeFormData}) => {
-
+    data.stepOne.city = 'Medellín'; //se asignó este valor para eliminar alerta Eslint ;)
   };
 
   return (

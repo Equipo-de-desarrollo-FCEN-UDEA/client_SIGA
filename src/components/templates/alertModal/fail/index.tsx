@@ -1,7 +1,5 @@
-function Fail() {
-  return (
+const Fail = () => (
     <div>Fail</div>
   )
-}
 
 export default Fail

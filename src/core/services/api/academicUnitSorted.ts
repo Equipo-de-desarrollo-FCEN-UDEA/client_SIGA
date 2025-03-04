@@ -17,7 +17,6 @@ export const fetchAcademicUnitsSorted = async () => {
       institute: getFilteredInstitutes(data),
     };
   } catch (error) {
-    console.error("Error al obtener las unidades académicas:", error);
-    throw error;
+    throw new Error((error as Error).message);
   }
 };

@@ -1,5 +1,5 @@
 export const createUser = async (
-  requestBody: Record<string, any>,
+  requestBody: Record<string, unknown>,
   queryParams: URLSearchParams
 ) => {
   try {
@@ -20,7 +20,6 @@ export const createUser = async (
 
     return await response.json();
   } catch (error) {
-    console.error("Error al crear el usuario:", error);
-    throw error;
+    throw new Error((error as Error).message);
   }
 };

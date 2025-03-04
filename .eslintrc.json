@@ -49,14 +49,14 @@
     //   }
     // ],
     "no-console": "error",
-    "no-unused-vars": [
-      2,
-      { "args": "after-used", "argsIgnorePattern": "^(parent|args|context)" }
-    ],
-    // "@typescript-eslint/no-unused-vars": [
+    // "no-unused-vars": [
     //   2,
-    //   { "args": "after-used", "argsIgnorePattern": "^(parent|args)" }
+    //   { "args": "after-used", "argsIgnorePattern": "^(parent|args|context)", "varsIgnorePattern": "^(React|_)" }
     // ],
+    "@typescript-eslint/no-unused-vars": [
+      2,
+      { "args": "after-used", "argsIgnorePattern": "^(parent|args)", "varsIgnorePattern": "^(React|_)" }
+    ],
     "jsx-a11y/anchor-is-valid": [
       "error",
       {

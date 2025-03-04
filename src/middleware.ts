@@ -3,6 +3,7 @@ import { jwtVerify } from "jose";
 
 // Este código es un middleware que se ejecuta antes de cada petición.
 export async function middleware(request: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   cookies: { get: (arg0: string) => any };
   nextUrl: { pathname: string | string[] };
   url: string | URL | undefined;
@@ -20,7 +21,7 @@ export async function middleware(request: {
     );
 
     return NextResponse.next();
-  } catch (error) {
+  } catch  {
     return NextResponse.redirect(new URL("/auth", request.url));
   }
 }

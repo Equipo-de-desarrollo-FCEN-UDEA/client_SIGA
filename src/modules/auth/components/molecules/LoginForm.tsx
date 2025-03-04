@@ -6,7 +6,7 @@ import TextInput from "@components/atoms/inputs/TextInput";
 import MainButton from "@components/atoms/buttons/MainButton";
 import { useSession } from "@/core/providers/SessionProvider";
 
-function LoginForm() {
+const LoginForm = () => {
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",

@@ -11,7 +11,6 @@ export const auth = async (credentials: { username: string; password: string }) 
         });
         return response;
     } catch (error) {
-        console.error("Error:", error);
-        return null;
+        throw new Error((error as Error).message);
     }
 }

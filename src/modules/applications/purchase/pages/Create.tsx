@@ -23,7 +23,7 @@ const Create = () => {
   });
   const [files, setFiles] = useState<File[]>([]);
   const steps = ['Info. general', 'Cotizaciones', 'Confirmar'];
-  const { currentStep, complete, nextStep, previusStep } = useStepperForm({
+  const { currentStep, complete, nextStep, previusStep } = useStepperForm<Purchase>({
     methods,
     combinedSchema,
   });

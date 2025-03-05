@@ -1,9 +1,10 @@
 import { getFilteredAcademicUnits, getFilteredInstitutes } from "@/utils/getFilteredAcademicUnits";
 
 export const fetchAcademicUnitsSorted = async () => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   try {
     const response = await fetch(
-      "http://localhost:8003/api/v1/academic_unit/adb1ea44-189f-47a7-b763-e0aae6e7c07e"
+      `${apiUrl}/academic_unit/adb1ea44-189f-47a7-b763-e0aae6e7c07e`
     );
 
     if (!response.ok) {

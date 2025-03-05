@@ -45,14 +45,10 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = async () => {
-    try {
       await logoutService();
       setUser(null);
       router.push("/auth");
-    } catch (error) {
-      console.error("Error cerrando sesión", error);
-    }
-  };
+    };
 
   const contextValue = useMemo(() => ({ user, login, logout }), [user]);
 

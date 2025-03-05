@@ -37,6 +37,19 @@ class PurchaseService extends AbstractCRUD<Purchase> {
         }
         return await response.json();
     }
+
+    async assing_auxiliary(userID: UUID | null , purchaseID: UUID, isApprove: boolean) {
+        const url = this.apiUrl + `/send/user/${purchaseID}/?is_approved=${isApprove}` + (userID ? `&user_id=${userID}` : '');
+        const response = await fetch(url, {
+            method: 'PATCH',
+            credentials: 'include',
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return await response.json();
+    }
+
 }
 
 export default PurchaseService;

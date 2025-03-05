@@ -1,6 +1,7 @@
 import {UUID} from "crypto";
 import Application from "./application";
 import User from "./user";
+import UserApplicationAcademicUnit from "@/core/interfaces/applications/userApplicationAcademicUnit";
 
 interface UserApplication {
     user_id: UUID;
@@ -10,6 +11,7 @@ interface UserApplication {
     updated_at: Date;
     application: Application;
     user: User;
+    user_application_academic_units: UserApplicationAcademicUnit[];
 }
 
 export default UserApplication;

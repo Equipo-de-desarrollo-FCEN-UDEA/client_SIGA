@@ -47,7 +47,8 @@ const Page = ({ id }: { id: string }) => {
       setStatuses(mobility.status);
       const fetchData = async () => {
         try {
-          const data = await userApplicationAcademicUnitService.getActive(mobility.id);
+          const data = await userApplicationAcademicUnitService.getActive(
+            mobility.id as string);
           setUserApplicationAcademicUnit(data);
         } catch {
           setUserApplicationAcademicUnit(null);
@@ -93,9 +94,9 @@ const Page = ({ id }: { id: string }) => {
       </View>
 
       <div className='flex gap-4'>
-        <SecondaryButton text='Editar' />  
+        <SecondaryButton text='Editar' />
         {
-        mobility?.status?.[mobility.status.length - 1]?.name === 'CREADA' && 
+        mobility?.status?.[mobility.status.length - 1]?.name === 'CREADA' &&
           <MainButton text="Enviar" onClick={() => setConfirmModal(true)} />
         }
 

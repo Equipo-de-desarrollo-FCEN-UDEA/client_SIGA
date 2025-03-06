@@ -52,6 +52,7 @@ const FormMobility = () => {
       total_time: 0,
       date_report: currentDate.toString(),
       status: [],
+      id: null
     };
 
     const response = await mobilityCRUD.create({ ...requestBody });

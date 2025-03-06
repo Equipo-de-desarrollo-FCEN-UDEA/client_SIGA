@@ -1,6 +1,6 @@
 "use client"
 import { AcademicsUnit, Purchase } from '@/core/interfaces/applications/purchases/Purchase';
-import { combinedSchema, StepOneFormData } from '@/core/schemas/PurchaseCreateFormSchema';
+import { combinedSchema, StepOneFormData } from '@/core/schemas//application/purchase/PurchaseCreateFormSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
@@ -54,13 +54,13 @@ const Create = () => {
     if (response) {
       const responseFiles = await puchaseService.uploadFiles(files, response.id as UUID);
       if (responseFiles) {
-        router.push(`/solicitudes/compras/ver/${response.id}`);
+        router.push(`/solicitudes/compra/ver/${response.id}`);
       }
     }
   }
 
   return (
-    <div className="max-w-4xl border shadow-lg p-10 rounded-md mx-auto mt-3">
+    <div className=" w-2/3 max-h-2/3 border shadow-lg p-10 rounded-md mx-auto my-3">
       <FormProvider {...methods}>
         <FormStepper
           complete={complete}

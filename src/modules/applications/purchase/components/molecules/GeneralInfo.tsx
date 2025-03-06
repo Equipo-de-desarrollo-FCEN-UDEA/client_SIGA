@@ -1,6 +1,6 @@
-import { StepOneFormData } from '@/core/schemas/PurchaseCreateFormSchema';
+import { StepOneFormData } from '@/core/schemas/application/purchase/PurchaseCreateFormSchema';
 import React from 'react'
-import { useFormContext } from 'react-hook-form';
+import { FieldError, useFormContext } from 'react-hook-form';
 import SelectInput from "@/components/atoms/inputs/SelectInput";
 import { PurchaseScope, PurchaseType, AcademicsUnit } from '@/core/interfaces/applications/purchases/Purchase';
 import TextInput from '@/components/atoms/inputs/TextInput';
@@ -26,7 +26,7 @@ const GeneralInfo = () => {
             valueOptions={Object.values(PurchaseType)}
             label="Tipo:"
             {...register("stepOne.type")}
-            error={errors.stepOne?.type?.message}
+            error={(errors.stepOne?.type as FieldError)?.message}
         />
         <SelectInput
             options={Object.values(PurchaseScope)}

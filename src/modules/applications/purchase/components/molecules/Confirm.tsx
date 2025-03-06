@@ -1,4 +1,4 @@
-import { StepOneFormData } from '@/core/schemas/PurchaseCreateFormSchema';
+import { StepOneFormData } from '@/core/schemas/application/purchase/PurchaseCreateFormSchema';
 import React from 'react'
 import { useFormContext } from 'react-hook-form';
 import ViewElement from '@/modules/applications/components/atoms/ViewElement';

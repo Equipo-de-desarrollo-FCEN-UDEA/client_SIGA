@@ -7,6 +7,7 @@ import UserApplicationStatus from '@/core/interfaces/applications/applicationsSt
 import React, { useEffect, useState } from 'react'
 import UserApplication from '@/core/interfaces/userApplication';
 import SelectAuxiliary from '@/modules/applications/components/molecules/SelectAuxiliary';
+import CompleteInfo from '@/modules/applications/purchase/components/molecules/CompleteInfo';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
 import { randomUUID } from 'crypto';
 
@@ -19,6 +20,7 @@ const View = ({ id }: { id: string }) => {
 
     //modals
     const [assistantModal, setAssistantModal] = useState<boolean>(false);
+    const [completeInfoModal, setCompleteInfoModal] = useState<boolean>(false);
 
     useEffect(() => {
         const purchaseService = new PurchaseService();
@@ -47,6 +49,13 @@ const View = ({ id }: { id: string }) => {
             setStatuses(purchase.status);
         }
     }, [purchase]);
+
+    const getFormat = async () => {
+        const purchaseService = new PurchaseService();
+        if (purchase?.id) {
+            const format = await purchaseService.downloadFormat(purchase.id);
+        }
+    }
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
@@ -79,17 +88,31 @@ const View = ({ id }: { id: string }) => {
                         body={purchase?.description ?? null}
                     />
                 </div>
-                {statuses.at(-1)?.name ==  'Archivos Cargados' && (
+                {statuses.at(-1)?.name == 'Archivos Cargados' && (
                     <SecondaryButton text="Asignar auxiliar" onClick={() => setAssistantModal(true)} />
+                )}
+
+                {statuses.at(-1)?.name == 'Auxiliar Asignado' && (
+                    <SecondaryButton text="Completar información" onClick={() => setCompleteInfoModal(true)} />
+                )}
+
+                {statuses.length > 3 && (
+                    <SecondaryButton text="Descargar Formato de vicerrectoria" onClick={() => { getFormat() }} />
                 )}
 
             </div>
 
-            {assistantModal && userApplication &&(
-                <SelectAuxiliary 
+            {assistantModal && userApplication && (
+                <SelectAuxiliary
                     user_application_id={userApplication?.id ?? ''}
                     academic_unit_id={userApplication?.user_application_academic_units.at(-1)?.academic_unit.id as `${string}-${string}-${string}-${string}-${string}`}
-                    setAssistantModal={setAssistantModal}/>
+                    setAssistantModal={setAssistantModal} 
+                />
+            )}
+
+            {completeInfoModal && userApplication && (
+                <CompleteInfo user_application_id={userApplication?.id} setCompleteInfoModal={setCompleteInfoModal}/>
+
             )}
 
         </div>

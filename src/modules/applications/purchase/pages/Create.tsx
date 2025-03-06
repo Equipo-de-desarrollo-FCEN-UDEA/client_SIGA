@@ -1,6 +1,6 @@
 "use client"
 import { AcademicsUnit, Purchase } from '@/core/interfaces/applications/purchases/Purchase';
-import { combinedSchema, StepOneFormData } from '@/core/schemas/PurchaseCreateFormSchema';
+import { combinedSchema, StepOneFormData } from '@/core/schemas//application/purchase/PurchaseCreateFormSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'

@@ -4,12 +4,12 @@ import { UUID } from "crypto";
 
 interface AnnualPlan {
     is_true: boolean;
-    code: string;
+    code: string | null;
 }
 
 interface BankConsultation {
     is_true: boolean;
-    code: string;
+    code: string | null;
 }
 
 export interface PriorConsultation {
@@ -51,6 +51,12 @@ export const AcademicsUnit = {
 export enum PurchaseScope {
     NATIONAL = 'Nacional',
     INTERNATIONAL = 'Internacional',
+}
+
+export interface PurchaseComplete{
+    responsible_condition: string;
+    marco_agreement: boolean;
+    prior_consultation: PriorConsultation;
 }
 
 export interface Purchase {

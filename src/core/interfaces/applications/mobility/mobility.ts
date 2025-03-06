@@ -6,7 +6,7 @@ import UserApplicationStatus from "@/core/interfaces/applications/applicationsSt
 import { UUID } from "crypto";
 
 interface Mobility {
-    id: UUID;
+    id: UUID | null;
     process: ProcessEnum;
     type: MobilityType;
     purpose: MobilityPurpose;

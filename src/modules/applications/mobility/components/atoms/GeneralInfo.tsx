@@ -1,7 +1,7 @@
 import React from "react";
 import TextInput from "@/components/atoms/inputs/TextInput";
 import { StepOneFormData } from "@/core/schemas/mobilityCreateFormSchema";
-import { useFormContext } from "react-hook-form";
+import { FieldError, useFormContext } from "react-hook-form";
 import SelectInput from "@/components/atoms/inputs/SelectInput";
 import DateInput from "@/components/atoms/inputs/DateInput";
 import ProcessEnum from '@/core/interfaces/applications/mobility/process';
@@ -30,7 +30,7 @@ const GeneralInfo = () => {
         valueOptions={Object.values(TypeEnum)}
         label="Tipo:"
         {...register("stepOne.type")}
-        error={errors.stepOne?.type?.message}
+        error={(errors.stepOne?.type as FieldError)?.message}
       />
       <SelectInput
         options={Object.values(PurposeEnum)}

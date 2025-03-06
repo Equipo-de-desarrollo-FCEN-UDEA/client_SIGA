@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 import {SessionProvider} from "@/core/providers/SessionProvider";
-import { SideNavItem } from "@/components/molecules/Navitem/Navitem";
 import Sidebar from "@/components/organisms/sidebar";
 
 const geistSans = localFont({

@@ -54,7 +54,7 @@ const Create = () => {
     if (response) {
       const responseFiles = await puchaseService.uploadFiles(files, response.id as UUID);
       if (responseFiles) {
-        router.push(`/solicitudes/compras/ver/${response.id}`);
+        router.push(`/solicitudes/compra/ver/${response.id}`);
       }
     }
   }

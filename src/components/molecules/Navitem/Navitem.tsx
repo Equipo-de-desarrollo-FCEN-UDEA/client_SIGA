@@ -36,7 +36,7 @@ export const NavItems = () => {
         },
         {
             title: "Compras",
-            href: "/solicitudes/compras/crear",
+            href: "/solicitudes/compra/crear",
             icon: <LuShoppingCart size ={30} color="green"/>,
             position: "top",
             active: inNavItemActive(pathname, "/compras/crear"),

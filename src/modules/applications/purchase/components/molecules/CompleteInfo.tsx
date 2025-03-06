@@ -5,7 +5,7 @@ import Modal from '@/components/templates/Modal'
 import { useStepperForm } from '@/core/hooks/useStepperForm';
 import React, { useEffect } from 'react'
 import { combinedSchema, StepOneFormData, StepTwoFormData, StepThreeFormData, CombinedSchema } from '@/core/schemas//application/purchase/PurchaseCompleteFormSchema';
-import { FieldErrors, Form, FormProvider, useForm } from 'react-hook-form';
+import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PurchaseComplete } from '@/core/interfaces/applications/purchases/Purchase';
 import PurchaseService from '@/core/services/api/applications/purchases';
@@ -71,7 +71,7 @@ const CompleteInfo = ({user_application_id, setCompleteInfoModal }: CompleteInfo
 
         const response = await puchaseService.completePurchase(user_application_id, true, requestBody);
         if (response) {
-            const file = await puchaseService.downloadFormat(user_application_id);
+            await puchaseService.downloadFormat(user_application_id);
             window.location.reload();
         }
 

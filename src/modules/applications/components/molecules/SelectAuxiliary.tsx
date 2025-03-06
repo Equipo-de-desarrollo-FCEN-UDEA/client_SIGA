@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import Modal from '@/components/templates/Modal';
 import { UUID } from 'crypto';
 import UserRolAcademicUnitService from '@/core/services/api/user/userRolAcademicUnit';
-import { FormProvider } from 'react-hook-form';
 import SelectInput from '@/components/atoms/inputs/SelectInput';
 import UserRolAcademicUnit from '@/core/interfaces/user/userRolAcademicUnit';
 import MainButton from '@/components/atoms/buttons/MainButton';
@@ -28,7 +27,6 @@ const SelectAuxiliary = ({ user_application_id, academic_unit_id, setAssistantMo
             });
         }
         fetchData();
-        console.log(auxiliaries);
     }, [academic_unit_id]);
 
     const handleSubmit = async () => {
@@ -43,8 +41,8 @@ const SelectAuxiliary = ({ user_application_id, academic_unit_id, setAssistantMo
     return (
         <Modal setModal={() => setAssistantModal(false)}>
             <div>
-                <h2 className="text-xl font-bold text-center my-3" >Asignar Auxiliar</h2>
-                <form className="mb-4 flex flex-col gap-3">
+                <h2 className="text-xl font-bold text-center my-3">Asignar Auxiliar</h2>
+                <form >
                     <SelectInput
                         label='Aprovar Solicitud'
                         placeholder='Seleccione una opción...'

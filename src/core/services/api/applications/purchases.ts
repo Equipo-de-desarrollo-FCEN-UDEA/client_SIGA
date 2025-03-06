@@ -75,8 +75,6 @@ class PurchaseService extends AbstractCRUD<Purchase> {
             throw new Error('Network response was not ok');
         }
         const blob = await response.blob();
-        console.log("Tamaño del archivo recibido:", blob.size); // ⚠️ Debe ser mayor a 0
-        console.log("Tipo de archivo recibido:", blob.type); // 
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;

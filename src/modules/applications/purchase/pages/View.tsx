@@ -9,7 +9,6 @@ import UserApplication from '@/core/interfaces/userApplication';
 import SelectAuxiliary from '@/modules/applications/components/molecules/SelectAuxiliary';
 import CompleteInfo from '@/modules/applications/purchase/components/molecules/CompleteInfo';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
-import { randomUUID } from 'crypto';
 
 const View = ({ id }: { id: string }) => {
     const [userApplication, setUserApplication] = useState<UserApplication | null>(null);
@@ -53,7 +52,7 @@ const View = ({ id }: { id: string }) => {
     const getFormat = async () => {
         const purchaseService = new PurchaseService();
         if (purchase?.id) {
-            const format = await purchaseService.downloadFormat(purchase.id);
+            await purchaseService.downloadFormat(purchase.id);
         }
     }
 

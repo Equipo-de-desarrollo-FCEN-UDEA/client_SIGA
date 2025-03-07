@@ -131,3 +131,8 @@ dist
 
 # Dockerfile
 Dockerfile
+
+# Certs directory
+certs/
+
+openssl.cnf

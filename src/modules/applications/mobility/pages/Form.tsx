@@ -57,12 +57,12 @@ const FormMobility = () => {
 
     const response = await mobilityCRUD.create({ ...requestBody });
     if (response) {
-      router.push(`/solicitudes/mobility/ver/${response.id}`);
+      router.push(`/solicitudes/movilidad/ver/${response.id}`);
     }
   };
 
   return (
-    <div className="max-w-4xl border shadow-lg p-10 rounded-md mx-auto mt-3">
+    <div className="w-2/3 max-h-2/3 border shadow-lg p-10 rounded-md mx-auto my-3">
       <FormProvider {...methods}>
         <FormStepper
           complete={complete}

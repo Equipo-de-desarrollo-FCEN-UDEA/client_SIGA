@@ -25,7 +25,7 @@ const Page = () => {
   }
   else {
     return (
-      <div className='grid place-items-center mt-10'>
+      <div className='flex w-full justify-center items-center mt-10'>
         <Login />
       </div>
     )

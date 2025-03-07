@@ -73,8 +73,8 @@ const VotingDetail = ({ id }: { id: string}) => {
 
     return (
         <>
-            <div className="flex flex-col md:flex-row md:flex-wrap md:gap-4 justify-center items-center">
-                <div className="mt-14 max-w-3xl w-full md:w-[650px] md:h-full border shadow-lg p-10 rounded-md">
+            <div className="w-2/3 max-h-2/3  p-10 mx-auto justify-center items-center">
+                <div className="mt-14 max-w-3xl w-full md:w-[650px] border shadow-lg p-10 rounded-md">
                     <h2 className="text-xl font-bold mb-3">Detalle de la votación</h2>
 
                     <div className="flex flex-col md:flex-row justify-between">

@@ -57,7 +57,7 @@ const FormMobility = () => {
 
     const response = await mobilityCRUD.create({ ...requestBody });
     if (response) {
-      router.push(`/solicitudes/mobility/ver/${response.id}`);
+      router.push(`/solicitudes/movilidad/ver/${response.id}`);
     }
   };
 

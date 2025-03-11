@@ -11,6 +11,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
     "@iconify/react": "^5.0.2",
+    "@radix-ui/react-tooltip": "^1.1.8",
     "axios": "^1.7.7",
     "jose": "^5.9.6",
     "next": "^14.2.23",

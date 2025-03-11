@@ -1,10 +1,11 @@
 export const createUser = async (
-  requestBody: Record<string, any>,
+  requestBody: Record<string, unknown>,
   queryParams: URLSearchParams
 ) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   try {
     const response = await fetch(
-      `http://localhost:8003/api/v1/user?${queryParams.toString()}`,
+      `${apiUrl}/user?${queryParams.toString()}`,
       {
         method: "POST",
         headers: {
@@ -20,7 +21,6 @@ export const createUser = async (
 
     return await response.json();
   } catch (error) {
-    console.error("Error al crear el usuario:", error);
-    throw error;
+    throw new Error((error as Error).message);
   }
 };

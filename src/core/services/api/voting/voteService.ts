@@ -9,7 +9,7 @@ export const fetchVoteTypes= async () => {
   
       return data_vote_types;
     } catch (error) {
-      console.error("Error obteniendo los tipos de votos: " + error);
+      throw new Error("Error obteniendo los tipos de votos: " + error);
     }
   };
 
@@ -28,12 +28,12 @@ export const fetchVoteTypes= async () => {
       );
       
       if (response.ok) {
-        const responseData = await response.json();
+        await response.json();
         window.location.reload();
       }
   
       return response;
     } catch (error) {
-      console.error("Error al asignar el voto del usuario: ", error);
+      throw new Error("Error al asignar el voto del usuario: " + error);
     }
   };

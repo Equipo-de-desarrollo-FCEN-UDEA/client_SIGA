@@ -2,12 +2,10 @@
 
 import ForgotPasswordPage from "@/modules/auth/pages/ForgotPassword";
 
-const page = () => {
-  return (
-    <div className="flex justify-center items-start min-h-screen pt-20">
+const page = () => (
+    <div className="flex w-full justify-center items-center mt-10">
       <ForgotPasswordPage/>
     </div>
   );
-};
 
 export default page;

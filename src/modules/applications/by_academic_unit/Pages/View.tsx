@@ -42,12 +42,9 @@ const Page = ({ id }: Readonly<{ id: string }>) => {
     }
 
     return (
-        <>
-            <h1>userApplications</h1>
-            <div>
-                <Table headers={headers} rows={rows} link={true} />
-            </div>
-        </>
+        <div className="w-2/3 max-h-2/3  p-10 mx-auto my-3">
+            <Table headers={headers} rows={rows} link={true} />
+        </div>
     );
 }
 

@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useContext, useState, ReactNode, useEffect, useMemo } from "react";
 import { auth } from "@/core/services/api/auth/loginService";
+import { logout as logoutService} from "@/core/services/api/auth/logoutService";
 import { getSession } from "@/core/services/api/user/userService";
 import { useRouter } from "next/navigation";
 
@@ -43,9 +44,11 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const logout = () => {
-    console.log("logout");
-  };
+  const logout = async () => {
+      await logoutService();
+      setUser(null);
+      router.push("/auth");
+    };
 
   const contextValue = useMemo(() => ({ user, login, logout }), [user]);
 

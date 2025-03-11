@@ -12,6 +12,8 @@ export const Documents = () => {
   const {
     register,
     formState: { errors },
+    setValue,
+    watch,
   } = useFormContext<{ stepFour: StepFourFormData }>();
 
   // Estado inicial con un solo FileUpload vacío
@@ -25,18 +27,23 @@ export const Documents = () => {
     }
   };
 
-  // Función para manejar la eliminación de archivos
   const removeFile = (id: number) => {
     if (files.length === 1) {
-      // Si hay solo un campo, solo se borra el archivo pero no el input
       setFiles([{ id, file: null }]);
+      setValue("stepFour.documents", []); // Limpia el valor en el formulario
     } else {
-      // Si hay más de un campo, eliminarlo completamente
-      setFiles(files.filter((fileEntry) => fileEntry.id !== id));
+      const newFiles = files.filter((fileEntry) => fileEntry.id !== id);
+      setFiles(newFiles);
+
+      // Filtra null y asegura el tipo correcto (File[])
+      setValue(
+        "stepFour.documents",
+        newFiles.map((file) => file.file).filter((file): file is File => file !== null)
+      );
     }
   };
 
-  // Maneja el cambio de archivo sin afectar otros FileUpload
+
   const handleFileChange = (id: number, newFiles: File[]) => {
     setFiles(
       files.map((fileEntry) =>
@@ -44,6 +51,12 @@ export const Documents = () => {
           ? { ...fileEntry, file: newFiles.length > 0 ? newFiles[0] : null }
           : fileEntry
       )
+    );
+
+    // Guarda los archivos en lugar de sus nombres
+    setValue(
+      "stepFour.documents",
+      files.map((file) => file.file).filter(Boolean) as File[]
     );
   };
 
@@ -53,12 +66,10 @@ export const Documents = () => {
 
       {files.map((fileEntry) => (
         <div key={fileEntry.id} className="flex items-center space-x-4">
-          {/* FileUpload alineado horizontalmente */}
           <FileUpload
             onFilesChange={(newFiles) => handleFileChange(fileEntry.id, newFiles)}
             fileName={fileEntry.file ? fileEntry.file.name : ""}
           />
-
           <ButtonIcon
             bgColor="border border-red-500 hover:bg-red-100"
             textColor="text-red-500"
@@ -73,6 +84,7 @@ export const Documents = () => {
           )}
         </div>
       ))}
+
     </div>
   );
 };

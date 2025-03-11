@@ -31,8 +31,7 @@ export const stepThreeSchema = z.object({
 });
 
 export const stepFourSchema = z.object({
-  documents: z.array(z.string(
-  )),
+  documents: z.array(z.instanceof(File)).max(3, "Máximo 3 archivos permitidos"),
 });
 
 

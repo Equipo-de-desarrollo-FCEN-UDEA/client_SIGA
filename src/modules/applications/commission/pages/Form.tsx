@@ -21,7 +21,7 @@ const FormCommission = () => {
   const methods = useForm<Commission>({
     resolver: zodResolver(combinedSchema),
   });
-  const steps = ["Lugar", "Fechas", "Justificación", "Documentos"];
+  const steps = ["Lugar", "Fechas", "Justificación", "Documentos", "Finalizar"];
   const { currentStep, complete, nextStep, previusStep } = useStepperForm({
       methods,
       combinedSchema,

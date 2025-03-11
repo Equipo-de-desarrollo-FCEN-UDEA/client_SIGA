@@ -16,6 +16,9 @@ export const stepTwoSchema = z.object({
   date_start: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: "La fecha de inicio no es válida.",
   }),
+  date_end: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: "La fecha de finalización no es válida.",
+  }),
 });
 
 export const stepThreeSchema = z.object({

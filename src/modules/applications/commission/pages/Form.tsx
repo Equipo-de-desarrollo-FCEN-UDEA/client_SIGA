@@ -8,11 +8,14 @@ import {
   combinedSchema, 
   StepOneFormData, 
   StepTwoFormData, 
-  StepThreeFormData 
+  StepThreeFormData, 
+  StepFourFormData
 } from "@/core/schemas/commissionCreateFormSchema";
 import Date from "../components/Date";
+import { Documents } from "../components/Documents";
 import Place from "../components/Place";
 import Justification from "../components/Justification";
+import { HeadingPrimary } from "@/components/atoms/title/HeadingPrimary";
 
 const FormCommission = () => {
   const methods = useForm<Commission>({
@@ -27,12 +30,25 @@ const FormCommission = () => {
   const onSubmit = async (data: {  
     stepOne: StepOneFormData;
     stepTwo: StepTwoFormData;
-    stepThree: StepThreeFormData}) => {
-
+    stepThree: StepThreeFormData;
+    stepFour: StepFourFormData; }) => {
+      const requestBody: Commission = {
+        country: data.stepOne.country,
+        state: data.stepOne.state,
+        city: data.stepOne.city,
+        date_start: data.stepTwo.date_start,
+        date_end: data.stepTwo.date_start,
+        reason: data.stepThree.reason,
+        justification: data.stepThree.justification,
+        status: [],
+        documents: data.stepFour.documents
+      }
+      console.log(requestBody);
   };
 
   return (
     <div className="max-w-4xl border shadow-lg p-10 rounded-md mx-auto mt-3">
+      <HeadingPrimary text="Crear Comisión" />
       <FormProvider {...methods}>
         <FormStepper
           complete={complete}
@@ -46,6 +62,7 @@ const FormCommission = () => {
           {currentStep === 1 && <Place />}
           {currentStep === 2 && <Date />}
           {currentStep === 3 && <Justification />}
+          {currentStep === 4 && <Documents />}
         </FormStepper>
       </FormProvider>
     </div>

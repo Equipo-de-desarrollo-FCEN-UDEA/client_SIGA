@@ -45,7 +45,7 @@ const FormStepper: React.FC<FormStepperProps> = ({
                 i + 1
               )}
             </div>
-            <p className="text-gray-500">{step}</p>
+            <p className="hidden text-gray-500 sm:flex">{step}</p>
           </div>
         ))}
       </div>

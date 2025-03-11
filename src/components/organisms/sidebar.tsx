@@ -11,20 +11,21 @@ import { NavButton } from '../atoms/buttons/NavButton';
 const Sidebar = () => {
     const { user, logout: signOut } = useSession();
     const [showOptions, setShowOptions] = useState(false);
-    const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
+    const [isExpanded, setIsExpanded] = useState(true);
     const navApplications = NavApplications();
     const navLinks = NavLinks();
-    const toggleSidebar = () => setIsSidebarExpanded(!isSidebarExpanded);
+    const expand = () => setIsExpanded(!isExpanded);
 
     if (user != null) {
         return (
             <div className={`flex 
-              ${isSidebarExpanded ? "w-[230px]" : "w-[101px]"}
+              ${isExpanded ? "w-[230px]" : "w-[101px]"}
               transition-all duration-300 ease-in-out`}>
                 <aside className="h-screen w-[230px] bg-gray-50 border-r border-gray-300 
                                   flex flex-col justify-between p-4 shadow-sm shadow-gray-600">
 
-                    <div className={`flex flex-col gap-2 transition-all duration-300 ease-in-out items-center`}>
+                    <div className={`flex flex-col gap-2 transition-all 
+                                    duration-300 ease-in-out items-center`}>
                         <RiShieldUserLine size={60} color="green" />
                         <span className="font-semibold text-gray-800 tracking-wide">
                             {user.name} {user.last_name}
@@ -42,7 +43,7 @@ const Sidebar = () => {
                                         path={item.href}
                                         icon={item.icon}
                                         active={item.active}
-                                        isSidebarExpanded={isSidebarExpanded}
+                                        isExpanded={isExpanded}
                                     />
                                 ))}
                             </div>
@@ -54,13 +55,15 @@ const Sidebar = () => {
                         <div className="items-start w-full">
                             <NavButton
                                 label="Crear solicitud"
-                                icon={showOptions ? <IoIosArrowUp size={isSidebarExpanded ? 20 : 25} />
-                                    : <IoIosArrowDown size={isSidebarExpanded ? 20 : 25} />}
+                                icon={showOptions ? <IoIosArrowUp size={isExpanded ? 20 : 25} />
+                                    : <IoIosArrowDown size={isExpanded ? 20 : 25} />}
                                 isActive={showOptions}
-                                isExpanded={isSidebarExpanded}
+                                isExpanded={isExpanded}
                                 iconPosition="right"
                                 onClick={() => setShowOptions(!showOptions)}
-                                className={`bg-gray-50 ${isSidebarExpanded ? "justify-between" : "justify-center"}`}
+                                className={`bg-gray-50 
+                                            ${isExpanded ? "justify-between" 
+                                            : "justify-center"}`}
                             />
 
 
@@ -75,7 +78,7 @@ const Sidebar = () => {
                                                 path={item.href}
                                                 icon={item.icon}
                                                 active={item.active}
-                                                isSidebarExpanded={isSidebarExpanded}
+                                                isExpanded={isExpanded}
                                                 className={"text-sm"}
                                             />
                                         ))}
@@ -90,12 +93,13 @@ const Sidebar = () => {
                         label="Cerrar Sesión"
                         icon={<PiSignOutBold size={25} color="red" />}
                         isActive={false}
-                        isExpanded={isSidebarExpanded}
+                        isExpanded={isExpanded}
                         iconPosition="left"
                         onClick={signOut}
-                        className={`hover:bg-gray-200 text-gray-800 w-full ${isSidebarExpanded ? "px-4 py-2 gap-2 justify-start"
-                            : "w-12 h-12 p-0 justify-center"}
-                            `}
+                        className={`hover:bg-gray-200 text-gray-800 w-full 
+                                    ${isExpanded ? "px-4 py-2 gap-2 justify-start"
+                                    : "w-12 h-12 p-0 justify-center"}
+                                    `}
                     />
                 </aside>
 
@@ -107,9 +111,9 @@ const Sidebar = () => {
                                justify-center rounded-full bg-green-700 text-white 
                                shadow-lg hover:bg-green-600 hover:shadow-xl 
                                transition-all duration-200 ease-in-out"
-                        onClick={toggleSidebar}
+                        onClick={expand}
                     >
-                        {isSidebarExpanded ? (
+                        {isExpanded ? (
                             <FaChevronCircleLeft size={24} />
                         ) : (
                             <FaChevronCircleRight size={24} />

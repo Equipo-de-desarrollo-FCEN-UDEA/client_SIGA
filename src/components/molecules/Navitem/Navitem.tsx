@@ -45,17 +45,19 @@ export const SideNavItem: React.FC<{
   path: string;
   icon: React.ReactNode;
   active: boolean;
-  isSidebarExpanded: boolean;
+  isExpanded: boolean;
   className?: string;
-}> = ({ label, path, icon, active, isSidebarExpanded, className}) => (
+  onClick?: () => void;
+}> = ({ label, path, icon, active, isExpanded, className, onClick}) => (
   <NavButton
     label={label}
     href={path}
     icon={icon}
     iconPosition="left"
     isActive={active}
-    isExpanded={isSidebarExpanded}
+    isExpanded={isExpanded}
     className={className}
+    onClick={onClick}
   />
 );
 

@@ -8,8 +8,10 @@ services:
     container_name: nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./certs:/etc/letsencrypt
     depends_on:
       - nextjs
 
@@ -21,5 +23,15 @@ services:
       - ./openssl.cnf:/etc/ssl/openssl.cnf
     entrypoint: >
       sh -c "
-      openssl req -new -newkey rsa:2048 -nodes -keyout /certs/siga.udea.edu.co.key -out /certs/siga.udea.edu.co.csr -config /etc/ssl/openssl.cnf
+      openssl req -new -newkey rsa:4096 -nodes -keyout /certs/siga.udea.edu.co.key -out /certs/siga.udea.edu.co.csr -config /etc/ssl/openssl.cnf -batch &&
+      openssl x509 -req -days 365 -in /certs/siga.udea.edu.co.csr -signkey /certs/siga.udea.edu.co.key -out /certs/siga.udea.edu.co.crt &&
+      ls -l /certs
       "
+    networks:
+      - siga-fcen
+    deploy:
+      replicas: 0
+
+networks:
+  siga-fcen:
+    external: True

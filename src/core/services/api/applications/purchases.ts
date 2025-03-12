@@ -1,5 +1,5 @@
 import { AbstractCRUD } from '@/core/services/api/CRUD';
-import { Purchase, PurchaseComplete } from '@/core/interfaces/applications/purchases/Purchase';
+import { Purchase, PurchaseComplete, PurchaseRequest } from '@/core/interfaces/applications/purchases/Purchase';
 import { UUID } from 'crypto';
 
 class PurchaseService extends AbstractCRUD<Purchase> {
@@ -10,6 +10,21 @@ class PurchaseService extends AbstractCRUD<Purchase> {
             method: 'POST',
             credentials: 'include',
             body: data,
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return await response.json();
+    }
+
+    async advancePurchaseStatus(purchaseRequest: PurchaseRequest, purchaseID: UUID, isApprove: boolean) {
+        const response = await fetch(this.apiUrl + `/${purchaseID}/next/?is_approve=${isApprove}`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(purchaseRequest),
         });
         if (!response.ok) {
             throw new Error('Network response was not ok');

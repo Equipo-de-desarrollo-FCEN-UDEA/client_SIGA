@@ -59,6 +59,12 @@ export interface PurchaseComplete{
     prior_consultation: PriorConsultation;
 }
 
+export interface PurchaseRequest {
+    user_to_assign_id: UUID | null;
+    observation: string | null;
+    purchase_complete: PurchaseComplete | null;
+}
+
 export interface Purchase {
     id: UUID | null;
     type: PurchaseType;

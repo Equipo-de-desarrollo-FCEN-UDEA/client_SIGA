@@ -135,5 +135,4 @@ Dockerfile
 # Certs directory
 certs/
 nginx.conf
-
 openssl.cnf

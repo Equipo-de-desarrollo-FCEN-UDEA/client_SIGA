@@ -2,10 +2,8 @@ import { Purchase } from '@/core/interfaces/applications/purchases/Purchase';
 import PurchaseService from '@/core/services/api/applications/purchases';
 import UserApplicationService from '@/core/services/api/applications/user_application';
 import ViewElement from '@/modules/applications/components/atoms/ViewElement';
-import UserApplicationStatus from '@/core/interfaces/applications/applicationsStatus';
-
 import React, { useEffect, useState } from 'react'
-import UserApplication from '@/core/interfaces/userApplication';
+import UserApplication from '@/core/interfaces/applications/userApplication';
 import SelectAuxiliary from '@/modules/applications/components/molecules/SelectAuxiliary';
 import CompleteInfo from '@/modules/applications/purchase/components/molecules/CompleteInfo';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
@@ -15,8 +13,6 @@ const View = ({ id }: { id: string }) => {
     const [purchase, setPurchase] = useState<Purchase | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null)
-    const [statuses, setStatuses] = useState<UserApplicationStatus[]>([]);
-
     //modals
     const [assistantModal, setAssistantModal] = useState<boolean>(false);
     const [completeInfoModal, setCompleteInfoModal] = useState<boolean>(false);
@@ -42,12 +38,6 @@ const View = ({ id }: { id: string }) => {
         }
         fetchData();
     }, [id])
-
-    useEffect(() => {
-        if (purchase) {
-            setStatuses(purchase.status);
-        }
-    }, [purchase]);
 
     const getFormat = async () => {
         const purchaseService = new PurchaseService();
@@ -87,15 +77,15 @@ const View = ({ id }: { id: string }) => {
                         body={purchase?.description ?? null}
                     />
                 </div>
-                {statuses.at(-1)?.name == 'Archivos Cargados' && (
+                {userApplication?.user_application_status.length == 1 && (
                     <SecondaryButton text="Asignar auxiliar" onClick={() => setAssistantModal(true)} />
                 )}
 
-                {statuses.at(-1)?.name == 'Auxiliar Asignado' && (
+                {userApplication?.user_application_status.length == 2 && (
                     <SecondaryButton text="Completar información" onClick={() => setCompleteInfoModal(true)} />
                 )}
 
-                {statuses.length > 3 && (
+                {userApplication?.user_application_status.length == 3 && (
                     <SecondaryButton text="Descargar Formato de vicerrectoria" onClick={() => { getFormat() }} />
                 )}
 

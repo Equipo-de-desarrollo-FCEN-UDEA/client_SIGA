@@ -5,16 +5,11 @@ import { UUID } from 'crypto';
 class PurchaseService extends AbstractCRUD<Purchase> {
     apiUrl = process.env.NEXT_PUBLIC_API_URL + '/purchase';
 
-    async create(data: Purchase, academicUnitId?: UUID) {
+    async create(data: FormData, academicUnitId?: UUID) {
         const response = await fetch(this.apiUrl + `/create?academic_unit_id=${academicUnitId}`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
             credentials: 'include',
-            body: JSON.stringify({
-                ...data,
-            }),
+            body: data,
         });
         if (!response.ok) {
             throw new Error('Network response was not ok');

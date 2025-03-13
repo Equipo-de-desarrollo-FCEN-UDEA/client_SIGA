@@ -10,10 +10,7 @@ const MAX_FILES = 3;
 
 export const Documents = () => {
   const {
-    register,
-    formState: { errors },
     setValue,
-    watch,
   } = useFormContext<{ stepFour: StepFourFormData }>();
 
   // Estado inicial con un solo FileUpload vacío

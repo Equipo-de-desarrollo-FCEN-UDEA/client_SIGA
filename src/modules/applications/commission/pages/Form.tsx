@@ -16,6 +16,7 @@ import { Documents } from "../components/Documents";
 import Place from "../components/Place";
 import Justification from "../components/Justification";
 import { HeadingPrimary } from "@/components/atoms/title/HeadingPrimary";
+import { View } from "../components/View";
 
 const FormCommission = () => {
   const methods = useForm<Commission>({
@@ -63,6 +64,7 @@ const FormCommission = () => {
           {currentStep === 2 && <Date />}
           {currentStep === 3 && <Justification />}
           {currentStep === 4 && <Documents />}
+          {currentStep === 5 && <View />}
         </FormStepper>
       </FormProvider>
     </div>

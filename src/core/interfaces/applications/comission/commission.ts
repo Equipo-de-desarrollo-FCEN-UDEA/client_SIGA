@@ -7,9 +7,9 @@ export interface Commission {
   state: string;
   city: string;
   date_start: string;
-  date_end: String;
+  date_end: string;
   reason: string;
   justification: string;
   status: UserApplicationStatus[];
-  documents: string[];
+  documents: File[];
 }

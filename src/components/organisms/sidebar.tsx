@@ -6,7 +6,8 @@ import { RiShieldUserLine } from "react-icons/ri";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { FaChevronCircleLeft, FaChevronCircleRight } from "react-icons/fa";
 import { NavApplications, NavLinks, SideNavItem } from '@/components/molecules/Navitem/Navitem';
-import { NavButton } from '../atoms/buttons/NavButton';
+import { NavButton } from '@/components/atoms/buttons/NavButton';
+import { ToggleIcon } from '@/components/atoms/buttons/ToggleIcon';
 
 const Sidebar = () => {
     const { user, logout: signOut } = useSession();
@@ -55,15 +56,22 @@ const Sidebar = () => {
                         <div className="items-start w-full">
                             <NavButton
                                 label="Crear solicitud"
-                                icon={showOptions ? <IoIosArrowUp size={isExpanded ? 20 : 25} />
-                                    : <IoIosArrowDown size={isExpanded ? 20 : 25} />}
+                                icon={
+                                    <ToggleIcon
+                                        isActive={showOptions}
+                                        iconOn={<IoIosArrowUp />}
+                                        iconOff={<IoIosArrowDown />}
+                                        sizeOn={isExpanded ? 20 : 25}
+                                        sizeOff={isExpanded ? 20 : 25}
+                                    />
+                                }
                                 isActive={showOptions}
                                 isExpanded={isExpanded}
                                 iconPosition="right"
                                 onClick={() => setShowOptions(!showOptions)}
                                 className={`bg-gray-50 
-                                            ${isExpanded ? "justify-between" 
-                                            : "justify-center"}`}
+                                            ${isExpanded ? "justify-between"
+                                        : "justify-center"}`}
                             />
 
 
@@ -98,7 +106,7 @@ const Sidebar = () => {
                         onClick={signOut}
                         className={`hover:bg-gray-200 text-gray-800 w-full 
                                     ${isExpanded ? "px-4 py-2 gap-2 justify-start"
-                                    : "w-12 h-12 p-0 justify-center"}
+                                : "w-12 h-12 p-0 justify-center"}
                                     `}
                     />
                 </aside>
@@ -113,11 +121,11 @@ const Sidebar = () => {
                                transition-all duration-200 ease-in-out"
                         onClick={expand}
                     >
-                        {isExpanded ? (
-                            <FaChevronCircleLeft size={24} />
-                        ) : (
-                            <FaChevronCircleRight size={24} />
-                        )}
+                        <ToggleIcon
+                            isActive={isExpanded}
+                            iconOn={<FaChevronCircleLeft />}
+                            iconOff={<FaChevronCircleRight />}
+                        />
                     </button>
                 </div>
 

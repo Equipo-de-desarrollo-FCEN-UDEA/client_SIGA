@@ -37,15 +37,20 @@ export const NavButton: React.FC<NavButtonProps> = ({
         </button>
     );
 
-    return isExpanded ? (
-        href ? (
+    let contentWithLink = content;
+    if (href) {
+        contentWithLink = (
             <Link href={href} className="w-full">
                 {content}
             </Link>
-        ) : (
-            content
-        )
-    ) : (
+        );
+    }
+
+    if (isExpanded) {
+        return contentWithLink;
+    }
+
+    return (
         <Tooltip.Provider delayDuration={70}>
             <Tooltip.Root>
                 <Tooltip.Trigger asChild>

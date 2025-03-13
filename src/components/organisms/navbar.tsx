@@ -43,10 +43,10 @@ const Navbar = () => {
             </div>
             <div className="flex justify-between items-center">
                 <div className={`fixed top-0 left-0 z-50 w-full bg-gray-50 
-            shadow-md transition-all duration-300 ease-in-out 
-            ${isExpanded ? "h-[180px] opacity-100"
+                shadow-md transition-all duration-300 ease-in-out 
+                ${isExpanded ? "h-[180px] opacity-100"
                         : "h-0 opacity-0 overflow-hidden"}
-            `}>
+                    `}>
                     <div className="flex items-center py-3">
                         <RiShieldUserLine size={30} color="green" />
                         <div className="flex flex-col ml-1 font-semibold text-sm text-gray-800 tracking-wide">
@@ -85,7 +85,8 @@ const Navbar = () => {
                     <div className="relative">
                         <NavButton
                             label="Crear solicitud"
-                            icon={showOptions ? <IoIosArrowUp size={20} /> : <IoIosArrowDown size={20} />}
+                            icon={showOptions ? <IoIosArrowUp size={20} />
+                                : <IoIosArrowDown size={20} />}
                             isActive={showOptions}
                             isExpanded={isExpanded}
                             iconPosition="right"
@@ -94,11 +95,10 @@ const Navbar = () => {
                         />
 
                         {/* Opciones desplegables de solicitudes */}
-                        <div
-                            className={`absolute left-0 right-0 bg-white shadow-lg 
-                rounded-md mt-2 py-2 transition-all duration-300 ease-in-out
-                ${showOptions ? "opacity-100 translate-y-0 visible"
-                                    : "opacity-0 -translate-y-3 invisible"}`}
+                        <div className={`absolute left-0 right-0 bg-white shadow-lg 
+                        rounded-md mt-2 py-2 transition-all duration-300 ease-in-out
+                        ${showOptions ? "opacity-100 translate-y-0 visible"
+                                : "opacity-0 -translate-y-3 invisible"}`}
                         >
                             {navApplications.map((item) => (
                                 <SideNavItem
@@ -123,14 +123,18 @@ const Navbar = () => {
                 {/* Botón de menú */}
                 <div className="relative w-full">
                     <div className="relative w-full">
-                        <button
-                            type="button"
-                            className={`fixed bottom-40 right-4 z-50 flex items-center justify-center bg-white
-                    rounded-full border-8 shadow-lg transition-all duration-300 ease-in-out
-                    ${isExpanded ? "h-14 w-14 border-green-600 text-green-600" : "h-12 w-12 border-green-700 text-green-700"}
-                    hover:bg-gray-100 hover:shadow-xl`}
-                            onClick={expand}
-                        >
+                        <button type="button"
+                            className={`fixed bottom-40 right-4 z-50 flex 
+                                items-center justify-center bg-white 
+                                rounded-full border-8 shadow-lg transition-all 
+                                duration-300 ease-in-out
+                                ${isExpanded ? "h-14 w-14 border-green-600 text-green-600"
+                                    : "h-12 w-12 border-green-700 text-green-700"}
+                                    hover:bg-gray-100 hover:shadow-xl`}
+                            onClick={() => {
+                                setShowOptions(false);
+                                expand();
+                            }}>
                             <FaBars size={20} />
                         </button>
                     </div>

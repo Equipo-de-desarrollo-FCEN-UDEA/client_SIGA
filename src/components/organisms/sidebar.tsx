@@ -22,8 +22,9 @@ const Sidebar = () => {
             <div className={`flex 
               ${isExpanded ? "w-[230px]" : "w-[101px]"}
               transition-all duration-300 ease-in-out`}>
-                <aside className="h-screen w-[230px] bg-gray-50 border-r border-gray-300 
-                                  flex flex-col justify-between p-4 shadow-sm shadow-gray-600">
+                <aside className="fixed top-0 left-0 w-[230px] h-screen bg-gray-50 border-r border-gray-300 
+                  flex flex-col justify-between p-4 shadow-sm shadow-gray-600 z-50">
+
 
                     <div className={`flex flex-col gap-2 transition-all 
                                     duration-300 ease-in-out items-center`}>

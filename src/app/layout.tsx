@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-import {SessionProvider} from "@/core/providers/SessionProvider";
-import Sidebar from "@/components/organisms/sidebar";
+import { SessionProvider } from "@/core/providers/SessionProvider";
+import SessionLayout  from "@/components/layouts/SessionLayout";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,11 +35,9 @@ const RootLayout = ({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SessionProvider>
-          <div className="flex">
-            <Sidebar />
+          <SessionLayout>
             {children}
-          </div>
-          
+          </SessionLayout>
         </SessionProvider>
       </body>
     </html>

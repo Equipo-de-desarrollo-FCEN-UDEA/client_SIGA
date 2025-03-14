@@ -60,9 +60,10 @@ const Create = () => {
   }
 
   return (
-    <div className=" w-2/3 max-h-2/3 border shadow-lg p-10 rounded-md mx-auto my-3">
+    <div className=" w-2/3 max-h-2/3 border shadow-lg p-10 rounded-md w-full sm:mx-auto sm:w-auto my-3">
       <FormProvider {...methods}>
         <FormStepper
+          name="Compras"
           complete={complete}
           currentStep={currentStep}
           steps={steps}

@@ -12,6 +12,7 @@ type FormStepperProps = {
   steps: string[];
   currentStep: number;
   complete: boolean;
+  name?: string;
   onNext: () => void;
   onPrevius: () => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,12 +25,20 @@ const FormStepper: React.FC<FormStepperProps> = ({
   steps,
   currentStep,
   complete,
+  name,
   onNext,
   onPrevius,
   onSubmit,
   handleSubmit,
 }) => (
+  
   <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-between h-full">
+    {React.createElement(
+      "h1",
+      { className: "text-4xl font-bold text-green-700 text-center" },
+      name
+    )}
+    <hr className="my-5" />
     <div>
       <div className="w-full flex justify-center">
         {steps?.map((step, i) => (
@@ -45,11 +54,11 @@ const FormStepper: React.FC<FormStepperProps> = ({
                 i + 1
               )}
             </div>
-            <p className="text-gray-500">{step}</p>
+            <p className="hidden text-gray-500 sm:flex">{step}</p>
           </div>
         ))}
       </div>
-
+      <span>&nbsp;</span>
       {children}
     </div>
 

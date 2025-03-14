@@ -8,10 +8,11 @@ interface Status {
     description: string;
 }
 
-interface UserApplicationStatus {
+export interface UserApplicationStatus {
     status: Status
     user: User;
     observation: string | null;
+    created_at: Date;
 }
 
 interface UserApplication {

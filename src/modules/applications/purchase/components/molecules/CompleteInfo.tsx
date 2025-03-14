@@ -7,7 +7,7 @@ import React, { useEffect } from 'react'
 import { combinedSchema, StepOneFormData, StepTwoFormData, StepThreeFormData, CombinedSchema } from '@/core/schemas//application/purchase/PurchaseCompleteFormSchema';
 import { FieldErrors, FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { PurchaseComplete } from '@/core/interfaces/applications/purchases/Purchase';
+import { PurchaseComplete, PurchaseRequest } from '@/core/interfaces/applications/purchases/Purchase';
 import PurchaseService from '@/core/services/api/applications/purchases';
 import { UUID } from 'crypto';
 interface CompleteInfoProps {
@@ -69,7 +69,14 @@ const CompleteInfo = ({user_application_id, setCompleteInfoModal }: CompleteInfo
             }
         }
 
-        const response = await puchaseService.completePurchase(user_application_id, true, requestBody);
+        const request: PurchaseRequest = {
+            user_to_assign_id: null,
+            observation: null,
+            purchase_complete: requestBody
+        }
+
+
+        const response = await puchaseService.advancePurchaseStatus(request, user_application_id, true);
         if (response) {
             await puchaseService.downloadFormat(user_application_id);
             window.location.reload();

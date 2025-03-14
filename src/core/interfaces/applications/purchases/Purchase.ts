@@ -78,5 +78,6 @@ export interface Purchase {
     prior_consultation: PriorConsultation | null;
     selected_provider: Provider | null;
     materials: Material[] | null;
+    documents: string[];
 }
 

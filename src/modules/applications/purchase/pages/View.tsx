@@ -68,7 +68,7 @@ const View = ({ id }: { id: string }) => {
             <div className='grid justify-items-stretch grid-flow-row md:grid-cols-3 grid-cols-1 gap-4 my-4 border-b-2'>
                 <ViewElement
                     label="Solicitante"
-                    body={`${userApplication?.user.name} ${userApplication?.user.last_name}` ?? ''}
+                    body={`${userApplication?.user.name} ${userApplication?.user.last_name}`}
                 />
                 <ViewElement
                     label="Tipo"
@@ -100,7 +100,9 @@ const View = ({ id }: { id: string }) => {
                 <div className="flex">
                     <div className='flex flex-col'>
                         {purchase?.documents.map((document, index) => (
-                            <MainButton text={document} textColor='text-blue-700' bgColor='none' onClick={() => {getDocument(document)}} />
+                            <div key={index}>
+                                <MainButton text={document} textColor='text-blue-700' bgColor='none' onClick={() => {getDocument(document)}} />
+                            </div>
                         ))}
                     </div>
                 </div>

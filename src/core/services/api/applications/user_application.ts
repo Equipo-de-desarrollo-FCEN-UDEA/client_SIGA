@@ -16,7 +16,7 @@ class UserApplicationService extends AbstractCRUD<UserApplication> {
         const blob = await response.blob();
         const blobUrl = URL.createObjectURL(blob);
 
-        window.open(blobUrl), '_blank';
+        window.open(blobUrl, '_blank');
         
     }
 }

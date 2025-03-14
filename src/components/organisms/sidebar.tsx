@@ -19,13 +19,12 @@ const Sidebar = () => {
 
     if (user != null) {
         return (
-            <div className={`flex 
-              ${isExpanded ? "w-[230px]" : "w-[101px]"}
-              transition-all duration-300 ease-in-out`}>
-                <aside className="fixed top-0 left-0 w-[230px] h-screen bg-gray-50 border-r border-gray-300 
-                  flex flex-col justify-between p-4 shadow-sm shadow-gray-600 z-50">
-
-
+            <div className={`flex ${isExpanded ? "w-[230px]" : "w-[101px]"}
+                            transition-all duration-300 ease-in-out`}>
+                <aside className={`fixed h-screen ${isExpanded ? "w-[230px]" : "w-[101px]"
+                    } transition-all duration-300 ease-in-out bg-gray-50 border-r border-gray-300 
+                flex flex-col justify-between p-4 shadow-sm shadow-gray-600`}
+                >
                     <div className={`flex flex-col gap-2 transition-all 
                                     duration-300 ease-in-out items-center`}>
                         <RiShieldUserLine size={60} color="green" />
@@ -70,9 +69,8 @@ const Sidebar = () => {
                                 isExpanded={isExpanded}
                                 iconPosition="right"
                                 onClick={() => setShowOptions(!showOptions)}
-                                className={`bg-gray-50 
-                                            ${isExpanded ? "justify-between"
-                                        : "justify-center"}`}
+                                className={`bg-gray-50 ${isExpanded ? "justify-between"
+                                    : "justify-center"}`}
                             />
 
 
@@ -98,39 +96,43 @@ const Sidebar = () => {
                     </div>
 
                     {/* Botón de cerrar sesión*/}
-                    <NavButton
-                        label="Cerrar Sesión"
-                        icon={<PiSignOutBold size={25} color="red" />}
-                        isActive={false}
-                        isExpanded={isExpanded}
-                        iconPosition="left"
-                        onClick={signOut}
-                        className={`hover:bg-gray-200 text-gray-800 w-full 
+                    <div className="flex flex-col flex-grow justify-end">
+                        <NavButton
+                            label="Cerrar Sesión"
+                            icon={<PiSignOutBold size={25} color="red" />}
+                            isActive={false}
+                            isExpanded={isExpanded}
+                            iconPosition="left"
+                            onClick={signOut}
+                            className={`hover:bg-gray-200 text-gray-800 w-full 
                                     ${isExpanded ? "px-4 py-2 gap-2 justify-start"
-                                : "w-12 h-12 p-0 justify-center"}
+                                    : "w-12 h-12 p-0 justify-center"}
                                     `}
-                    />
-                </aside>
+                        />
+                    </div>
 
-                {/*Botón para expandir o contraer el sidebar*/}
-                <div className="relative">
-                    <button
-                        type="button"
-                        className="absolute bottom-40 right-[-12px] flex h-10 w-10 items-center 
+                    {/*Botón para expandir o contraer el sidebar*/}
+                    <div className="relative">
+                        <button
+                            type="button"
+                            className="fixed absolute bottom-40 right-[-35px] flex h-10 w-10 items-center 
                                justify-center rounded-full bg-green-700 text-white 
                                shadow-lg hover:bg-green-600 hover:shadow-xl 
                                transition-all duration-200 ease-in-out"
-                        onClick={expand}
-                    >
-                        <ToggleIcon
-                            isActive={isExpanded}
-                            iconOn={<FaChevronCircleLeft />}
-                            iconOff={<FaChevronCircleRight />}
-                        />
-                    </button>
-                </div>
+                            onClick={expand}
+                        >
+                            <ToggleIcon
+                                isActive={isExpanded}
+                                iconOn={<FaChevronCircleLeft />}
+                                iconOff={<FaChevronCircleRight />}
+                            />
+                        </button>
+                    </div>
+                </aside>
 
-            </div>
+
+
+            </div >
         )
     }
 }

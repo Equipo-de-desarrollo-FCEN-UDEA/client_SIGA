@@ -17,6 +17,7 @@ import Place from "../components/Place";
 import Justification from "../components/Justification";
 import { HeadingPrimary } from "@/components/atoms/title/HeadingPrimary";
 import View from "../components/View";
+import CommissionCRUD from "@/core/services/api/applications/commission";
 const FormCommission = () => {
   const methods = useForm<Commission>({
     resolver: zodResolver(combinedSchema),
@@ -27,7 +28,7 @@ const FormCommission = () => {
     combinedSchema,
   });
 
-
+  const commissionCrud = new CommissionCRUD();
 
   const onSubmit = async (data: {
     stepOne: StepOneFormData;
@@ -46,11 +47,13 @@ const FormCommission = () => {
       status: [],
       documents: data.stepFour.documents
     }
-    console.log(requestBody);
+    const response = await commissionCrud.create({ ...requestBody });
+
+    console.log(response);
   };
 
   return (
-    <div className="max-w-4xl border shadow-lg p-10 rounded-md mx-auto mt-3">
+    <div className="max-w-4xl border shadow-lg p-5 rounded-md mx-auto mt-3">
       <HeadingPrimary text="Crear Comisión" />
       <FormProvider {...methods}>
         <FormStepper

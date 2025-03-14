@@ -1,5 +1,6 @@
 import { useFormContext, useWatch } from "react-hook-form";
 import { Commission } from "@/core/interfaces/applications/comission/commission";
+import DetailsSection from "@/components/molecules/DetailsSection/DetailsSection";
 
 const View = () => {
   const { control } = useFormContext();
@@ -18,10 +19,7 @@ const View = () => {
   };
 
   return (
-    <div>
-      <h2>Resumen de la Comisión</h2>
-      <pre>{JSON.stringify(requestBody, null, 2)}</pre>
-    </div>
+      <DetailsSection data={requestBody} />
   );
 };
 

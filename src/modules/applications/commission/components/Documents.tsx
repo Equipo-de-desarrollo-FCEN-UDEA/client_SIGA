@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { StepFourFormData } from "@/core/schemas/commissionCreateFormSchema";
 import { HeadingSecondary } from "@/components/atoms/title/HeadingSecondary";
 import { ButtonIcon } from "@/components/atoms/buttons/ButtonIcon";
-import { FileUpload } from "@/components/atoms/upload/FileUpload";
+import { FileUpload } from "@/components/molecules/upload/FileUpload";
 import { FaPlus, FaMinus } from "react-icons/fa";
 
 const MAX_FILES = 3;

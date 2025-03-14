@@ -4,11 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useStepperForm } from "@/core/hooks/useStepperForm";
 import { useForm, FormProvider } from "react-hook-form";
 import { Commission } from "@/core/interfaces/applications/comission/commission";
-import { 
-  combinedSchema, 
-  StepOneFormData, 
-  StepTwoFormData, 
-  StepThreeFormData, 
+import {
+  combinedSchema,
+  StepOneFormData,
+  StepTwoFormData,
+  StepThreeFormData,
   StepFourFormData
 } from "@/core/schemas/commissionCreateFormSchema";
 import Date from "../components/Date";
@@ -16,35 +16,37 @@ import { Documents } from "../components/Documents";
 import Place from "../components/Place";
 import Justification from "../components/Justification";
 import { HeadingPrimary } from "@/components/atoms/title/HeadingPrimary";
-import { View } from "../components/View";
-
+import View from "../components/View";
 const FormCommission = () => {
   const methods = useForm<Commission>({
     resolver: zodResolver(combinedSchema),
   });
   const steps = ["Lugar", "Fechas", "Justificación", "Documentos", "Finalizar"];
   const { currentStep, complete, nextStep, previusStep } = useStepperForm({
-      methods,
-      combinedSchema,
+    methods,
+    combinedSchema,
   });
-  
-  const onSubmit = async (data: {  
+
+
+
+  const onSubmit = async (data: {
     stepOne: StepOneFormData;
     stepTwo: StepTwoFormData;
     stepThree: StepThreeFormData;
-    stepFour: StepFourFormData; }) => {
-      const requestBody: Commission = {
-        country: data.stepOne.country,
-        state: data.stepOne.state,
-        city: data.stepOne.city,
-        date_start: data.stepTwo.date_start,
-        date_end: data.stepTwo.date_start,
-        reason: data.stepThree.reason,
-        justification: data.stepThree.justification,
-        status: [],
-        documents: data.stepFour.documents
-      }
-      console.log(requestBody);
+    stepFour: StepFourFormData;
+  }) => {
+    const requestBody: Commission = {
+      country: data.stepOne.country,
+      state: data.stepOne.state,
+      city: data.stepOne.city,
+      date_start: data.stepTwo.date_start,
+      date_end: data.stepTwo.date_start,
+      reason: data.stepThree.reason,
+      justification: data.stepThree.justification,
+      status: [],
+      documents: data.stepFour.documents
+    }
+    console.log(requestBody);
   };
 
   return (

@@ -8,17 +8,21 @@ import {
   combinedSchema, 
   StepOneFormData, 
   StepTwoFormData, 
-  StepThreeFormData 
+  StepThreeFormData, 
+  StepFourFormData
 } from "@/core/schemas/commissionCreateFormSchema";
-import Date from "@/modules/applications/commission/components/Date";
-import Place from "@/modules/applications/commission/components/Place";
-import Justification from "@/modules/applications/commission/components/Justification";
+import Date from "../components/Date";
+import { Documents } from "../components/Documents";
+import Place from "../components/Place";
+import Justification from "../components/Justification";
+import { HeadingPrimary } from "@/components/atoms/title/HeadingPrimary";
+import { View } from "../components/View";
 
 const FormCommission = () => {
   const methods = useForm<Commission>({
     resolver: zodResolver(combinedSchema),
   });
-  const steps = ["Lugar", "Fechas", "Justificación", "Documentos"];
+  const steps = ["Lugar", "Fechas", "Justificación", "Documentos", "Finalizar"];
   const { currentStep, complete, nextStep, previusStep } = useStepperForm({
       methods,
       combinedSchema,
@@ -27,12 +31,25 @@ const FormCommission = () => {
   const onSubmit = async (data: {  
     stepOne: StepOneFormData;
     stepTwo: StepTwoFormData;
-    stepThree: StepThreeFormData}) => {
-    data.stepOne.city = 'Medellín'; //se asignó este valor para eliminar alerta Eslint ;)
+    stepThree: StepThreeFormData;
+    stepFour: StepFourFormData; }) => {
+      const requestBody: Commission = {
+        country: data.stepOne.country,
+        state: data.stepOne.state,
+        city: data.stepOne.city,
+        date_start: data.stepTwo.date_start,
+        date_end: data.stepTwo.date_start,
+        reason: data.stepThree.reason,
+        justification: data.stepThree.justification,
+        status: [],
+        documents: data.stepFour.documents
+      }
+      console.log(requestBody);
   };
 
   return (
     <div className="max-w-4xl border shadow-lg p-10 rounded-md mx-auto mt-3">
+      <HeadingPrimary text="Crear Comisión" />
       <FormProvider {...methods}>
         <FormStepper
           complete={complete}
@@ -46,6 +63,8 @@ const FormCommission = () => {
           {currentStep === 1 && <Place />}
           {currentStep === 2 && <Date />}
           {currentStep === 3 && <Justification />}
+          {currentStep === 4 && <Documents />}
+          {currentStep === 5 && <View />}
         </FormStepper>
       </FormProvider>
     </div>

@@ -40,7 +40,7 @@ export enum PurchaseType {
 
 const EXTENSION = process.env.NEXT_PUBLIC_EXTENSION_ID as string;
 const CIEN = process.env.NEXT_PUBLIC_CIEN_ID as string;
-const DECANATURA = process.env.NEXT_PUBLIC_FCEN_ID as string;
+const DECANATURA = process.env.NEXT_PUBLIC_FCEN as string;
 
 export const AcademicsUnit = {
     "Centro de Extensión": EXTENSION ,
@@ -59,6 +59,12 @@ export interface PurchaseComplete{
     prior_consultation: PriorConsultation;
 }
 
+export interface PurchaseRequest {
+    user_to_assign_id: UUID | null;
+    observation: string | null;
+    purchase_complete: PurchaseComplete | null;
+}
+
 export interface Purchase {
     id: UUID | null;
     type: PurchaseType;
@@ -72,5 +78,6 @@ export interface Purchase {
     prior_consultation: PriorConsultation | null;
     selected_provider: Provider | null;
     materials: Material[] | null;
+    documents: string[];
 }
 

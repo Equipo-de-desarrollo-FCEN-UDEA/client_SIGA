@@ -33,36 +33,29 @@ const Create = () => {
   const onSubmit = async (data: {
     stepOne: StepOneFormData;
   }) => {
-    const requestBody: Purchase = {
-      type: data.stepOne.type,
-      scope: data.stepOne.scope,
-      need: data.stepOne.need,
-      description: data.stepOne.description,
-      estimated_budget: data.stepOne.estimated_budget,
-      id: null,
-      responsible_condition: null,
-      marco_agreement: null,
-      status: [],
-      prior_consultation: null,
-      selected_provider: null,
-      materials: null
-    };
+    const formData = new FormData();
+    formData.append('type', data.stepOne.type);
+    formData.append('scope', data.stepOne.scope);
+    formData.append('need', data.stepOne.need);
+    formData.append('description', data.stepOne.description);
+    formData.append('estimated_budget', data.stepOne.estimated_budget.toString());
+    files.forEach((file) => {
+      formData.append('files', file);
+    });
 
     const academicUnitId = AcademicsUnit[data.stepOne.academicUnit as keyof typeof AcademicsUnit];
 
-    const response = await puchaseService.create({ ...requestBody }, academicUnitId as UUID);
+    const response = await puchaseService.create(formData, academicUnitId as UUID);
     if (response) {
-      const responseFiles = await puchaseService.uploadFiles(files, response.id as UUID);
-      if (responseFiles) {
-        router.push(`/solicitudes/compra/ver/${response.id}`);
-      }
+      router.push(`/solicitudes/compra/ver/${response.id}`);
     }
   }
 
   return (
-    <div className=" w-2/3 max-h-2/3 border shadow-lg p-10 rounded-md mx-auto my-3">
+    <div className=" w-2/3 max-h-2/3 border shadow-lg p-10 rounded-md w-full sm:mx-auto sm:w-auto my-3">
       <FormProvider {...methods}>
         <FormStepper
+          name="Compras"
           complete={complete}
           currentStep={currentStep}
           steps={steps}

@@ -53,7 +53,7 @@ const FormCommission = () => {
   };
 
   return (
-    <div className="max-w-4xl border shadow-lg p-5 rounded-md mx-auto mt-3">
+    <div className="h-fit border shadow-lg p-5 rounded-md mx-auto mt-3">
       <HeadingPrimary text="Crear Comisión" />
       <FormProvider {...methods}>
         <FormStepper

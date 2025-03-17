@@ -3,13 +3,11 @@ import { useFormContext } from "react-hook-form";
 import { StepTwoFormData } from "@/core/schemas/commissionCreateFormSchema";
 import DateInput from "@/components/atoms/inputs/DateInput";
 
-const Place = () => {
+const DateComponent = () => {
   const {
     register,
     formState: { errors },
-  } = useFormContext<{
-    stepTwo: StepTwoFormData;
-  }>();
+  } = useFormContext<{ stepTwo: StepTwoFormData }>();
 
   return (
     <div className="space-y-4">
@@ -19,7 +17,7 @@ const Place = () => {
         error={errors.stepTwo?.date_start?.message}
       />
       <DateInput
-        label="Fecha de finalización"
+        label="Fecha de Finalización"
         {...register("stepTwo.date_end")}
         error={errors.stepTwo?.date_end?.message}
       />
@@ -27,4 +25,4 @@ const Place = () => {
   );
 };
 
-export default Place;
+export default DateComponent;

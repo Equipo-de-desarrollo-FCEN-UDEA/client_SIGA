@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const stepOneSchema = z.object({
   country: z.string().min(3, {
-    message: "El país de destino destino debe tener al menos 3 caracteres",
+    message: "El país de destino debe tener al menos 3 caracteres",
   }),
   state: z.string().min(3, {
     message: "El Estado/Departamento/Región de destino debe tener al menos 3 caracteres",
@@ -12,14 +12,19 @@ export const stepOneSchema = z.object({
   }),
 });
 
-export const stepTwoSchema = z.object({
-  date_start: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: "La fecha de inicio no es válida.",
-  }),
-  date_end: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: "La fecha de finalización no es válida.",
-  }),
-});
+export const stepTwoSchema = z
+  .object({
+    date_start: z.string().refine((val) => !isNaN(Date.parse(val)), {
+      message: "La fecha de inicio no es válida.",
+    }),
+    date_end: z.string().refine((val) => !isNaN(Date.parse(val)), {
+      message: "La fecha de finalización no es válida.",
+    }),
+  })
+  .refine((data) => new Date(data.date_start) <= new Date(data.date_end), {
+    message: "La fecha de inicio no puede ser posterior a la fecha de finalización.",
+    path: ["date_start"], // Asigna el error a `date_start`
+  });
 
 export const stepThreeSchema = z.object({
   reason: z.string().min(5, {
@@ -31,9 +36,10 @@ export const stepThreeSchema = z.object({
 });
 
 export const stepFourSchema = z.object({
-  documents: z.array(z.instanceof(File)).max(3, "Máximo 3 archivos permitidos"),
+  documents: z.array(z.instanceof(File)).max(3, {
+    message: "Máximo 3 archivos permitidos",
+  }),
 });
-
 
 export const combinedSchema = z.object({
   stepOne: stepOneSchema,

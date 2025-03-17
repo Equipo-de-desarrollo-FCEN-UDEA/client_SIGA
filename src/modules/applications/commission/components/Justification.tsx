@@ -3,6 +3,7 @@ import { useFormContext } from "react-hook-form";
 
 import TextInput from "@/components/atoms/inputs/TextInput";
 import { StepThreeFormData } from "@/core/schemas/commissionCreateFormSchema";
+import TextArea from "@/components/atoms/inputs/TextArea";
 
 const Place = () => {
   const {
@@ -20,7 +21,7 @@ const Place = () => {
         {...register("stepThree.reason")}
         error={errors.stepThree?.reason?.message}
       />
-      <TextInput
+      <TextArea
         label="Justificación"
         placeholder=""
         {...register("stepThree.justification")}

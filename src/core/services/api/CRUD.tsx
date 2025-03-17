@@ -25,7 +25,7 @@ export abstract class AbstractCRUD<T> {
     return result;
   }
 
-  async create(data: T) {
+  async create(data: T | FormData) {
     const response = await fetch(this.apiUrl + '/create', {
       method: 'POST',
       headers: {

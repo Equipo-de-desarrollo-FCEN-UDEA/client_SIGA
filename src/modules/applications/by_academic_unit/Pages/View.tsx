@@ -1,6 +1,5 @@
 "use client";
 import UserApplicationAcademicUnit from "@/core/interfaces/applications/userApplicationAcademicUnit";
-import UserApplicationAcademicUnitService from "@/core/services/api/applications/user_application_academic_unit";
 import { useEffect, useState } from "react";
 import Table from "@/components/organisms/Table";
 import UserApplicationService from "@/core/services/api/applications/user_application";
@@ -8,7 +7,6 @@ import UserApplication from "@/core/interfaces/applications/userApplication";
 import { UUID } from "crypto";
 
 const Page = ({ id }: Readonly<{ id: UUID }>) => {
-    const [userApplicationsAcademicUnit, setUserApplicationsAcademicUnit] = useState<UserApplicationAcademicUnit[] | null>(null);
     const [userApplications, setUserApplications] = useState<UserApplication[] | null>(null);
     const [rows, setRows] = useState<string[][]>([]);
     const headers = ['Solicitante', 'Tipo', 'Estado', 'Acción'];

@@ -1,6 +1,5 @@
 import Modal from '@/components/templates/Modal'
 import { UserApplicationStatus } from '@/core/interfaces/applications/userApplication';
-import { UUID } from 'crypto';
 import React from 'react'
 
 interface StatusProps {
@@ -17,8 +16,8 @@ const Status = ({ status, setStatusModal }: StatusProps) => {
                 <h3 className="font-bold border-b pb-2 text-center">Observación</h3>
                 <h3 className="font-bold border-b pb-2 text-right">Fecha</h3>
 
-                {status.map((status, index) => (
-                    <React.Fragment key={index}>
+                {status.map((status) => (
+                    <React.Fragment key={status.status.name}>
                         <p className={`border-b py-2 `}>
                             {status.status.description}
                         </p>

@@ -9,7 +9,6 @@ import CompleteInfo from '@/modules/applications/purchase/components/molecules/C
 import Status from '@/modules/applications/components/molecules/Status';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
 import { UUID } from 'crypto';
-import Link from 'next/link';
 import MainButton from '@/components/atoms/buttons/MainButton';
 
 const View = ({ id }: { id: string }) => {
@@ -99,8 +98,8 @@ const View = ({ id }: { id: string }) => {
                 </h3>
                 <div className="flex">
                     <div className='flex flex-col'>
-                        {purchase?.documents.map((document, index) => (
-                            <div key={index}>
+                        {purchase?.documents.map((document) => (
+                            <div key={document}>
                                 <MainButton text={document} textColor='text-blue-700' bgColor='none' onClick={() => {getDocument(document)}} />
                             </div>
                         ))}

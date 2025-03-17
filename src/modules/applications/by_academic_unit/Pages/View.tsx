@@ -1,5 +1,4 @@
 "use client";
-import UserApplicationAcademicUnit from "@/core/interfaces/applications/userApplicationAcademicUnit";
 import { useEffect, useState } from "react";
 import Table from "@/components/organisms/Table";
 import UserApplicationService from "@/core/services/api/applications/user_application";

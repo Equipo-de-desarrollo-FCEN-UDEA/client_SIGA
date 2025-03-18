@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import VotingTable from '@modules/voting/pages/VotingTable';
+import SessionLayout from "@/components/layouts/SessionLayout";
 
 const  Home = () => {
   const [votings, setVotings] = useState([]);
@@ -30,11 +31,13 @@ const  Home = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
+    <SessionLayout>
     <div className="flex flex-col items-center justify-center">
         <div className="md:w-2/3">
           <VotingTable votings={votings} />
         </div>
     </div>
+    </SessionLayout>
   );
 }
 

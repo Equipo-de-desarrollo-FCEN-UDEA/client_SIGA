@@ -50,7 +50,7 @@ const SelectAuxiliary = ({ user_application_id, academic_unit_id, setAssistantMo
                 <h2 className="text-xl font-bold text-center my-3">Asignar Auxiliar</h2>
                 <form >
                     <SelectInput
-                        label='Aprovar Solicitud'
+                        label='Aprobar Solicitud'
                         placeholder='Seleccione una opción...'
                         value={isApproved ? 'True' : 'False'}
                         options={['SI', 'NO']}

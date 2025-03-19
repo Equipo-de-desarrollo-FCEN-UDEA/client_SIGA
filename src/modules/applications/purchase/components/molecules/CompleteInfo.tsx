@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { PurchaseComplete, PurchaseRequest } from '@/core/interfaces/applications/purchases/Purchase';
 import PurchaseService from '@/core/services/api/applications/purchases';
 import { UUID } from 'crypto';
+import ViewElement from '@/modules/applications/components/atoms/ViewElement';
 interface CompleteInfoProps {
     user_application_id: UUID;
     setCompleteInfoModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -77,6 +78,7 @@ const CompleteInfo = ({user_application_id, setCompleteInfoModal }: CompleteInfo
 
 
         const response = await puchaseService.advancePurchaseStatus(request, user_application_id, true);
+        console.log(response);
         if (response) {
             await puchaseService.downloadFormat(user_application_id);
             window.location.reload();
@@ -161,6 +163,48 @@ const CompleteInfo = ({user_application_id, setCompleteInfoModal }: CompleteInfo
 
                             </div>
                         )}
+                        {currentStep === 4 && (() => {
+                            const data = methods.getValues();
+                            return (
+                                <>
+                                    <h2 className='font-semibold'>Confirmar</h2>
+                                    <div className='grid justify-items-stretch grid-flow-row md:grid-cols-2 grid-cols-1 gap-4 my-4' >
+                                        <ViewElement
+                                            label="Condición del responsable de la contratación:"
+                                            body={data.stepOne.responsibleCondition}
+                                        />
+                                        <ViewElement
+                                            label="Verificación de contratos marco o acuerdos generales para el servicio, obra o bien requerido."
+                                            body={data.stepTwo.marcoAgreement === 'true' ? 'Existe' : 'No Existe'}
+                                        />
+                                        <ViewElement
+                                            label="Plan Anual de Compras"
+                                            body={data.stepThree.annualPlanIsTrue === 'true' ? 'Existe' : 'No Existe'}
+                                        />
+                                        {data.stepThree.annualPlanIsTrue === 'true' && (
+                                            <ViewElement
+                                                label="Código de registro"
+                                                body={data.stepThree.annualPlanCode }
+                                            />
+                                        )}
+                                        <ViewElement
+                                            label="Banco Universitario de Programas y Proyectos"
+                                            body={data.stepThree.bankConsultationIsTrue === 'true' ? 'Existe' : 'No Existe'}
+                                        />
+                                        {data.stepThree.bankConsultationIsTrue === 'true' && (
+                                            <ViewElement
+                                                label="Código de la ficha del proyecto"
+                                                body={data.stepThree.bankConsultationCode}
+                                            />
+                                        )}
+                                        <ViewElement
+                                            label="Número del Contrato o convenio"
+                                            body={data.stepThree.contract == '' ? data.stepThree.contract : 'N/A'}
+                                        />
+                                    </div>
+                                </>
+                            );
+                        })()}
                     </div>
                 </FormStepper>
             </FormProvider>

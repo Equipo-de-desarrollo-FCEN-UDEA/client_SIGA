@@ -7,6 +7,7 @@ import UserApplication from '@/core/interfaces/applications/userApplication';
 import SelectAuxiliary from '@/modules/applications/components/molecules/SelectAuxiliary';
 import CompleteInfo from '@/modules/applications/purchase/components/molecules/CompleteInfo';
 import Status from '@/modules/applications/components/molecules/Status';
+import NextStatus from '@/modules/applications/components/molecules/NextStatus';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
 import { UUID } from 'crypto';
 import MainButton from '@/components/atoms/buttons/MainButton';
@@ -20,6 +21,7 @@ const View = ({ id }: { id: string }) => {
     const [assistantModal, setAssistantModal] = useState<boolean>(false);
     const [completeInfoModal, setCompleteInfoModal] = useState<boolean>(false);
     const [statusModal, setStatusModal] = useState<boolean>(false);
+    const [nextStatusModal, setNextStatusModal] = useState<boolean>(false);
 
     useEffect(() => {
         const purchaseService = new PurchaseService();
@@ -120,8 +122,12 @@ const View = ({ id }: { id: string }) => {
                     <SecondaryButton text="Completar información" onClick={() => setCompleteInfoModal(true)} />
                 )}
 
-                {userApplication?.user_application_status.length == 3 && (
+                {userApplication?.user_application_status?.length && userApplication?.user_application_status?.length >= 3 && (
                     <SecondaryButton text="Descargar Formato de vicerrectoria" onClick={() => { getFormat() }} />
+                )}
+
+                {userApplication?.user_application_status.length && [3,4].includes(userApplication?.user_application_status.length) &&  (
+                    <SecondaryButton text="Actualizar estado" onClick={() => {setNextStatusModal(true)}} />
                 )}
 
             </div>
@@ -141,6 +147,10 @@ const View = ({ id }: { id: string }) => {
 
             {statusModal && userApplication && (
                 <Status status={userApplication?.user_application_status} setStatusModal={setStatusModal} />
+            )}
+
+            {nextStatusModal && userApplication && (
+                <NextStatus userApplication={userApplication} setNextStatusModal={setNextStatusModal} />
             )}
 
         </div>

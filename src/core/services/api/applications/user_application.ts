@@ -19,6 +19,17 @@ class UserApplicationService extends AbstractCRUD<UserApplication> {
         window.open(blobUrl, '_blank');
         
     }
+
+    async getToAcademicUnit(academicUnitId: UUID) {
+        const response = await fetch(`${this.apiUrl}/academic_unit/${academicUnitId}`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return await response.json();
+    }
 }
 
 export default UserApplicationService;

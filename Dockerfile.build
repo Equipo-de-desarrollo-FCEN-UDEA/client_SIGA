@@ -13,5 +13,5 @@ COPY --from=builder /src/app/next.config.mjs ./next.config.mjs
 COPY --from=builder /src/app/.next ./.next
 COPY --from=builder /src/app/node_modules ./node_modules
 COPY --from=builder /src/app/package.json ./package.json
-
+EXPOSE 3000
 CMD ["npm", "start"]

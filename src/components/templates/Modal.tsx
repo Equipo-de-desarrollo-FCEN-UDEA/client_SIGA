@@ -7,7 +7,7 @@ type modalProps = {
 
 const Modal = ({setModal, children}:modalProps) => (
     <div className="fixed inset-0 z-10 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-          <div className="absolute bg-white z-20 mt-14 min-w-3xl md:w-[500px] border shadow-lg p-10 rounded-md">
+          <div className="absolute bg-white z-20 mt-14 min-w-3xl md:w-[600px] border shadow-lg p-10 rounded-md">
             <Icon
               icon="iconamoon:close-bold"
               className="text-4xl absolute top-5 right-5 cursor-pointer text-black"

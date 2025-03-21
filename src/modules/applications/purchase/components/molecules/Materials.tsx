@@ -1,11 +1,11 @@
 import TextInput from '@/components/atoms/inputs/TextInput'
 import React from 'react'
-import {UseFormSetValue} from 'react-hook-form'
+import { UseFormSetValue } from 'react-hook-form'
 
 type Material = {
   name: string
   quantity: string
-  price: string 
+  price: string
 }
 
 type MaterialsProps = {
@@ -31,9 +31,9 @@ const Materials = ({ materials, error, setValue }: MaterialsProps) => {
       return
     }
     setMaterialError(null)
-    
+
     const updatedMaterials = [...materials, tempMaterial];
-  
+
     setValue('stepFour.materials', updatedMaterials, { shouldValidate: true });
     setTempMaterial({ name: '', quantity: '', price: '' });
   };
@@ -79,21 +79,37 @@ const Materials = ({ materials, error, setValue }: MaterialsProps) => {
 
       {/* Lista de materiales */}
 
-      <ul className="mt-4">
-        {materials.map((mat, index) => (
-          <li key={index} className="flex justify-between items-center bg-gray-100 p-2 rounded mt-1">
-            <span className="text-sm">
-              {mat.name} - {mat.quantity} - ${mat.price}
-            </span>
-            <button
-              className="text-red-500 text-xs font-bold"
-              onClick={() => handleRemoveMaterial(index)}
-            >
-              Eliminar
-            </button>
-          </li>
-        ))}
-      </ul>
+      {materials.length > 0 && (
+        <div className="overflow-x-auto mt-4">
+          <table className="min-w-full table-auto border border-gray-200">
+            <thead className="bg-gray-500">
+              <tr>
+                <th className="text-left px-4 py-2">Material</th>
+                <th className="text-right px-4 py-2">Cantidad</th>
+                <th className="text-right px-4 py-2">Precio unitario</th>
+                <th className="text-center px-4 py-2">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {materials.map((mat, index) => (
+                <tr key={index} className="border-t border-gray-200 hover:bg-gray-50">
+                  <td className="px-4 py-2 text-sm">{mat.name}</td>
+                  <td className="px-4 py-2 text-sm text-right">{mat.quantity}</td>
+                  <td className="px-4 py-2 text-sm text-right">${mat.price}</td>
+                  <td className="px-4 py-2 text-center">
+                    <button
+                      onClick={() => handleRemoveMaterial(index)}
+                      className="text-red-600 hover:text-red-800 font-medium text-sm"
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   )
 }

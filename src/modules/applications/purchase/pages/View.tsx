@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import UserApplication from '@/core/interfaces/applications/userApplication';
 import SelectAuxiliary from '@/modules/applications/components/molecules/SelectAuxiliary';
 import CompleteInfo from '@/modules/applications/purchase/components/molecules/CompleteInfo';
+import SelectProvider from '@/modules/applications/purchase/components/organisms/SelectProvider';
 import Status from '@/modules/applications/components/molecules/Status';
 import NextStatus from '@/modules/applications/components/molecules/NextStatus';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
@@ -22,6 +23,7 @@ const View = ({ id }: { id: string }) => {
     const [completeInfoModal, setCompleteInfoModal] = useState<boolean>(false);
     const [statusModal, setStatusModal] = useState<boolean>(false);
     const [nextStatusModal, setNextStatusModal] = useState<boolean>(false);
+    const [selectProviderModal, setSelectProviderModal] = useState<boolean>(false);
 
     useEffect(() => {
         const purchaseService = new PurchaseService();
@@ -130,6 +132,10 @@ const View = ({ id }: { id: string }) => {
                     <SecondaryButton text="Actualizar estado" onClick={() => {setNextStatusModal(true)}} />
                 )}
 
+                {userApplication?.user_application_status.length == 5 && (
+                    <SecondaryButton text="Seleccionar proveedor" onClick={() => setSelectProviderModal(true)} />
+                )}
+
             </div>
 
             {assistantModal && userApplication && (
@@ -151,6 +157,10 @@ const View = ({ id }: { id: string }) => {
 
             {nextStatusModal && userApplication && (
                 <NextStatus userApplication={userApplication} setNextStatusModal={setNextStatusModal} />
+            )}
+
+            {selectProviderModal && userApplication && (
+                <SelectProvider user_application_id={userApplication?.id} setSelectProviderModal={setSelectProviderModal} />
             )}
 
         </div>

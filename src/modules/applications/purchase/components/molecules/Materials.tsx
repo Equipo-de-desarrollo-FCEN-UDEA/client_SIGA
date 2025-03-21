@@ -1,8 +1,100 @@
+import TextInput from '@/components/atoms/inputs/TextInput'
 import React from 'react'
+import {UseFormSetValue} from 'react-hook-form'
 
-const Materials = () => {
+type Material = {
+  name: string
+  quantity: string
+  price: string 
+}
+
+type MaterialsProps = {
+  materials: Material[]
+  setValue: UseFormSetValue<any>
+  error?: string
+}
+
+const Materials = ({ materials, error, setValue }: MaterialsProps) => {
+  const [tempMaterial, setTempMaterial] = React.useState<Material>({
+    name: '',
+    quantity: '',
+    price: '',
+  })
+  const [materialError, setMaterialError] = React.useState<string | null>(null)
+  const handleInputChange = (field: keyof Material) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTempMaterial({ ...tempMaterial, [field]: e.target.value })
+  }
+
+  const handleAddMaterial = () => {
+    if (!tempMaterial.name || !tempMaterial.quantity || !tempMaterial.price) {
+      setMaterialError('Debes ingresar todos los campos para agregar un material')
+      return
+    }
+    setMaterialError(null)
+    
+    const updatedMaterials = [...materials, tempMaterial];
+  
+    setValue('stepFour.materials', updatedMaterials, { shouldValidate: true });
+    setTempMaterial({ name: '', quantity: '', price: '' });
+  };
+
+  const handleRemoveMaterial = (index: number) => {
+    const updatedMaterials = materials.filter((_, i) => i !== index)
+    setValue('stepFour.materials', updatedMaterials, { shouldValidate: true })
+  }
+
   return (
-    <div>Materials</div>
+    <div className="flex flex-col gap-4">
+      <TextInput
+        label="Material"
+        placeholder="Ingrese el nombre del material"
+        value={tempMaterial.name}
+        onChange={handleInputChange('name')}
+      />
+      <TextInput
+        label="Cantidad"
+        placeholder="Ingrese la cantidad del material"
+        value={String(tempMaterial.quantity) ?? ''}
+        onChange={handleInputChange('quantity')}
+        type='number'
+      />
+      <TextInput
+        label="Precio unitario"
+        placeholder="Ingrese el precio del material"
+        value={String(tempMaterial.price) ?? ''}
+        onChange={handleInputChange('price')}
+        type='number'
+      />
+
+      <button
+        type='button'
+        onClick={handleAddMaterial}
+        className="w-fit px-4 py-1 rounded bg-green-600 text-white"
+      >
+        Agregar
+      </button>
+
+      <span className="text-red-500 text-sm">{error ?? ''}</span>
+      {materialError && <span className="text-red-500 text-sm">{materialError}</span>}
+
+      {/* Lista de materiales */}
+
+      <ul className="mt-4">
+        {materials.map((mat, index) => (
+          <li key={index} className="flex justify-between items-center bg-gray-100 p-2 rounded mt-1">
+            <span className="text-sm">
+              {mat.name} - {mat.quantity} - ${mat.price}
+            </span>
+            <button
+              className="text-red-500 text-xs font-bold"
+              onClick={() => handleRemoveMaterial(index)}
+            >
+              Eliminar
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 

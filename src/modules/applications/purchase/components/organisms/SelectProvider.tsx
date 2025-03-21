@@ -28,6 +28,9 @@ const SelectProvider = ({ user_application_id, setSelectProviderModal }: SelectP
       },
       stepTwo: {
         marketPrices: []
+      },
+      stepFour: {
+        materials: []
       }
     }
   });
@@ -35,6 +38,7 @@ const SelectProvider = ({ user_application_id, setSelectProviderModal }: SelectP
   const { setValue, watch, formState: { errors } } = methods;
   const quotations = watch("stepOne.quotations", []);
   const marketPrices = watch("stepTwo.marketPrices", []);
+  const materials = watch("stepFour.materials", []);
 
 
   const steps = ['', '', '', ''];
@@ -88,7 +92,11 @@ const SelectProvider = ({ user_application_id, setSelectProviderModal }: SelectP
                 <InfoProvider/>
               )}
               {currentStep === 4 && (
-                <Materials/>
+                <Materials 
+                materials={materials} 
+                setValue={setValue}
+                error={methods.formState.errors.stepFour?.materials?.message}  
+              />
               )}
           </div>
         </FormStepper>

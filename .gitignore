@@ -130,7 +130,7 @@ dist
 .pnp.*
 
 # Dockerfile
-Dockerfile
+Dockerfile*
 
 # Certs directory
 certs/

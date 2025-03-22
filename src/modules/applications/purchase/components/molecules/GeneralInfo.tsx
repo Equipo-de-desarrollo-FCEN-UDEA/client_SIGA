@@ -31,7 +31,7 @@ const GeneralInfo = () => {
         <SelectInput
             options={Object.values(PurchaseScope)}
             valueOptions={Object.values(PurchaseScope)}
-            label="Alcance:"
+            label="Origen:"
             {...register("stepOne.scope")}
             error={errors.stepOne?.scope?.message}
         />

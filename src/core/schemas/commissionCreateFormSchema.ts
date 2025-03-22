@@ -16,6 +16,9 @@ export const stepTwoSchema = z.object({
   date_start: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: "La fecha de inicio no es válida.",
   }),
+  date_end: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: "La fecha de finalización no es válida.",
+  }),
 });
 
 export const stepThreeSchema = z.object({
@@ -28,8 +31,7 @@ export const stepThreeSchema = z.object({
 });
 
 export const stepFourSchema = z.object({
-  documents: z.array(z.string(
-  )),
+  documents: z.array(z.instanceof(File)).max(3, "Máximo 3 archivos permitidos"),
 });
 
 

@@ -15,7 +15,7 @@ const Place = () => {
   return (
     <div className="space-y-4">
       <TextInput
-        label="Motivo de la comisión"
+        label="Motivo de la Comisión"
         placeholder=""
         {...register("stepThree.reason")}
         error={errors.stepThree?.reason?.message}

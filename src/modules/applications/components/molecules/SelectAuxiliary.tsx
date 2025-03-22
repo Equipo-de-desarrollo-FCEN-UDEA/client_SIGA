@@ -5,6 +5,7 @@ import { UUID } from 'crypto';
 import UserRolAcademicUnitService from '@/core/services/api/user/userRolAcademicUnit';
 import SelectInput from '@/components/atoms/inputs/SelectInput';
 import UserRolAcademicUnit from '@/core/interfaces/user/userRolAcademicUnit';
+import { PurchaseRequest } from '@/core/interfaces/applications/purchases/Purchase';
 import MainButton from '@/components/atoms/buttons/MainButton';
 import PurchaseService from '@/core/services/api/applications/purchases';
 
@@ -30,8 +31,13 @@ const SelectAuxiliary = ({ user_application_id, academic_unit_id, setAssistantMo
     }, [academic_unit_id]);
 
     const handleSubmit = async () => {
-        await new PurchaseService().assing_auxiliary(
-            selectedAuxiliary,
+        const data: PurchaseRequest = {
+            user_to_assign_id: selectedAuxiliary,
+            observation: null,
+            purchase_complete: null
+        }
+        await new PurchaseService().advancePurchaseStatus(
+            data,
             user_application_id,
             isApproved
         );

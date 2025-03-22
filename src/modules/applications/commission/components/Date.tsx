@@ -14,9 +14,14 @@ const Place = () => {
   return (
     <div className="space-y-4">
       <DateInput
-        label="Fecha de inicio:"
+        label="Fecha de Inicio"
         {...register("stepTwo.date_start")}
         error={errors.stepTwo?.date_start?.message}
+      />
+      <DateInput
+        label="Fecha de finalización"
+        {...register("stepTwo.date_end")}
+        error={errors.stepTwo?.date_end?.message}
       />
     </div>
   );

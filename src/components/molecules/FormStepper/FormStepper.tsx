@@ -12,6 +12,7 @@ type FormStepperProps = {
   steps: string[];
   currentStep: number;
   complete: boolean;
+  name?: string;
   onNext: () => void;
   onPrevius: () => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,50 +25,60 @@ const FormStepper: React.FC<FormStepperProps> = ({
   steps,
   currentStep,
   complete,
+  name,
   onNext,
   onPrevius,
   onSubmit,
   handleSubmit,
 }) => (
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="w-full flex justify-center">
-          {steps?.map((step, i) => (
-            <div
-              key={i}
-              className={`step-item ${currentStep === i + 1 && "active"} ${
-                (i + 1 < currentStep || complete) && "complete"
+  
+  <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-between h-full">
+    {React.createElement(
+      "h1",
+      { className: "text-4xl font-bold text-green-700 text-center" },
+      name
+    )}
+    <hr className="my-5" />
+    <div>
+      <div className="w-full flex justify-center">
+        {steps?.map((step, i) => (
+          <div
+            key={i}
+            className={`step-item ${currentStep === i + 1 && "active"} ${(i + 1 < currentStep || complete) && "complete"
               } `}
-            >
-              <div className="step">
-                {i + 1 < currentStep || complete ? (
-                  <TiTick size={24} className="text-white" />
-                ) : (
-                  i + 1
-                )}
-              </div>
-              <p className="text-gray-500">{step}</p>
+          >
+            <div className="step">
+              {i + 1 < currentStep || complete ? (
+                <TiTick size={24} className="text-white" />
+              ) : (
+                i + 1
+              )}
             </div>
-          ))}
-        </div>
+            <p className="hidden text-gray-500 sm:flex">{step}</p>
+          </div>
+        ))}
+      </div>
+      <span>&nbsp;</span>
+      {children}
+    </div>
 
-        {children}
 
-        <div className="flex justify-between mt-5 gap-3">
-          {currentStep > 1 && (
-            <SecondaryButton text="Atrás" buttonType="button" onClick={onPrevius} />
-          )}
-          {currentStep < steps.length && (
-            <MainButton
-              onClick={onNext}
-              buttonType={"button"}
-              text={"Siguiente"}
-            />
-          )}
-          {currentStep === steps.length && (
-            <MainButton buttonType="submit" text="Terminar" />
-          )}
-        </div>
-      </form>
-  );
+    <div className="flex justify-between mt-5 gap-3">
+      {currentStep > 1 && (
+        <SecondaryButton text="Atrás" buttonType="button" onClick={onPrevius} />
+      )}
+      {currentStep < steps.length && (
+        <MainButton
+          onClick={onNext}
+          buttonType={"button"}
+          text={"Siguiente"}
+        />
+      )}
+      {currentStep === steps.length && (
+        <MainButton buttonType="submit" text="Terminar" />
+      )}
+    </div>
+  </form>
+);
 
 export default FormStepper;

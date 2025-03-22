@@ -6,8 +6,6 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-COPY .env prod.env
-
 # Production stage
 FROM node:19.9.0-alpine
 WORKDIR /src/app

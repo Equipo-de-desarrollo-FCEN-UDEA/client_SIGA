@@ -6,6 +6,8 @@ RUN npm install
 COPY . .
 RUN npm run build
 
+COPY .env prod.env
+
 # Production stage
 FROM node:19.9.0-alpine
 WORKDIR /src/app
@@ -13,5 +15,5 @@ COPY --from=builder /src/app/next.config.mjs ./next.config.mjs
 COPY --from=builder /src/app/.next ./.next
 COPY --from=builder /src/app/node_modules ./node_modules
 COPY --from=builder /src/app/package.json ./package.json
-
+EXPOSE 3000
 CMD ["npm", "start"]

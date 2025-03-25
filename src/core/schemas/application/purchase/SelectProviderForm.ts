@@ -25,7 +25,7 @@ export const stepFourSchema = z.object({
         z.object({
             name: z.string().min(1, "El nombre es obligatorio"),
             quantity: z.preprocess((val) => Number(val), z.number().min(1, "Cantidad mínima 1")),
-            price: z.preprocess((val) => Number(val), z.number().positive("Precio debe ser mayor que 0")),
+            unit_price: z.preprocess((val) => Number(val), z.number().positive("Precio debe ser mayor que 0")),
         })
     ).min(1, "Debe agregar al menos un material"),
 })

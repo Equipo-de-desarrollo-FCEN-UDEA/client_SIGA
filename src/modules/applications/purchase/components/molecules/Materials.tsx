@@ -5,7 +5,7 @@ import { UseFormSetValue } from 'react-hook-form'
 type Material = {
   name: string
   quantity: string
-  price: string
+  unit_price: string
 }
 
 type MaterialsProps = {
@@ -18,7 +18,7 @@ const Materials = ({ materials, error, setValue }: MaterialsProps) => {
   const [tempMaterial, setTempMaterial] = React.useState<Material>({
     name: '',
     quantity: '',
-    price: '',
+    unit_price: '',
   })
   const [materialError, setMaterialError] = React.useState<string | null>(null)
   const handleInputChange = (field: keyof Material) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +26,7 @@ const Materials = ({ materials, error, setValue }: MaterialsProps) => {
   }
 
   const handleAddMaterial = () => {
-    if (!tempMaterial.name || !tempMaterial.quantity || !tempMaterial.price) {
+    if (!tempMaterial.name || !tempMaterial.quantity || !tempMaterial.unit_price) {
       setMaterialError('Debes ingresar todos los campos para agregar un material')
       return
     }
@@ -35,7 +35,7 @@ const Materials = ({ materials, error, setValue }: MaterialsProps) => {
     const updatedMaterials = [...materials, tempMaterial];
 
     setValue('stepFour.materials', updatedMaterials, { shouldValidate: true });
-    setTempMaterial({ name: '', quantity: '', price: '' });
+    setTempMaterial({ name: '', quantity: '', unit_price: '' });
   };
 
   const handleRemoveMaterial = (index: number) => {
@@ -61,8 +61,8 @@ const Materials = ({ materials, error, setValue }: MaterialsProps) => {
       <TextInput
         label="Precio unitario"
         placeholder="Ingrese el precio del material"
-        value={String(tempMaterial.price) ?? ''}
-        onChange={handleInputChange('price')}
+        value={String(tempMaterial.unit_price) ?? ''}
+        onChange={handleInputChange('unit_price')}
         type='number'
       />
 
@@ -95,7 +95,7 @@ const Materials = ({ materials, error, setValue }: MaterialsProps) => {
                 <tr key={index} className="border-t border-gray-200 hover:bg-gray-50">
                   <td className="px-4 py-2 text-sm">{mat.name}</td>
                   <td className="px-4 py-2 text-sm text-right">{mat.quantity}</td>
-                  <td className="px-4 py-2 text-sm text-right">${mat.price}</td>
+                  <td className="px-4 py-2 text-sm text-right">${mat.unit_price}</td>
                   <td className="px-4 py-2 text-center">
                     <button
                       onClick={() => handleRemoveMaterial(index)}

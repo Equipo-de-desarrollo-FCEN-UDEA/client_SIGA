@@ -73,7 +73,9 @@ const CompleteInfo = ({user_application_id, setCompleteInfoModal }: CompleteInfo
         const request: PurchaseRequest = {
             user_to_assign_id: null,
             observation: null,
-            purchase_complete: requestBody
+            purchase_complete: requestBody,
+            selected_provider: null,
+            materials: null
         }
 
 

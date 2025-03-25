@@ -12,6 +12,7 @@ import NextStatus from '@/modules/applications/components/molecules/NextStatus';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
 import { UUID } from 'crypto';
 import MainButton from '@/components/atoms/buttons/MainButton';
+import Link from 'next/link';
 
 const View = ({ id }: { id: string }) => {
     const [userApplication, setUserApplication] = useState<UserApplication | null>(null);
@@ -102,9 +103,9 @@ const View = ({ id }: { id: string }) => {
                 </h3>
                 <div className="flex">
                     <div className='flex flex-col'>
-                        {purchase?.documents.map((document) => (
-                            <div key={document}>
-                                <MainButton text={document} textColor='text-blue-700' bgColor='none' onClick={() => {getDocument(document)}} />
+                        {userApplication?.documents?.map((document) => (
+                            <div key={document.name}>
+                                <Link href={document.url} target="_blank" rel="noopener noreferrer" className='text-blue-700'>{document.name}</Link>
                             </div>
                         ))}
                     </div>
@@ -128,8 +129,8 @@ const View = ({ id }: { id: string }) => {
                     <SecondaryButton text="Descargar Formato de vicerrectoria" onClick={() => { getFormat() }} />
                 )}
 
-                {userApplication?.user_application_status.length && [3,4].includes(userApplication?.user_application_status.length) &&  (
-                    <SecondaryButton text="Actualizar estado" onClick={() => {setNextStatusModal(true)}} />
+                {userApplication?.user_application_status.length && [3, 4].includes(userApplication?.user_application_status.length) && (
+                    <SecondaryButton text="Actualizar estado" onClick={() => { setNextStatusModal(true) }} />
                 )}
 
                 {userApplication?.user_application_status.length == 5 && (

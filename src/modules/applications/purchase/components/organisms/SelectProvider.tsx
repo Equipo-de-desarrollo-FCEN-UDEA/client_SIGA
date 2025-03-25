@@ -10,6 +10,8 @@ import FormStepper from '@/components/molecules/FormStepper/FormStepper'
 import FileInput from '@/components/atoms/inputs/FileInput'
 import InfoProvider from '@/modules/applications/purchase/components/molecules/InfoProvider'
 import Materials from '@/modules/applications/purchase/components/molecules/Materials'
+import PurchaseService from '@/core/services/api/applications/purchases'
+import { Provider, PurchaseRequest, PurchaseSelectedProvider } from '@/core/interfaces/applications/purchases/Purchase'
 
 interface SelectProviderProps {
   user_application_id: UUID,
@@ -48,8 +50,31 @@ const SelectProvider = ({ user_application_id, setSelectProviderModal }: SelectP
     combinedSchema,
   });
 
-  const onsubmit = (data: any) => {
+  const purchaseService = new PurchaseService();
+
+  const onsubmit = async (data: any) => {
     console.log(data)
+    const selected_provider: Provider = {
+      id: data.stepThree.providerId,
+      name: data.stepThree.providerName,
+      email: data.stepThree.providerEmail,
+      phone: data.stepThree.providerPhone
+    }
+
+    const request: PurchaseRequest = {
+      user_to_assign_id: null,
+      observation: null,
+      purchase_complete: null,
+      selected_provider: selected_provider,
+      materials: data.stepFour.materials
+    }
+
+    const response = await purchaseService.advancePurchaseStatus(request, user_application_id, true);
+
+    if (response) {
+      window.location.reload();
+    }
+    
   }
 
   return (

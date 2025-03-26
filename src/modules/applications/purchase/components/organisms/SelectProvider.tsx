@@ -12,6 +12,7 @@ import InfoProvider from '@/modules/applications/purchase/components/molecules/I
 import Materials from '@/modules/applications/purchase/components/molecules/Materials'
 import PurchaseService from '@/core/services/api/applications/purchases'
 import { Provider, PurchaseRequest, PurchaseSelectedProvider } from '@/core/interfaces/applications/purchases/Purchase'
+import UserApplicationService from '@/core/services/api/applications/user_application'
 
 interface SelectProviderProps {
   user_application_id: UUID,
@@ -51,6 +52,7 @@ const SelectProvider = ({ user_application_id, setSelectProviderModal }: SelectP
   });
 
   const purchaseService = new PurchaseService();
+  const userApplicationService = new UserApplicationService();
 
   const onsubmit = async (data: any) => {
     console.log(data)
@@ -69,12 +71,15 @@ const SelectProvider = ({ user_application_id, setSelectProviderModal }: SelectP
       materials: data.stepFour.materials
     }
 
-    const response = await purchaseService.advancePurchaseStatus(request, user_application_id, true);
+    const responseFiles = await userApplicationService.uploadFiles([...data.stepOne.quotations, ...data.stepTwo.marketPrices], user_application_id);
 
-    if (response) {
-      window.location.reload();
+    if (responseFiles) {
+      const response = await purchaseService.advancePurchaseStatus(request, user_application_id, true);
+
+      if (response) {
+        window.location.reload();
+      }
     }
-    
   }
 
   return (

@@ -129,7 +129,7 @@ const View = ({ id }: { id: string }) => {
                     <SecondaryButton text="Descargar Formato de vicerrectoria" onClick={() => { getFormat() }} />
                 )}
 
-                {userApplication?.user_application_status.length && [3, 4].includes(userApplication?.user_application_status.length) && (
+                {userApplication?.user_application_status.length && [3, 4, 6, 7].includes(userApplication?.user_application_status.length) && (
                     <SecondaryButton text="Actualizar estado" onClick={() => { setNextStatusModal(true) }} />
                 )}
 

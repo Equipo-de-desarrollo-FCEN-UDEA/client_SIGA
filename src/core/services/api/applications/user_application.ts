@@ -52,6 +52,23 @@ class UserApplicationService extends AbstractCRUD<UserApplication> {
         }
         return await response.json();
     }
+
+    async uploadFiles(files: File[], userApplicationId: UUID) {
+        const formData = new FormData();
+        files.forEach((file) => {
+            formData.append('files', file);
+        });
+        const response = await fetch(`${this.apiUrl}/upload/${userApplicationId}`, {
+            method: 'POST',
+            credentials: 'include',
+            body: formData,
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return await response.json();
+    }
+
 }
 
 export default UserApplicationService;

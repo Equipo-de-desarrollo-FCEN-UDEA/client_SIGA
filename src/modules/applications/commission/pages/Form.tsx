@@ -1,4 +1,7 @@
+import "react-toastify/dist/ReactToastify.css";
 import React from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 import FormStepper from "@/components/molecules/FormStepper/FormStepper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStepperForm } from "@/core/hooks/useStepperForm";
@@ -18,7 +21,11 @@ import Justification from "../components/Justification";
 import { HeadingPrimary } from "@/components/atoms/title/HeadingPrimary";
 import View from "../components/View";
 import CommissionCRUD from "@/core/services/api/applications/commission";
+
+
+
 const FormCommission = () => {
+  const router = useRouter();
   const methods = useForm<Commission>({
     resolver: zodResolver(combinedSchema),
   });
@@ -47,9 +54,22 @@ const FormCommission = () => {
       status: [],
       documents: data.stepFour.documents
     }
-    const response = await commissionCrud.create({ ...requestBody });
+    try {
+      const response = await commissionCrud.create({ ...requestBody });
 
-    console.log(response);
+      if (response.error) {
+        throw new Error(response.error.message || "Error al crear la comisión");
+      }
+
+      toast.success("Comisión creada exitosamente");
+
+      if (response) {
+        router.push(`/solicitudes/commission/ver/${response.id}`);
+      }
+
+    } catch (error) {
+      toast.error(`${error || "Hubo un problema al crear la comisión"}`);
+    }
   };
 
   return (
@@ -72,6 +92,7 @@ const FormCommission = () => {
           {currentStep === 5 && <View />}
         </FormStepper>
       </FormProvider>
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };

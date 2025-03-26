@@ -2,7 +2,6 @@ import React from "react";
 import { FiUpload } from "react-icons/fi";
 
 interface FileUploadProps {
-  error?: string | null;
   onFilesChange: (files: File[]) => void;
   fileName?: string;
 }
@@ -21,6 +20,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFilesChange, fileName 
         <span className="text-lg font-medium cursor-pointer">
           {fileName ? `Archivo: ${fileName}` : "Subir archivo de la solicitud"}
         </span>
+        
       </label>
       <input className="hidden" id="file_input" type="file" onChange={handleFileChange} />
     </div>

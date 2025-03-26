@@ -1,43 +1,44 @@
 "use client";
-import UserApplicationAcademicUnit from "@/core/interfaces/applications/userApplicationAcademicUnit";
-import UserApplicationAcademicUnitService from "@/core/services/api/applications/user_application_academic_unit";
 import { useEffect, useState } from "react";
 import Table from "@/components/organisms/Table";
+import UserApplicationService from "@/core/services/api/applications/user_application";
+import UserApplication from "@/core/interfaces/applications/userApplication";
+import { UUID } from "crypto";
 
-const Page = ({ id }: Readonly<{ id: string }>) => {
-    const [userApplicationsAcademicUnit, setUserApplicationsAcademicUnit] = useState<UserApplicationAcademicUnit[] | null>(null);
+const Page = ({ id }: Readonly<{ id: UUID }>) => {
+    const [userApplications, setUserApplications] = useState<UserApplication[] | null>(null);
     const [rows, setRows] = useState<string[][]>([]);
     const headers = ['Solicitante', 'Tipo', 'Estado', 'Acción'];
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const us_app_academic_unit = new UserApplicationAcademicUnitService();
+        const userApplicationService = new UserApplicationService();
         const fetchData = async () => {
-            const data = await us_app_academic_unit.getUserApplicationAcademicUnitByAcademicUnit(id);
-            setUserApplicationsAcademicUnit(data);
+            const data = await userApplicationService.getToAcademicUnit(id);
+            setUserApplications(data);
         };
         fetchData();
     }, [id]);
 
-    // Nuevo useEffect que se activa cuando userApplicationsAcademicUnit cambia
+    // Nuevo useEffect que se activa cuando userApplications cambia
     useEffect(() => {
-        if (userApplicationsAcademicUnit) {
+        if (userApplications) {
 
-            const newRows = userApplicationsAcademicUnit.map((userApplicationAcademicUnit) => {
-            const type = userApplicationAcademicUnit.user_application.application.name.toLowerCase();
+            const newRows = userApplications.map((userApplication) => {
+            const type = userApplication.application.name.toLowerCase();
             return ([
-                userApplicationAcademicUnit.user_application.user.name,
-                userApplicationAcademicUnit.user_application.application.name,
-                userApplicationAcademicUnit.is_active ? 'Activo' : 'Inactivo',
-                `/solicitudes/${type}/ver/${userApplicationAcademicUnit.user_application.id}`,
+                `${userApplication.user.name} ${userApplication.user.last_name}`,
+                userApplication.application.name,
+                userApplication.user_application_status[0].status.description,
+                `/solicitudes/${type}/ver/${userApplication.id}`,
 
             ])});
             setRows(newRows);
         }
         setLoading(false);
-    }, [userApplicationsAcademicUnit]);
+    }, [userApplications]);
 
-    if (!userApplicationsAcademicUnit && !rows && loading) {
+    if (!userApplications && !rows && loading) {
         return <h1>Cargando...</h1>;
     }
 

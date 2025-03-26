@@ -44,7 +44,7 @@ class UserApplicationService extends AbstractCRUD<UserApplication> {
 
     async advanceStatus(userApplicationId: UUID, observation: string | null = null, isApprove: boolean = true) {
         const formData = new FormData();
-        formData.append('observation', observation || '');
+        formData.append('observation', observation ?? '');
         const response = await fetch(`${this.apiUrl}/${userApplicationId}/next?is_approved=${isApprove}`, {
             method: 'POST',
             credentials: 'include',

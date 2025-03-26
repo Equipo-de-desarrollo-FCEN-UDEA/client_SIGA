@@ -56,12 +56,6 @@ const View = ({ id }: { id: string }) => {
             await purchaseService.downloadFormat(purchase.id);
         }
     }
-    const getDocument = async (document: string) => {
-        const userApplicationService = new UserApplicationService();
-        if (purchase?.documents) {
-            await userApplicationService.downloadDocument(userApplication?.user.id as UUID, userApplication?.id as UUID, document);
-        }
-    }
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;

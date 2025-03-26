@@ -54,14 +54,14 @@ const Materials = ({ materials, error, setValue }: MaterialsProps) => {
       <TextInput
         label="Cantidad"
         placeholder="Ingrese la cantidad del material"
-        value={String(tempMaterial.quantity) ?? ''}
+        value={String(tempMaterial.quantity)}
         onChange={handleInputChange('quantity')}
         type='number'
       />
       <TextInput
         label="Precio unitario"
         placeholder="Ingrese el precio del material"
-        value={String(tempMaterial.unit_price) ?? ''}
+        value={String(tempMaterial.unit_price)}
         onChange={handleInputChange('unit_price')}
         type='number'
       />

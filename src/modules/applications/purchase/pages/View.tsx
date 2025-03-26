@@ -9,6 +9,7 @@ import CompleteInfo from '@/modules/applications/purchase/components/molecules/C
 import SelectProvider from '@/modules/applications/purchase/components/organisms/SelectProvider';
 import Status from '@/modules/applications/components/molecules/Status';
 import NextStatus from '@/modules/applications/components/molecules/NextStatus';
+import Reject from '@/modules/applications/components/molecules/Reject';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
 import { UUID } from 'crypto';
 import MainButton from '@/components/atoms/buttons/MainButton';
@@ -25,6 +26,7 @@ const View = ({ id }: { id: string }) => {
     const [statusModal, setStatusModal] = useState<boolean>(false);
     const [nextStatusModal, setNextStatusModal] = useState<boolean>(false);
     const [selectProviderModal, setSelectProviderModal] = useState<boolean>(false);
+    const [rejectModal, setRejectModal] = useState<boolean>(false);
 
     useEffect(() => {
         const purchaseService = new PurchaseService();
@@ -116,7 +118,8 @@ const View = ({ id }: { id: string }) => {
 
                 <SecondaryButton text="Ver estados de la solicitud" onClick={() => setStatusModal(true)} />
 
-
+            {userApplication?.user_application_status.at(0)?.status.name != 'REJECTED' && (
+                <>
                 {userApplication?.user_application_status.length == 1 && (
                     <SecondaryButton text="Asignar auxiliar" onClick={() => setAssistantModal(true)} />
                 )}
@@ -137,6 +140,9 @@ const View = ({ id }: { id: string }) => {
                     <SecondaryButton text="Seleccionar proveedor" onClick={() => setSelectProviderModal(true)} />
                 )}
 
+                <MainButton text="Rechazar Solicitud" onClick={() => {setRejectModal(true)}} bgColor='bg-red-500' />
+                </>
+            )}
             </div>
 
             {assistantModal && userApplication && (
@@ -162,6 +168,10 @@ const View = ({ id }: { id: string }) => {
 
             {selectProviderModal && userApplication && (
                 <SelectProvider user_application_id={userApplication?.id} setSelectProviderModal={setSelectProviderModal} />
+            )}
+
+            {rejectModal && userApplication && (
+                <Reject userApplicationId={userApplication?.id} setRejectModal={setRejectModal} />
             )}
 
         </div>

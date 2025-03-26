@@ -92,7 +92,7 @@ const Materials = ({ materials, error, setValue }: MaterialsProps) => {
             </thead>
             <tbody>
               {materials.map((mat, index) => (
-                <tr key={index} className="border-t border-gray-200 hover:bg-gray-50">
+                <tr key={mat.name} className="border-t border-gray-200 hover:bg-gray-50">
                   <td className="px-4 py-2 text-sm">{mat.name}</td>
                   <td className="px-4 py-2 text-sm text-right">{mat.quantity}</td>
                   <td className="px-4 py-2 text-sm text-right">${mat.unit_price}</td>

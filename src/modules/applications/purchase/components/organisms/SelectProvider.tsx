@@ -5,13 +5,13 @@ import { UUID } from 'crypto'
 import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import { CombinedSchema, combinedSchema } from '@/core/schemas/application/purchase/SelectProviderForm'
+import {combinedSchema } from '@/core/schemas/application/purchase/SelectProviderForm'
 import FormStepper from '@/components/molecules/FormStepper/FormStepper'
 import FileInput from '@/components/atoms/inputs/FileInput'
 import InfoProvider from '@/modules/applications/purchase/components/molecules/InfoProvider'
 import Materials from '@/modules/applications/purchase/components/molecules/Materials'
 import PurchaseService from '@/core/services/api/applications/purchases'
-import { Provider, PurchaseRequest, PurchaseSelectedProvider } from '@/core/interfaces/applications/purchases/Purchase'
+import { Provider, PurchaseRequest } from '@/core/interfaces/applications/purchases/Purchase'
 import UserApplicationService from '@/core/services/api/applications/user_application'
 
 interface SelectProviderProps {
@@ -97,7 +97,6 @@ const SelectProvider = ({ user_application_id, setSelectProviderModal }: SelectP
         >
           <div className='flex flex-col gap-5 my-5'>
               {currentStep === 1 && (
-                <>
                   <FileInput
                     label="Ingrese dos cotizaciones actualizadas con fecha posterior al CDP"
                     name="stepOne.quotations"
@@ -105,10 +104,8 @@ const SelectProvider = ({ user_application_id, setSelectProviderModal }: SelectP
                     setValue={setValue}
                     error={errors.stepOne?.quotations?.message}
                   />
-                </>
               )}
               {currentStep === 2 && (
-                <>
                   <FileInput
                     label="Ingrese el cuadro comparativo de precios del mercado"
                     name="stepTwo.marketPrices"
@@ -116,7 +113,6 @@ const SelectProvider = ({ user_application_id, setSelectProviderModal }: SelectP
                     setValue={setValue}
                     error={errors.stepTwo?.marketPrices?.message}
                   />
-                </>
               )}
               {currentStep === 3 && (
                 <InfoProvider/>

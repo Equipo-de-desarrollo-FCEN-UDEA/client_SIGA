@@ -15,7 +15,7 @@ export interface UserApplicationStatus {
     created_at: Date;
 }
 
-interface document{
+interface Document{
     name: string;
     url: string;
 }
@@ -27,7 +27,7 @@ interface UserApplication {
     user_application_academic_units: UserApplicationAcademicUnit[];
     user_application_status: UserApplicationStatus[];
     created_at: Date;
-    documents: document[];
+    documents: Document[];
 }
 
 export default UserApplication;

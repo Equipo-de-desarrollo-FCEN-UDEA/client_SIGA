@@ -26,6 +26,11 @@ export const NavApplications = () =>
       href: "/solicitudes/compra/crear",
       icon: <LuShoppingCart size={25} />
     },
+    {
+      title: "Comisión",
+      href: "/solicitudes/commission/crear",
+      icon: <LuShoppingCart size={25} />
+    }
   ]);
 
 export const NavLinks = () =>

@@ -63,7 +63,15 @@ export interface PurchaseRequest {
     user_to_assign_id: UUID | null;
     observation: string | null;
     purchase_complete: PurchaseComplete | null;
+    selected_provider: Provider | null;
+    materials: Material[] | null;
 }
+
+export interface PurchaseSelectedProvider {
+    selected_provider: Provider;
+    materials: Material[];
+}
+
 
 export interface Purchase {
     id: UUID | null;

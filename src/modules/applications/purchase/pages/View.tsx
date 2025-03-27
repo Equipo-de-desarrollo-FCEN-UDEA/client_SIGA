@@ -6,10 +6,14 @@ import React, { useEffect, useState } from 'react'
 import UserApplication from '@/core/interfaces/applications/userApplication';
 import SelectAuxiliary from '@/modules/applications/components/molecules/SelectAuxiliary';
 import CompleteInfo from '@/modules/applications/purchase/components/molecules/CompleteInfo';
+import SelectProvider from '@/modules/applications/purchase/components/organisms/SelectProvider';
 import Status from '@/modules/applications/components/molecules/Status';
+import NextStatus from '@/modules/applications/components/molecules/NextStatus';
+import Reject from '@/modules/applications/components/molecules/Reject';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
 import { UUID } from 'crypto';
 import MainButton from '@/components/atoms/buttons/MainButton';
+import Link from 'next/link';
 
 const View = ({ id }: { id: string }) => {
     const [userApplication, setUserApplication] = useState<UserApplication | null>(null);
@@ -20,6 +24,9 @@ const View = ({ id }: { id: string }) => {
     const [assistantModal, setAssistantModal] = useState<boolean>(false);
     const [completeInfoModal, setCompleteInfoModal] = useState<boolean>(false);
     const [statusModal, setStatusModal] = useState<boolean>(false);
+    const [nextStatusModal, setNextStatusModal] = useState<boolean>(false);
+    const [selectProviderModal, setSelectProviderModal] = useState<boolean>(false);
+    const [rejectModal, setRejectModal] = useState<boolean>(false);
 
     useEffect(() => {
         const purchaseService = new PurchaseService();
@@ -47,12 +54,6 @@ const View = ({ id }: { id: string }) => {
         const purchaseService = new PurchaseService();
         if (purchase?.id) {
             await purchaseService.downloadFormat(purchase.id);
-        }
-    }
-    const getDocument = async (document: string) => {
-        const userApplicationService = new UserApplicationService();
-        if (purchase?.documents) {
-            await userApplicationService.downloadDocument(userApplication?.user.id as UUID, userApplication?.id as UUID, document);
         }
     }
 
@@ -98,9 +99,9 @@ const View = ({ id }: { id: string }) => {
                 </h3>
                 <div className="flex">
                     <div className='flex flex-col'>
-                        {purchase?.documents.map((document) => (
-                            <div key={document}>
-                                <MainButton text={document} textColor='text-blue-700' bgColor='none' onClick={() => {getDocument(document)}} />
+                        {userApplication?.documents?.map((document) => (
+                            <div key={document.name}>
+                                <Link href={document.url} target="_blank" rel="noopener noreferrer" className='text-blue-700'>{document.name}</Link>
                             </div>
                         ))}
                     </div>
@@ -111,7 +112,8 @@ const View = ({ id }: { id: string }) => {
 
                 <SecondaryButton text="Ver estados de la solicitud" onClick={() => setStatusModal(true)} />
 
-
+            {userApplication?.user_application_status.at(0)?.status.name != 'REJECTED' && (
+                <>
                 {userApplication?.user_application_status.length == 1 && (
                     <SecondaryButton text="Asignar auxiliar" onClick={() => setAssistantModal(true)} />
                 )}
@@ -120,10 +122,21 @@ const View = ({ id }: { id: string }) => {
                     <SecondaryButton text="Completar información" onClick={() => setCompleteInfoModal(true)} />
                 )}
 
-                {userApplication?.user_application_status.length == 3 && (
+                {userApplication?.user_application_status?.length && userApplication?.user_application_status?.length >= 3 && (
                     <SecondaryButton text="Descargar Formato de vicerrectoria" onClick={() => { getFormat() }} />
                 )}
 
+                {userApplication?.user_application_status.length && [3, 4, 6, 7].includes(userApplication?.user_application_status.length) && (
+                    <SecondaryButton text="Actualizar estado" onClick={() => { setNextStatusModal(true) }} />
+                )}
+
+                {userApplication?.user_application_status.length == 5 && (
+                    <SecondaryButton text="Seleccionar proveedor" onClick={() => setSelectProviderModal(true)} />
+                )}
+
+                <MainButton text="Rechazar Solicitud" onClick={() => {setRejectModal(true)}} bgColor='bg-red-500' />
+                </>
+            )}
             </div>
 
             {assistantModal && userApplication && (
@@ -141,6 +154,18 @@ const View = ({ id }: { id: string }) => {
 
             {statusModal && userApplication && (
                 <Status status={userApplication?.user_application_status} setStatusModal={setStatusModal} />
+            )}
+
+            {nextStatusModal && userApplication && (
+                <NextStatus userApplication={userApplication} setNextStatusModal={setNextStatusModal} />
+            )}
+
+            {selectProviderModal && userApplication && (
+                <SelectProvider user_application_id={userApplication?.id} setSelectProviderModal={setSelectProviderModal} />
+            )}
+
+            {rejectModal && userApplication && (
+                <Reject userApplicationId={userApplication?.id} setRejectModal={setRejectModal} />
             )}
 
         </div>

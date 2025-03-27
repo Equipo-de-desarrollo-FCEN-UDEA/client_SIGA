@@ -84,7 +84,7 @@ const SelectProvider = ({ user_application_id, setSelectProviderModal }: SelectP
 
   return (
     <Modal setModal={() => setSelectProviderModal(false)}>
-      <h2 className='text-xl font-bold text-center my-3'>Seleecionar Proveedor</h2>
+      <h2 className='text-xl font-bold text-center my-3'>Seleccionar Proveedor</h2>
       <FormProvider {...methods}>
         <FormStepper
           complete={complete}

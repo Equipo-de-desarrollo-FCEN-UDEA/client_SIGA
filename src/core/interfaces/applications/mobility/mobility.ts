@@ -5,6 +5,10 @@ import Subject from "@/core/interfaces/applications/mobility/subject";
 import UserApplicationStatus from "@/core/interfaces/applications/applicationsStatus";
 import { UUID } from "crypto";
 
+export interface MobilityRequest {
+    academic_unit_id: UUID;
+}
+
 interface Mobility {
     id: UUID | null;
     process: ProcessEnum;

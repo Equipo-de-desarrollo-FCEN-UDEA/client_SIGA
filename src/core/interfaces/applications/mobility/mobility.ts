@@ -25,7 +25,6 @@ interface Mobility {
     total_time: number;
     date_report: string;
     subjects: Subject[];
-    status: UserApplicationStatus[];
 }
 
 export default Mobility;

@@ -48,8 +48,8 @@ const FileInput: React.FC<InputProps> = ({ label, name, error, files, setValue }
       {/* Lista de archivos seleccionados */}
       <ul className="mt-2">
         {files.map((file, index) => (
-          <li key={file.name} className="flex justify-between items-center bg-gray-100 p-2 rounded mt-1">
-            <span className="text-sm">{file.name}</span>
+          <li key={file?.name} className="flex justify-between items-center bg-gray-100 p-2 rounded mt-1">
+            <span className="text-sm">{file?.name || ''}</span>
             <button 
               className="text-red-500 text-xs font-bold"
               onClick={() => handleRemoveFile(index)}

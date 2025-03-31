@@ -6,6 +6,18 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL + '/mobility';
 class MobilityCRUD extends AbstractCRUD<Mobility> {
     apiUrl = apiUrl;
 
+    async create(data: FormData) {
+        const response = await fetch(`${this.apiUrl}/create`, {
+            method: 'POST',
+            credentials: 'include',
+            body: data,
+        });
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        return response.json();
+    }
+
     async sendToCommittee(id: string) {
         const response = await fetch(`${this.apiUrl}/update/${id}`, {
             method: 'PATCH',

@@ -15,6 +15,8 @@ const Documents = ({methods}: DocumentsProps) => {
     const insurance = watch('stepThree.insurance') || []
     const passport = watch('stepThree.passport') || []
 
+    const type = watch('stepOne.type')
+
   return (
     <div>
         <FileInput 
@@ -31,20 +33,25 @@ const Documents = ({methods}: DocumentsProps) => {
         setValue={setValue}
         error={errors.stepThree?.enrollmentCertificate?.message}
         />
-        <FileInput 
-        label="Seguro"
-        name='stepThree.insurance'
-        files={insurance}
-        setValue={setValue}
-        error={errors.stepThree?.insurance?.message}
-        />
-        <FileInput 
-        label="Pasaporte"
-        name='stepThree.passport'
-        files={passport}
-        setValue={setValue}
-        error={errors.stepThree?.passport?.message}
-        />
+
+        {type === 'Saliente Internacional' && (
+        <>
+          <FileInput 
+            label="Seguro"
+            name='stepThree.insurance'
+            files={insurance}
+            setValue={setValue}
+            error={errors.stepThree?.insurance?.message}
+          />
+          <FileInput 
+            label="Pasaporte"
+            name='stepThree.passport'
+            files={passport}
+            setValue={setValue}
+            error={errors.stepThree?.passport?.message}
+          />
+        </>
+        )}
     </div>
   )
 }

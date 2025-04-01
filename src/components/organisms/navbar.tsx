@@ -49,7 +49,7 @@ const Navbar = () => {
                     `}>
                     <div className="flex items-center py-3">
                         <RiShieldUserLine size={30} color="green" />
-                        <div className="flex flex-col ml-1 font-semibold text-sm text-gray-800 tracking-wide">
+                        <div className="md:flex flex-col ml-1 font-semibold text-sm text-gray-800 tracking-wide ">
                             <span> {user.name} {user.last_name} </span>
                         </div>
                         {/* Botón de Cerrar Sesión */}

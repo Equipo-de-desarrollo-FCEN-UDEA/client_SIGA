@@ -53,19 +53,20 @@ const FormMobility = () => {
     formData.append('email_contact_person', data.stepTwo.email_contact_person);
     formData.append('date_start', data.stepOne.date_start);
     formData.append('date_end', data.stepOne.date_end);
-    formData.append('subjects', JSON.stringify(subjects));
+    formData.append('subjects', (JSON.stringify(subjects)).replace(/[\[\]]/g, "") );
     formData.append('total_time', '0');
     formData.append('date_report', currentDate.toString());
-
     //files
     formData.append('admission_letter', data.stepThree.admissionLetter[0])
     formData.append('enrollment_certificate', data.stepThree.enrollmentCertificate[0])
     if (data.stepThree.insurance?.[0]) {
-      formData.append('insurance', data.stepThree.insurance[0]);
+      formData.append('insurance', data.stepThree.insurance[0] ?? '');
     }
     if (data.stepThree.passport?.[0]) {
       formData.append('passport', data.stepThree.passport?.[0] ?? '')
     }
+
+    console.log(formData.get('subjects'));
 
     const response = await mobilityCRUD.create(formData);
     if (response) {

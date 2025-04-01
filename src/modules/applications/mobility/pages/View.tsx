@@ -95,7 +95,8 @@ const Page = ({ id }: { id: string }) => {
         </div>
 
       </View>
-      {userApplication?.user_application_status.at(0)?.status.name != 'REJECTED' || 'FINISHED' && (
+      {userApplication?.user_application_status.at(0)?.status.name !== 'REJECTED' && 
+      userApplication?.user_application_status.at(0)?.status.name !== 'FINISHED' &&(
         <div className='flex gap-4 my-3'>
           {
             userApplication?.user_application_status[0].status.name === 'CREATED' &&
@@ -104,7 +105,8 @@ const Page = ({ id }: { id: string }) => {
           }
 
           {
-            (userApplication?.user_application_status[0].status.name === 'IN_INTERNATIONAL' || 'IN_DEAN') &&
+            (userApplication?.user_application_status[0].status.name === 'IN_INTERNATIONAL' || 
+            userApplication?.user_application_status[0].status.name ===  'IN_DEAN') &&
             user?.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit.id) &&
             <MainButton text="Aprobar Solicitud" onClick={() => setResponseModal(true)} />
           }

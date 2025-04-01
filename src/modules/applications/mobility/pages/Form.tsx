@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import Mobility from "@/core/interfaces/applications/mobility/mobility";
 import GeneralInfo from "@/modules/applications/mobility/components/atoms/GeneralInfo";
 import MobilityCRUD from "@/core/services/api/applications/mobility";
 import Contact from "@/modules/applications/mobility/components/atoms/Contact";
@@ -53,7 +52,7 @@ const FormMobility = () => {
     formData.append('email_contact_person', data.stepTwo.email_contact_person);
     formData.append('date_start', data.stepOne.date_start);
     formData.append('date_end', data.stepOne.date_end);
-    formData.append('subjects', (JSON.stringify(subjects)).replace(/[\[\]]/g, "") );
+    formData.append('subjects', (JSON.stringify(subjects)).replace(/[[]]/g, "") );
     formData.append('total_time', '0');
     formData.append('date_report', currentDate.toString());
     //files

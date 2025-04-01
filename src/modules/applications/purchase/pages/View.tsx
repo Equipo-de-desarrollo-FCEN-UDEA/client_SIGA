@@ -13,7 +13,6 @@ import Reject from '@/modules/applications/components/molecules/Reject';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
 import { UUID } from 'crypto';
 import MainButton from '@/components/atoms/buttons/MainButton';
-import Link from 'next/link';
 import ViewApplication from '@/components/molecules/applications/View';
 
 const View = ({ id }: { id: string }) => {

@@ -6,7 +6,7 @@ import UserApplicationStatus from "@/core/interfaces/applications/applicationsSt
 import { UUID } from "crypto";
 
 export interface MobilityRequest {
-    academic_unit_id: UUID;
+    academic_unit_id: UUID | null;
 }
 
 interface Mobility {

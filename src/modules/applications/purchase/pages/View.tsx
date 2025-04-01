@@ -14,6 +14,7 @@ import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
 import { UUID } from 'crypto';
 import MainButton from '@/components/atoms/buttons/MainButton';
 import Link from 'next/link';
+import ViewApplication from '@/components/molecules/applications/View';
 
 const View = ({ id }: { id: string }) => {
     const [userApplication, setUserApplication] = useState<UserApplication | null>(null);
@@ -60,83 +61,66 @@ const View = ({ id }: { id: string }) => {
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
-    return (
+    if (userApplication) return (
 
         <div className='max-w-4xl border shadow-lg p-10 rounded-md mx-auto my-2'>
-            <h1 className='text-2xl font-bold mb-3 border-b-2'>Información de la Compra</h1>
-
-            <div className='grid justify-items-stretch grid-flow-row md:grid-cols-3 grid-cols-1 gap-4 my-4 border-b-2'>
-                <ViewElement
-                    label="Solicitante"
-                    body={`${userApplication?.user.name} ${userApplication?.user.last_name}`}
-                />
-                <ViewElement
-                    label="Tipo"
-                    body={purchase?.type ?? ''}
-                />
-                <ViewElement
-                    label="Procedencia"
-                    body={purchase?.scope ?? ''}
-                />
-                <ViewElement
-                    label="Valor o presupuesto estimado"
-                    body={purchase?.estimated_budget ? `$${purchase.estimated_budget.toString()}` : null}
-                />
-                <div className='grid gap-4 col-span-full'>
+            <ViewApplication title="Información de la Compra" userApplication={userApplication}>
+                <div className='grid justify-items-stretch grid-flow-row md:grid-cols-3 grid-cols-1 gap-4 my-4 border-b-2'>
                     <ViewElement
-                        label="Necesidad y conveniencia de la contratación"
-                        body={purchase?.need ?? ''}
+                        label="Solicitante"
+                        body={`${userApplication?.user.name} ${userApplication?.user.last_name}`}
                     />
                     <ViewElement
-                        label="Descripción del objeto del contrato"
-                        body={purchase?.description ?? null}
+                        label="Tipo"
+                        body={purchase?.type ?? ''}
                     />
-                </div>
-            </div>
-            <div className='flex flex-col border-b-2 py-3 my-2'>
-                <h3 className='font-bold text-sm'>
-                    Documentos:
-                </h3>
-                <div className="flex">
-                    <div className='flex flex-col'>
-                        {userApplication?.documents?.map((document) => (
-                            <div key={document.name}>
-                                <Link href={document.url} target="_blank" rel="noopener noreferrer" className='text-blue-700'>{document.name}</Link>
-                            </div>
-                        ))}
+                    <ViewElement
+                        label="Procedencia"
+                        body={purchase?.scope ?? ''}
+                    />
+                    <ViewElement
+                        label="Valor o presupuesto estimado"
+                        body={purchase?.estimated_budget ? `$${purchase.estimated_budget.toString()}` : null}
+                    />
+                    <div className='grid gap-4 col-span-full'>
+                        <ViewElement
+                            label="Necesidad y conveniencia de la contratación"
+                            body={purchase?.need ?? ''}
+                        />
+                        <ViewElement
+                            label="Descripción del objeto del contrato"
+                            body={purchase?.description ?? null}
+                        />
                     </div>
                 </div>
-
-            </div>
+            </ViewApplication>
             <div className='flex flex-col gap-2'>
 
-                <SecondaryButton text="Ver estados de la solicitud" onClick={() => setStatusModal(true)} />
+                {userApplication?.user_application_status.at(0)?.status.name != 'REJECTED' && (
+                    <>
+                        {userApplication?.user_application_status.length == 1 && (
+                            <SecondaryButton text="Asignar auxiliar" onClick={() => setAssistantModal(true)} />
+                        )}
 
-            {userApplication?.user_application_status.at(0)?.status.name != 'REJECTED' && (
-                <>
-                {userApplication?.user_application_status.length == 1 && (
-                    <SecondaryButton text="Asignar auxiliar" onClick={() => setAssistantModal(true)} />
+                        {userApplication?.user_application_status.length == 2 && (
+                            <SecondaryButton text="Completar información" onClick={() => setCompleteInfoModal(true)} />
+                        )}
+
+                        {userApplication?.user_application_status?.length && userApplication?.user_application_status?.length >= 3 && (
+                            <SecondaryButton text="Descargar Formato de vicerrectoria" onClick={() => { getFormat() }} />
+                        )}
+
+                        {userApplication?.user_application_status.length && [3, 4, 6, 7].includes(userApplication?.user_application_status.length) && (
+                            <SecondaryButton text="Actualizar estado" onClick={() => { setNextStatusModal(true) }} />
+                        )}
+
+                        {userApplication?.user_application_status.length == 5 && (
+                            <SecondaryButton text="Seleccionar proveedor" onClick={() => setSelectProviderModal(true)} />
+                        )}
+
+                        <MainButton text="Rechazar Solicitud" onClick={() => { setRejectModal(true) }} bgColor='bg-red-500' />
+                    </>
                 )}
-
-                {userApplication?.user_application_status.length == 2 && (
-                    <SecondaryButton text="Completar información" onClick={() => setCompleteInfoModal(true)} />
-                )}
-
-                {userApplication?.user_application_status?.length && userApplication?.user_application_status?.length >= 3 && (
-                    <SecondaryButton text="Descargar Formato de vicerrectoria" onClick={() => { getFormat() }} />
-                )}
-
-                {userApplication?.user_application_status.length && [3, 4, 6, 7].includes(userApplication?.user_application_status.length) && (
-                    <SecondaryButton text="Actualizar estado" onClick={() => { setNextStatusModal(true) }} />
-                )}
-
-                {userApplication?.user_application_status.length == 5 && (
-                    <SecondaryButton text="Seleccionar proveedor" onClick={() => setSelectProviderModal(true)} />
-                )}
-
-                <MainButton text="Rechazar Solicitud" onClick={() => {setRejectModal(true)}} bgColor='bg-red-500' />
-                </>
-            )}
             </div>
 
             {assistantModal && userApplication && (

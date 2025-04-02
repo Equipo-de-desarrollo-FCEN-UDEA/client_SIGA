@@ -113,6 +113,7 @@ const Subjects = ({
       </table>
 
       <button
+        type="button"
         onClick={() => setModal(true)}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {

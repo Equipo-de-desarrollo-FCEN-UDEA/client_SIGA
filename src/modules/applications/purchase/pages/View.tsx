@@ -6,10 +6,14 @@ import React, { useEffect, useState } from 'react'
 import UserApplication from '@/core/interfaces/applications/userApplication';
 import SelectAuxiliary from '@/modules/applications/components/molecules/SelectAuxiliary';
 import CompleteInfo from '@/modules/applications/purchase/components/molecules/CompleteInfo';
+import SelectProvider from '@/modules/applications/purchase/components/organisms/SelectProvider';
 import Status from '@/modules/applications/components/molecules/Status';
+import NextStatus from '@/modules/applications/components/molecules/NextStatus';
+import Reject from '@/modules/applications/components/molecules/Reject';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
 import { UUID } from 'crypto';
 import MainButton from '@/components/atoms/buttons/MainButton';
+import ViewApplication from '@/components/molecules/applications/View';
 
 const View = ({ id }: { id: string }) => {
     const [userApplication, setUserApplication] = useState<UserApplication | null>(null);
@@ -20,6 +24,9 @@ const View = ({ id }: { id: string }) => {
     const [assistantModal, setAssistantModal] = useState<boolean>(false);
     const [completeInfoModal, setCompleteInfoModal] = useState<boolean>(false);
     const [statusModal, setStatusModal] = useState<boolean>(false);
+    const [nextStatusModal, setNextStatusModal] = useState<boolean>(false);
+    const [selectProviderModal, setSelectProviderModal] = useState<boolean>(false);
+    const [rejectModal, setRejectModal] = useState<boolean>(false);
 
     useEffect(() => {
         const purchaseService = new PurchaseService();
@@ -49,81 +56,70 @@ const View = ({ id }: { id: string }) => {
             await purchaseService.downloadFormat(purchase.id);
         }
     }
-    const getDocument = async (document: string) => {
-        const userApplicationService = new UserApplicationService();
-        if (purchase?.documents) {
-            await userApplicationService.downloadDocument(userApplication?.user.id as UUID, userApplication?.id as UUID, document);
-        }
-    }
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
-    return (
+    if (userApplication) return (
 
         <div className='max-w-4xl border shadow-lg p-10 rounded-md mx-auto my-2'>
-            <h1 className='text-2xl font-bold mb-3 border-b-2'>Información de la Compra</h1>
-
-            <div className='grid justify-items-stretch grid-flow-row md:grid-cols-3 grid-cols-1 gap-4 my-4 border-b-2'>
-                <ViewElement
-                    label="Solicitante"
-                    body={`${userApplication?.user.name} ${userApplication?.user.last_name}`}
-                />
-                <ViewElement
-                    label="Tipo"
-                    body={purchase?.type ?? ''}
-                />
-                <ViewElement
-                    label="Procedencia"
-                    body={purchase?.scope ?? ''}
-                />
-                <ViewElement
-                    label="Valor o presupuesto estimado"
-                    body={purchase?.estimated_budget ? `$${purchase.estimated_budget.toString()}` : null}
-                />
-                <div className='grid gap-4 col-span-full'>
+            <ViewApplication title="Información de la Compra" userApplication={userApplication}>
+                <div className='grid justify-items-stretch grid-flow-row md:grid-cols-3 grid-cols-1 gap-4 my-4 border-b-2'>
                     <ViewElement
-                        label="Necesidad y conveniencia de la contratación"
-                        body={purchase?.need ?? ''}
+                        label="Solicitante"
+                        body={`${userApplication?.user.name} ${userApplication?.user.last_name}`}
                     />
                     <ViewElement
-                        label="Descripción del objeto del contrato"
-                        body={purchase?.description ?? null}
+                        label="Tipo"
+                        body={purchase?.type ?? ''}
                     />
-                </div>
-            </div>
-            <div className='flex flex-col border-b-2 py-3 my-2'>
-                <h3 className='font-bold text-sm'>
-                    Documentos:
-                </h3>
-                <div className="flex">
-                    <div className='flex flex-col'>
-                        {purchase?.documents.map((document) => (
-                            <div key={document}>
-                                <MainButton text={document} textColor='text-blue-700' bgColor='none' onClick={() => {getDocument(document)}} />
-                            </div>
-                        ))}
+                    <ViewElement
+                        label="Procedencia"
+                        body={purchase?.scope ?? ''}
+                    />
+                    <ViewElement
+                        label="Valor o presupuesto estimado"
+                        body={purchase?.estimated_budget ? `$${purchase.estimated_budget.toString()}` : null}
+                    />
+                    <div className='grid gap-4 col-span-full'>
+                        <ViewElement
+                            label="Necesidad y conveniencia de la contratación"
+                            body={purchase?.need ?? ''}
+                        />
+                        <ViewElement
+                            label="Descripción del objeto del contrato"
+                            body={purchase?.description ?? null}
+                        />
                     </div>
                 </div>
-
-            </div>
+            </ViewApplication>
             <div className='flex flex-col gap-2'>
 
-                <SecondaryButton text="Ver estados de la solicitud" onClick={() => setStatusModal(true)} />
+                {userApplication?.user_application_status.at(0)?.status.name != 'REJECTED' && (
+                    <>
+                        {userApplication?.user_application_status.length == 1 && (
+                            <SecondaryButton text="Asignar auxiliar" onClick={() => setAssistantModal(true)} />
+                        )}
 
+                        {userApplication?.user_application_status.length == 2 && (
+                            <SecondaryButton text="Completar información" onClick={() => setCompleteInfoModal(true)} />
+                        )}
 
-                {userApplication?.user_application_status.length == 1 && (
-                    <SecondaryButton text="Asignar auxiliar" onClick={() => setAssistantModal(true)} />
+                        {userApplication?.user_application_status?.length && userApplication?.user_application_status?.length >= 3 && (
+                            <SecondaryButton text="Descargar Formato de vicerrectoria" onClick={() => { getFormat() }} />
+                        )}
+
+                        {userApplication?.user_application_status.length && [3, 4, 6, 7].includes(userApplication?.user_application_status.length) && (
+                            <SecondaryButton text="Actualizar estado" onClick={() => { setNextStatusModal(true) }} />
+                        )}
+
+                        {userApplication?.user_application_status.length == 5 && (
+                            <SecondaryButton text="Seleccionar proveedor" onClick={() => setSelectProviderModal(true)} />
+                        )}
+
+                        <MainButton text="Rechazar Solicitud" onClick={() => { setRejectModal(true) }} bgColor='bg-red-500' />
+                    </>
                 )}
-
-                {userApplication?.user_application_status.length == 2 && (
-                    <SecondaryButton text="Completar información" onClick={() => setCompleteInfoModal(true)} />
-                )}
-
-                {userApplication?.user_application_status.length == 3 && (
-                    <SecondaryButton text="Descargar Formato de vicerrectoria" onClick={() => { getFormat() }} />
-                )}
-
             </div>
 
             {assistantModal && userApplication && (
@@ -141,6 +137,18 @@ const View = ({ id }: { id: string }) => {
 
             {statusModal && userApplication && (
                 <Status status={userApplication?.user_application_status} setStatusModal={setStatusModal} />
+            )}
+
+            {nextStatusModal && userApplication && (
+                <NextStatus userApplication={userApplication} setNextStatusModal={setNextStatusModal} />
+            )}
+
+            {selectProviderModal && userApplication && (
+                <SelectProvider user_application_id={userApplication?.id} setSelectProviderModal={setSelectProviderModal} />
+            )}
+
+            {rejectModal && userApplication && (
+                <Reject userApplicationId={userApplication?.id} setRejectModal={setRejectModal} />
             )}
 
         </div>

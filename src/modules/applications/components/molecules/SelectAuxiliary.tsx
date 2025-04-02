@@ -18,7 +18,6 @@ interface SelectAuxiliaryProps {
 const SelectAuxiliary = ({ user_application_id, academic_unit_id, setAssistantModal }: SelectAuxiliaryProps) => {
     const [auxiliaries, setAuxiliaries] = useState([]);
     const [selectedAuxiliary, setSelectedAuxiliary] = useState<UUID | null>(null);
-    const [isApproved, setIsApproved] = useState<boolean>(false);
 
     useEffect(() => {
         const userRolAcademicUnitService = new UserRolAcademicUnitService();
@@ -34,12 +33,14 @@ const SelectAuxiliary = ({ user_application_id, academic_unit_id, setAssistantMo
         const data: PurchaseRequest = {
             user_to_assign_id: selectedAuxiliary,
             observation: null,
-            purchase_complete: null
+            purchase_complete: null,
+            selected_provider: null,
+            materials: null
         }
         await new PurchaseService().advancePurchaseStatus(
             data,
             user_application_id,
-            isApproved
+            true
         );
         window.location.reload();
     }
@@ -49,15 +50,6 @@ const SelectAuxiliary = ({ user_application_id, academic_unit_id, setAssistantMo
             <div>
                 <h2 className="text-xl font-bold text-center my-3">Asignar Auxiliar</h2>
                 <form >
-                    <SelectInput
-                        label='Aprovar Solicitud'
-                        placeholder='Seleccione una opción...'
-                        value={isApproved ? 'True' : 'False'}
-                        options={['SI', 'NO']}
-                        valueOptions={['True', 'False']}
-                        onChange={(e) => setIsApproved(e.target.value === 'True')}
-                    />
-                    {isApproved && (
                         <SelectInput
                             value={selectedAuxiliary as UUID}
                             onChange={(e) => setSelectedAuxiliary(e.target.value as UUID)}
@@ -66,7 +58,6 @@ const SelectAuxiliary = ({ user_application_id, academic_unit_id, setAssistantMo
                             label='Seleccionar Auxiliar'
                             placeholder='Seleccione una opción...'
                         />
-                    )}
                 </form>
             </div>
             <div className="mt-16">

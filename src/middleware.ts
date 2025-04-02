@@ -1,13 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
 // Este código es un middleware que se ejecuta antes de cada petición.
-export async function middleware(request: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  cookies: { get: (arg0: string) => any };
-  nextUrl: { pathname: string | string[] };
-  url: string | URL | undefined;
-}) {
+export async function middleware(request: NextRequest) {
   const jwt = request.cookies.get("access_token");
 
   if (jwt === undefined) {
@@ -28,5 +23,5 @@ export async function middleware(request: {
 
 // Protección de rutas con respecto a un rol
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|auth).*)',],
 };

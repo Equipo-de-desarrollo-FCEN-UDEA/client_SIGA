@@ -9,19 +9,22 @@ interface SessionLayoutProps {
 }
 
 const SessionLayout: React.FC<SessionLayoutProps> = ({ children }) => {
-    const { user } = useSession();
-    if (!user) return null; // No renderiza nada si no hay usuario
+  const { user } = useSession();
   return (
     <div>
       <div className="flex">
+        {user && (
+        <>
           <div className="hidden sm:flex">
             <Sidebar />
           </div>
           <div className="sm:hidden">
             <Navbar />
           </div>
-          {children}
-        </div>
+        </>
+        )}
+        {children}
+      </div>
     </div>
   )
 }

@@ -12,6 +12,7 @@ const Page = () => {
 
   useEffect(() => {
     if (user) {
+      console.log('user', user);
       router.push("/");
     } else {
       setLoading(false);

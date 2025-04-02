@@ -1,5 +1,5 @@
 'use client';
-import React, { use, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import Sidebar from "@/components/organisms/sidebar";
 import Navbar from "@/components/organisms/navbar";
 import { useSession } from '@/core/providers/SessionProvider';

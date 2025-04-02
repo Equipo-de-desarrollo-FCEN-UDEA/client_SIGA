@@ -1,7 +1,6 @@
 "use client";
 
-import { createContext, useState, useContext } from 'react';
-import { ReactNode } from 'react';
+import { createContext, useState, useContext, ReactNode, useMemo } from 'react';
 
 const LoadingContext = createContext<{
   loading: boolean;
@@ -15,9 +14,9 @@ export const useLoading = () => useContext(LoadingContext);
 
 export const LoadingProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
-
+  const contextValue = useMemo(() => ({loading, setLoading}), [loading])
   return (
-    <LoadingContext.Provider value={{ loading, setLoading }}>
+    <LoadingContext.Provider value={contextValue}>
       {children}
     </LoadingContext.Provider>
   );

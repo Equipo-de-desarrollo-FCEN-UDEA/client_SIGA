@@ -5,7 +5,6 @@ import "./globals.css";
 import { SessionProvider } from "@/core/providers/SessionProvider";
 import SessionLayout  from "@/components/layouts/SessionLayout";
 import { LoadingProvider } from "@/core/providers/LoadingProvider";
-import Loading from "@/components/atoms/loading/Loading";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

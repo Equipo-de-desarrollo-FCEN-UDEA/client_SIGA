@@ -52,7 +52,7 @@ const FormMobility = () => {
     formData.append('email_contact_person', data.stepTwo.email_contact_person);
     formData.append('date_start', data.stepOne.date_start);
     formData.append('date_end', data.stepOne.date_end);
-    formData.append('subjects', (JSON.stringify(subjects)).replace(/[[]]/g, "") );
+    formData.append('subjects', (JSON.stringify(subjects)).replace(/[\[\]]/g, "") );
     formData.append('total_time', '0');
     formData.append('date_report', currentDate.toString());
     //files

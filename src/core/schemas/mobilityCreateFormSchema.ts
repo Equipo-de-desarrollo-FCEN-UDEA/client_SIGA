@@ -27,14 +27,6 @@ export const stepOneSchema = z.object({
   date_end: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: "La fecha de fin no es válida.",
   })
-}).refine(({ date_start, date_end }) => {
-  const start = new Date(date_start);
-  const end = new Date(date_end);
-  const diffInDays = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
-  return diffInDays <= MAX_DAYS;
-}, {
-  message: `La fecha de finalización no debe exceder los ${MAX_DAYS} días de diferencia.`,
-  path: ["date_end"]
 });
 
 export const stepTwoSchema = z.object({

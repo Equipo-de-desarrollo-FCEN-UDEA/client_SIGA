@@ -2,8 +2,11 @@ import ProcessEnum from "@/core/interfaces/applications/mobility/process";
 import MobilityType from "@/core/interfaces/applications/mobility/type";
 import MobilityPurpose from "@/core/interfaces/applications/mobility/purpose";
 import Subject from "@/core/interfaces/applications/mobility/subject";
-import UserApplicationStatus from "@/core/interfaces/applications/applicationsStatus";
 import { UUID } from "crypto";
+
+export interface MobilityRequest {
+    academic_unit_id: UUID | null;
+}
 
 interface Mobility {
     id: UUID | null;
@@ -21,7 +24,6 @@ interface Mobility {
     total_time: number;
     date_report: string;
     subjects: Subject[];
-    status: UserApplicationStatus[];
 }
 
 export default Mobility;

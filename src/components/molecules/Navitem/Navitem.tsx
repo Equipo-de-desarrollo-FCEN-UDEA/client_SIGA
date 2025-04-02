@@ -4,7 +4,7 @@ import { IoEarthOutline } from "react-icons/io5";
 import { AiOutlineHome } from "react-icons/ai";
 import { NavButton } from "@/components/atoms/buttons/NavButton";
 import React from "react";
-
+import { FaPersonWalkingLuggage } from "react-icons/fa6";
 
 const useNavItems = (items: { title: string; href: string; icon: React.ReactNode }[]) => {
   const pathname = usePathname();
@@ -29,7 +29,7 @@ export const NavApplications = () =>
     {
       title: "Comisión",
       href: "/solicitudes/commission/crear",
-      icon: <LuShoppingCart size={25} />
+      icon: <FaPersonWalkingLuggage size={25} />
     }
   ]);
 

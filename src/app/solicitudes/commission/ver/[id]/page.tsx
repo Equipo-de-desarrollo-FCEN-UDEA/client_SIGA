@@ -1,9 +1,13 @@
-"use client"
+"use client";
+import React from 'react';
+import { useParams } from "next/navigation";
+import CommissionViewComponent from "@/modules/applications/commission/pages/View";
 
-import { CommissionViewComponent } from "@/modules/applications/commission/pages/View";
-
-const CommissionView: React.FC = () => (
-  <CommissionViewComponent />
+const Page = () => {
+  const { id } = useParams();
+  return(
+    <CommissionViewComponent id={id as string} />
 );
+}
 
-export default CommissionView;
+export default Page;

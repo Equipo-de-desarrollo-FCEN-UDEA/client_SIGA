@@ -8,7 +8,7 @@ import { UUID } from "crypto";
 const Page = ({ id }: Readonly<{ id: UUID }>) => {
     const [userApplications, setUserApplications] = useState<UserApplication[] | null>(null);
     const [rows, setRows] = useState<string[][]>([]);
-    const headers = ['Solicitante', 'Tipo', 'Estado', 'Acción'];
+    const headers = ['Consecutivo','Solicitante', 'Tipo', 'Estado', 'Acción'];
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -27,6 +27,7 @@ const Page = ({ id }: Readonly<{ id: UUID }>) => {
             const newRows = userApplications.map((userApplication) => {
             const type = userApplication.application.name.toLowerCase();
             return ([
+                `${userApplication.consecutive}`,
                 `${userApplication.user.name} ${userApplication.user.last_name}`,
                 userApplication.application.name,
                 userApplication.user_application_status[0].status.description,

@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { SessionProvider } from "@/core/providers/SessionProvider";
 import SessionLayout  from "@/components/layouts/SessionLayout";
+import { LoadingProvider } from "@/core/providers/LoadingProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,11 +35,13 @@ const RootLayout = ({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SessionProvider>
-          <SessionLayout>
-            {children}
-          </SessionLayout>
-        </SessionProvider>
+        <LoadingProvider>
+          <SessionProvider>
+            <SessionLayout>
+              {children}
+            </SessionLayout>
+          </SessionProvider>
+        </LoadingProvider>
       </body>
     </html>
   );

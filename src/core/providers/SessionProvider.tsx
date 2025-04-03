@@ -29,8 +29,12 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   useEffect(() => {
     const fetchSession = async () => {
-      const res =  await getSession();
-      if (res) setUser(res);
+      try {
+        const res =  await getSession();
+        setUser(res)
+      } catch (error) {
+        setUser(null);
+      }
     };
     fetchSession();
   }, []);

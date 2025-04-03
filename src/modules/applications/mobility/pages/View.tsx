@@ -10,6 +10,7 @@ import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
 import Modal from '@/components/templates/Modal';
 import UserApplication from '@/core/interfaces/applications/userApplication';
 import UserApplicationService from '@/core/services/api/applications/user_application';
+import Reject from '@/modules/applications/components/molecules/Reject';
 import { UUID } from 'crypto';
 
 const Page = ({ id }: { id: string }) => {
@@ -25,6 +26,8 @@ const Page = ({ id }: { id: string }) => {
   const { user } = useSession();
 
   //modals
+  const [rejectModal, setRejectModal] = useState<boolean>(false);
+
   useEffect(() => {
     const userApplicationService = new UserApplicationService();
     const mobilityCRUD = new MobilityCRUD();
@@ -114,6 +117,12 @@ const Page = ({ id }: { id: string }) => {
           {userApplication?.user_application_academic_units[0] && user?.scopes && user.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit_id) && (
             <MainButton text="Responder" onClick={() => setModal(true)} />
           )}
+          {(user?.scopes.includes(`representante:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) ||
+          user?.scopes.includes(`auxiliar:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) )&&
+          (
+          <MainButton text="Rechazar Solicitud" onClick={() => { setRejectModal(true) }} bgColor='bg-red-500' />
+          )
+          }
         </div>
       )}
 
@@ -142,6 +151,9 @@ const Page = ({ id }: { id: string }) => {
             <MainButton text="Aprobar" onClick={approveApplication} />
           </div>
         </Modal>
+      )}
+      {rejectModal && userApplication && (
+          <Reject userApplicationId={userApplication?.id} setRejectModal={setRejectModal} />
       )}
     </div>
   );

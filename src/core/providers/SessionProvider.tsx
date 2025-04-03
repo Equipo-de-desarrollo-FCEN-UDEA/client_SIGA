@@ -4,8 +4,10 @@ import { auth } from "@/core/services/api/auth/loginService";
 import { logout as logoutService} from "@/core/services/api/auth/logoutService";
 import { getSession } from "@/core/services/api/user/userService";
 import { useRouter } from "next/navigation";
+import { UUID } from "crypto";
 
 interface User {
+  id: UUID;
   name: string;
   last_name: string;
   scopes: string[];

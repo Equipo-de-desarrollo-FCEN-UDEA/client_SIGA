@@ -22,6 +22,7 @@ interface Document{
 
 interface UserApplication {
     id: UUID;
+    consecutive: number;
     application: Application;
     user: User;
     user_application_academic_units: UserApplicationAcademicUnit[];

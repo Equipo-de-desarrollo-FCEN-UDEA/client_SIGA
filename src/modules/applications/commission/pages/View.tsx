@@ -3,15 +3,17 @@ import React, { useState, useEffect } from 'react';
 import { toast } from "react-toastify";
 import CommissionCRUD from "@/core/services/api/applications/commission";
 import { Commission } from "@/core/interfaces/applications/comission/commission";
-import { useSession } from '@/core/providers/SessionProvider';
 import DetailsSection from '@/components/molecules/DetailsSection/DetailsSection';
 import View from '@/components/molecules/applications/View';
 import MainButton from '@/components/atoms/buttons/MainButton';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
 import UserApplicationStatus from '@/core/interfaces/applications/applicationsStatus';
 import Modal from '@/components/templates/Modal';
+import { useRouter } from 'next/navigation';
+
 
 const CommissionViewComponent = ({ id }: { id: string }) => {
+  const router = useRouter();
   const [commission, setCommission] = useState<Commission>({} as Commission);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const [statuses, setStatuses] = useState<UserApplicationStatus[]>([]);
@@ -54,6 +56,10 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
     }
   };
 
+  const navegate = async () => {
+    router.push(`/solicitudes/commission/editar/${id}`);
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -70,7 +76,7 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
         }
                {
           commission?.status?.[commission.status.length - 1]?.name === 'CREADA' &&
-          <SecondaryButton text='Editar'/>
+          <SecondaryButton text='Editar' onClick={navegate}/>
         }
       </div>
       {confirmModal && (

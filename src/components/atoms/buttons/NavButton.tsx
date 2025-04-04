@@ -23,7 +23,7 @@ export const NavButton: React.FC<NavButtonProps> = ({
     className = "",
 }) => {
     const content = (
-        <button
+        <div
             onClick={onClick}
             className={`flex items-center w-full px-4 py-2 rounded-lg transition
                         ${isActive ? "text-green-700 font-semibold hover:bg-gray-200" : "hover:bg-gray-200 text-gray-800"}
@@ -34,7 +34,7 @@ export const NavButton: React.FC<NavButtonProps> = ({
             {iconPosition === "left" && icon}
             {isExpanded && <span>{label}</span>}
             {iconPosition === "right" && icon}
-        </button>
+        </div>
     );
 
     let contentWithLink = content;

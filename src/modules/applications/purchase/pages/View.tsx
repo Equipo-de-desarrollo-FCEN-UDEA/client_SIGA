@@ -97,6 +97,29 @@ const View = ({ id }: { id: string }) => {
                         />
                     </div>
                 </div>
+                {purchase?.materials && (
+                    <div className='border-b-2'>
+                        <h5 className='font-bold'>Materiales</h5>
+                        <table className='table-auto w-full border-collapse border '>
+                            <thead>
+                                <tr>
+                                    <th className='border-t border-b border-gray-300 px-4 py-2'>Nombre</th>
+                                    <th className='border-t border-b border-gray-300 px-4 py-2'>Cantidad</th>
+                                    <th className='border-t border-b border-gray-300 px-4 py-2'>Valor unitario</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {purchase?.materials.map((material, index) => (
+                                    <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                        <td className='border-t border-b border-gray-300 px-4 py-2'>{material.name}</td>
+                                        <td className='border-t border-b border-gray-300 px-4 py-2'>{material.quantity}</td>
+                                        <td className='border-t border-b border-gray-300 px-4 py-2'>{material.unit_price}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
             </ViewApplication>
             <div className='flex flex-col gap-2'>
 

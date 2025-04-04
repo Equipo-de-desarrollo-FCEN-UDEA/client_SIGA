@@ -110,7 +110,7 @@ const View = ({ id }: { id: string }) => {
                             </thead>
                             <tbody>
                                 {purchase?.materials.map((material, index) => (
-                                    <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                    <tr key={material.name} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                                         <td className='border-t border-b border-gray-300 px-4 py-2'>{material.name}</td>
                                         <td className='border-t border-b border-gray-300 px-4 py-2'>{material.quantity}</td>
                                         <td className='border-t border-b border-gray-300 px-4 py-2'>{material.unit_price}</td>

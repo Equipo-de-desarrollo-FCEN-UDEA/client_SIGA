@@ -25,6 +25,7 @@ export const NavButton: React.FC<NavButtonProps> = ({
     const content = (
         <div
             onClick={onClick}
+            role="button"
             className={`flex items-center w-full px-4 py-2 rounded-lg transition
                         ${isActive ? "text-green-700 font-semibold hover:bg-gray-200" : "hover:bg-gray-200 text-gray-800"}
                         ${isExpanded ? "justify-start gap-3 hover:bg-gray-200" : "justify-center w-12 h-12"}

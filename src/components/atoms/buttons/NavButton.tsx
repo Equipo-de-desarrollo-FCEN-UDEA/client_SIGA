@@ -59,9 +59,8 @@ export const NavButton: React.FC<NavButtonProps> = ({
                             {content}
                         </Link>
                     ) : (
-                        <div className="w-full flex justify-center" onClick={onClick}>
-                            {content}
-                        </div>
+                        <>{content}</>
+                        
                     )}
                 </Tooltip.Trigger>
                 <Tooltip.Portal>

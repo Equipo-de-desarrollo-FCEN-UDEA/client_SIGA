@@ -25,7 +25,6 @@ export const NavButton: React.FC<NavButtonProps> = ({
     const content = (
         <button
             onClick={onClick}
-            role="button"
             className={`flex items-center w-full px-4 py-2 rounded-lg transition
                         ${isActive ? "text-green-700 font-semibold hover:bg-gray-200" : "hover:bg-gray-200 text-gray-800"}
                         ${isExpanded ? "justify-start gap-3 hover:bg-gray-200" : "justify-center w-12 h-12"}
@@ -60,9 +59,9 @@ export const NavButton: React.FC<NavButtonProps> = ({
                             {content}
                         </Link>
                     ) : (
-                        <button className="w-full flex justify-center" onClick={onClick}>
+                        <div className="w-full flex justify-center" onClick={onClick}>
                             {content}
-                        </button>
+                        </div>
                     )}
                 </Tooltip.Trigger>
                 <Tooltip.Portal>

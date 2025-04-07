@@ -10,6 +10,9 @@ const Home = () => (
       <Link href="/solicitudes/adb1ea44-189f-47a7-b763-e0aae6e7c07e">
         <p className="flex-1 p-4 bg-gray-200 text-center">Decanatura</p>
       </Link>
+      <Link href="/solicitudes/auxiliar/ver">
+        <p className="flex-1 p-4 bg-gray-200 text-center">Vista-auxiliar</p>
+      </Link>
     </div>
     <div className="flex flex-col mt-5">
       <h1 className="text-xl font-bold">Mis Solicitudes</h1>

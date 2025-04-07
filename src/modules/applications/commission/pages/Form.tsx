@@ -73,10 +73,10 @@ const FormCommission = () => {
   };
 
   return (
-    <div className="h-fit border shadow-lg p-5 rounded-md mx-auto mt-3">
-      <HeadingPrimary text="Crear Comisión" />
+    <div className="max-h-2/3 border shadow-lg p-10 rounded-md w-full sm:mx-auto sm:w-auto my-3">
       <FormProvider {...methods}>
         <FormStepper
+          name="Crear Comisión"
           complete={complete}
           currentStep={currentStep}
           steps={steps}

@@ -22,10 +22,14 @@ const SelectAuxiliary = ({ user_application_id, academic_unit_id, setAssistantMo
     useEffect(() => {
         const userRolAcademicUnitService = new UserRolAcademicUnitService();
         const fetchData = async () => {
-            userRolAcademicUnitService.det_axiliaries_by_academic_unit(academic_unit_id).then((data) => {
-                setAuxiliaries(data);
-            });
+        try {
+            const data = await userRolAcademicUnitService.det_axiliaries_by_academic_unit(academic_unit_id);
+            setAuxiliaries(data);
         }
+        catch (error) {
+            console.error('Error fetching auxiliaries:', error);
+        }
+    }
         fetchData();
     }, [academic_unit_id]);
 

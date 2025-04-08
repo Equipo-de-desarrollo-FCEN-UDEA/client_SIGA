@@ -13,6 +13,12 @@ const Home = () => (
       <Link href="/solicitudes/auxiliar/ver">
         <p className="flex-1 p-4 bg-gray-200 text-center">Vista-auxiliar</p>
       </Link>
+      <Link href={"/solicitudes/b882d1ef-1714-4f05-ad61-a9bfdd109592"}>
+        <p className="flex-1 p-4 bg-gray-200 text-center">Pregrado Matematicas</p>
+      </Link>
+      <Link href={"/voting"}>
+        <p className="flex-1 p-4 bg-gray-200 text-center">Mis votaciones</p>
+      </Link>
     </div>
     <div className="flex flex-col mt-5">
       <h1 className="text-xl font-bold">Mis Solicitudes</h1>

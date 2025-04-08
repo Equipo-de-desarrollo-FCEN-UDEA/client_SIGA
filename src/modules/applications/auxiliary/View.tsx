@@ -5,7 +5,6 @@ import { useSession } from '@/core/providers/SessionProvider'
 import Table from '@/components/organisms/Table'
 import UserApplication from '@/core/interfaces/applications/userApplication'
 import UserApplicationService from '@/core/services/api/applications/user_application'
-import { UUID } from 'crypto'
 
 const Page = () => {
   const [userApplications, setUserApplications] = useState<UserApplication[] | null>(null);
@@ -44,6 +43,10 @@ const Page = () => {
     }
     setLoading(false);
   }, [userApplications]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>

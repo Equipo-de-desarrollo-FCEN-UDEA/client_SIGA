@@ -1,5 +1,4 @@
 import View from '@/modules/applications/auxiliary/View'
-import MyApplications from "@/modules/applications/MyApplications";
 import { UUID } from 'crypto'
 import React from 'react'
 

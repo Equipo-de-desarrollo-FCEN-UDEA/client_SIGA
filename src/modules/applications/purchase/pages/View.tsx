@@ -140,8 +140,8 @@ const View = ({ id }: { id: string }) => {
                         }
 
                         {userApplication?.user_application_status?.length >= 3 && 
-                        user?.scopes.includes(`representante:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) &&
-                        user?.scopes.includes(`auxiliar:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) &&
+                        (user?.scopes.includes(`representante:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) ||
+                        user?.scopes.includes(`auxiliar:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) ) &&
                         (
                             <SecondaryButton text="Descargar Formato de vicerrectoria" onClick={() => { getFormat() }} />
                         )

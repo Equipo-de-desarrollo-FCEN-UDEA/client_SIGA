@@ -42,6 +42,17 @@ class UserApplicationService extends AbstractCRUD<UserApplication> {
         return await response.json();
     }
 
+    async getToUser(userId: UUID) {
+        const response = await fetch(`${this.apiUrl}/user/${userId}`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return await response.json();
+    }
+
     async getNextStep(userApplicationId: UUID, currentStep: number) {
         const response = await fetch(`${this.apiUrl}/next_step/${userApplicationId}?current_step=${currentStep}`, {
             method: 'GET',

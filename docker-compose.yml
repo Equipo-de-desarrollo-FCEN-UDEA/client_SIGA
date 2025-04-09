@@ -1,7 +1,7 @@
 services:
   nextjs:
     build:
-      context: ./
+      context: .
       dockerfile: Dockerfile.build
     container_name: nextjs
     ports:
@@ -14,8 +14,8 @@ services:
       - siga-fcen
   nginx:
     build:
-      context: ./nginx
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./nginx/Dockerfile.prod
     container_name: nginx
     expose:
       - "80"

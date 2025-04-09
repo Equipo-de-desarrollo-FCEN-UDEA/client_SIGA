@@ -29,6 +29,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./Dockerfile.build
+          file: Dockerfile.build
           push: true
           tags: ${{ secrets.DOCKER_ID }}/siga-nextjs:1.0.0

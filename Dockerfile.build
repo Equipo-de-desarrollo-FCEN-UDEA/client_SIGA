@@ -8,7 +8,12 @@ WORKDIR /src
 COPY package.json package-lock.json ./
 RUN npm install
 
-COPY . .
+COPY public ./public
+COPY pages ./pages
+COPY styles ./styles
+COPY next.config.js ./
+COPY tsconfig.json ./
+COPY .env ./
 
 # Construir la aplicación Next.js
 RUN npm run build

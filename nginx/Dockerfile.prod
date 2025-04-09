@@ -1,4 +1,14 @@
+# filepath: /home/smoke/project/SIGA/front/nginx/Dockerfile.prod
 FROM nginx:latest
+
+# Crear un usuario no privilegiado
+RUN addgroup --system nginx && adduser --system --ingroup nginx nginx
 
 # Copiar la configuración de Nginx
 COPY /nginx/nginx.conf /etc/nginx/nginx.conf
+
+# Cambiar el propietario de los archivos necesarios
+RUN chown -R nginx:nginx /var/cache/nginx /var/log/nginx /etc/nginx
+
+# Cambiar al usuario no privilegiado
+USER nginx

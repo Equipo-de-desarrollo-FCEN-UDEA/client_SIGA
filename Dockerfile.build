@@ -8,10 +8,8 @@ WORKDIR /src
 COPY package.json package-lock.json ./
 RUN npm install
 
-COPY public ./public
-COPY pages ./pages
-COPY styles ./styles
-COPY next.config.js ./
+COPY src ./src
+COPY next.config.mjs ./
 COPY tsconfig.json ./
 COPY .env ./
 

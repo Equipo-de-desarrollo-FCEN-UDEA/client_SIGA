@@ -44,7 +44,6 @@ const EditCommissionComponent = ({ id }: { id: string }) => {
       try {
         const data = await commissionCrud.getById(id);
         setCommission(data);
-        console.log(data)
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
@@ -72,25 +71,19 @@ const EditCommissionComponent = ({ id }: { id: string }) => {
       date_end: data.stepTwo.date_start,
       reason: data.stepThree.reason,
       justification: data.stepThree.justification,
-      status: [],
       documents: data.stepFour.documents
     }
-    try {
-      const response = await commissionCrud.updateData(id, { ...requestBody });
 
-      if (response.error) {
-        throw new Error(response.error.message || "Error al editar la comisión");
-      }
+    const response = await commissionCrud.updateData(id, { ...requestBody });
 
-      toast.success("Comisión editada exitosamente");
+    if (response.error)
+      throw new Error(response.error.message);
 
-      if (response) {
-        router.push(`/solicitudes/commission/ver/${response.id}`);
-      }
+    console.log(response);
 
-    } catch (error) {
-      toast.error(`${error || "Hubo un problema al editar la comisión"}`);
-    }
+    toast.success("Comisión editada exitosamente");
+
+    router.push(`/solicitudes/commission/ver/${response.id}`);
   };
 
   return (
@@ -106,8 +99,8 @@ const EditCommissionComponent = ({ id }: { id: string }) => {
           onSubmit={onSubmit}
           handleSubmit={methods.handleSubmit}
         >
-          {currentStep === 1 && <Place commissionPlace={{ country: commission.country, state: commission.state, city: commission.city }}  />}
-          {currentStep === 2 && <Date commissionDate={{date_start: commission.date_start, date_end: commission.date_end}}/>}
+          {currentStep === 1 && <Place commissionPlace={{ country: commission.country, state: commission.state, city: commission.city }} />}
+          {currentStep === 2 && <Date commissionDate={{ date_start: commission.date_start, date_end: commission.date_end }} />}
           {currentStep === 3 && <Justification commissionDetails={{ reason: commission.reason, justification: commission.justification }} />}
           {currentStep === 4 && <Documents />}
           {currentStep === 5 && <View />}

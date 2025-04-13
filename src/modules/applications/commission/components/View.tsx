@@ -14,7 +14,6 @@ const View = () => {
     date_end: formData.stepTwo?.date_end || "",
     reason: formData.stepThree?.reason || "",
     justification: formData.stepThree?.justification || "",
-    status: [],
     documents: formData.stepFour?.documents || [],
   };
 

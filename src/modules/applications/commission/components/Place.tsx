@@ -22,21 +22,18 @@ const Place: React.FC<PlaceProps> = ({ commissionPlace }) => {
       <TextInput
         label="País"
         placeholder="Escribe el nombre del país"
-        value={commissionPlace?.country}
         {...register("stepOne.country")}
         error={errors.stepOne?.country?.message}
       />
       <TextInput
         label="Estado / Departamento / Región"
         placeholder="Escribe el nombre del estado"
-        value={commissionPlace?.state}
         {...register("stepOne.state")}
         error={errors.stepOne?.state?.message}
       />
       <TextInput
         label="Ciudad"
         placeholder="Escribe el nombre de la ciudad"
-        value={commissionPlace?.city}
         {...register("stepOne.city")}
         error={errors.stepOne?.city?.message}
       />

@@ -51,7 +51,6 @@ const FormCommission = () => {
       date_end: data.stepTwo.date_start,
       reason: data.stepThree.reason,
       justification: data.stepThree.justification,
-      status: [],
       documents: data.stepFour.documents
     }
     try {
@@ -85,11 +84,13 @@ const FormCommission = () => {
           onSubmit={onSubmit}
           handleSubmit={methods.handleSubmit}
         >
-          {currentStep === 1 && <Place />}
-          {currentStep === 2 && <Date />}
-          {currentStep === 3 && <Justification />}
-          {currentStep === 4 && <Documents />}
-          {currentStep === 5 && <View />}
+          <div className="max-w-2x">
+            {currentStep === 1 && <Place />}
+            {currentStep === 2 && <Date />}
+            {currentStep === 3 && <Justification />}
+            {currentStep === 4 && <Documents />}
+            {currentStep === 5 && <View />}
+          </div>
         </FormStepper>
       </FormProvider>
       <ToastContainer position="top-right" autoClose={3000} />

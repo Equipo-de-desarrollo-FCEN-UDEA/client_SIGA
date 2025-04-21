@@ -1,21 +1,21 @@
 services:
   nextjs:
     build:
-      context: ./
+      context: .
       dockerfile: Dockerfile.build
     container_name: nextjs
     ports:
       - "3000:3000"
     volumes:
       - ./:/src
-    environment:
-      - .env
+    env_file:
+      - ./prod.env
     networks:
       - siga-fcen
   nginx:
     build:
-      context: ./nginx
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./nginx/Dockerfile.prod
     container_name: nginx
     expose:
       - "80"

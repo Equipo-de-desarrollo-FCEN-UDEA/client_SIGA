@@ -5,25 +5,32 @@ import TextInput from "@/components/atoms/inputs/TextInput";
 import { StepThreeFormData } from "@/core/schemas/commissionCreateFormSchema";
 import TextArea from "@/components/atoms/inputs/TextArea";
 
-const Place = () => {
+interface JustificationProps {
+  commissionDetails?: {
+    reason?: string;
+    justification?: string;
+  };
+}
+
+const Justification: React.FC<JustificationProps> = ({ commissionDetails }) => {
   const {
     register,
     formState: { errors },
-  } = useFormContext<{
-    stepThree: StepThreeFormData;
-  }>();
+  } = useFormContext<{ stepThree: StepThreeFormData }>();
 
   return (
     <div className="space-y-4">
       <TextInput
         label="Motivo de la Comisión"
-        placeholder=""
+        placeholder="Escribe el motivo"
+        value={commissionDetails?.reason}
         {...register("stepThree.reason")}
         error={errors.stepThree?.reason?.message}
       />
       <TextArea
         label="Justificación"
-        placeholder=""
+        placeholder="Escribe la justificación"
+        value={commissionDetails?.justification}
         {...register("stepThree.justification")}
         error={errors.stepThree?.justification?.message}
       />
@@ -31,4 +38,4 @@ const Place = () => {
   );
 };
 
-export default Place;
+export default Justification;

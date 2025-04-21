@@ -18,9 +18,9 @@ export abstract class AbstractCRUD<T> {
     const response = await fetch(this.apiUrl, {
       credentials: 'include',
     });
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
+    if (!response.ok) 
+      throw new Error(response.statusText);
+
     const result = await response.json();
     return result;
   }
@@ -34,9 +34,9 @@ export abstract class AbstractCRUD<T> {
       credentials: 'include',
       body: JSON.stringify(data),
     });
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
+    if (!response.ok) 
+      throw new Error(response.statusText);
+
     return await response.json();
   }
 
@@ -46,22 +46,21 @@ export abstract class AbstractCRUD<T> {
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify(data),
     });
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
+    if (!response.ok) 
+      throw new Error(response.statusText);
     return await response.json();
-
   }
 
   async deleteData(id: string) {
-
     const response = await fetch(`${this.apiUrl}/${id}`, {
       method: 'DELETE',
+      credentials: 'include',
     });
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error(response.statusText);
     }
     return await response.json();
 

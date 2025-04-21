@@ -1,4 +1,3 @@
-import UserApplicationStatus from "@/core/interfaces/applications/applicationsStatus";
 import { UUID } from "crypto";
 
 export interface Commission {
@@ -10,6 +9,5 @@ export interface Commission {
   date_end: string;
   reason: string;
   justification: string;
-  status: UserApplicationStatus[];
   documents: File[];
 }

@@ -3,13 +3,19 @@ import TextInput from "@/components/atoms/inputs/TextInput";
 import { useFormContext } from "react-hook-form";
 import { StepOneFormData } from "@/core/schemas/commissionCreateFormSchema";
 
-const Place = () => {
+interface PlaceProps {
+  commissionPlace?: {
+    country?: string;
+    state?: string;
+    city?: string;
+  };
+}
+
+const Place: React.FC<PlaceProps> = ({ commissionPlace }) => {
   const {
     register,
     formState: { errors },
-  } = useFormContext<{
-    stepOne: StepOneFormData;
-  }>();
+  } = useFormContext<{ stepOne: StepOneFormData }>();
 
   return (
     <div className="space-y-4">

@@ -3,15 +3,17 @@ import React, { useState, useEffect } from 'react';
 import { toast } from "react-toastify";
 import CommissionCRUD from "@/core/services/api/applications/commission";
 import { Commission } from "@/core/interfaces/applications/comission/commission";
-import { useSession } from '@/core/providers/SessionProvider';
 import DetailsSection from '@/components/molecules/DetailsSection/DetailsSection';
 import View from '@/components/molecules/applications/View';
 import MainButton from '@/components/atoms/buttons/MainButton';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
 import UserApplicationStatus from '@/core/interfaces/applications/applicationsStatus';
 import Modal from '@/components/templates/Modal';
+import { useRouter } from 'next/navigation';
+
 
 const CommissionViewComponent = ({ id }: { id: string }) => {
+  const router = useRouter();
   const [commission, setCommission] = useState<Commission>({} as Commission);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const [statuses, setStatuses] = useState<UserApplicationStatus[]>([]);
@@ -37,21 +39,21 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
     fetchData();
   }, [id]);
 
-  useEffect(() => {
-    if (commission) {
-      setStatuses(commission.status);
-    }
-  }, [commission]);
-
 
   const deleteData = async () => {
     const commissionCrud = new CommissionCRUD();
     try {
       await commissionCrud.deleteData(id);
+      setConfirmModal(false);
+      router.push("/");
       toast.success("Comisión eliminada exitosamente");
     } catch (err) {
       toast.error(`${err || "Hubo un problema al eliminar la comisión"}`);
     }
+  };
+
+  const navegate = async () => {
+    router.push(`/solicitudes/commission/editar/${id}`);
   };
 
   if (loading) return <div>Loading...</div>;
@@ -64,21 +66,15 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
         <DetailsSection data={commission} />
       </View>
       <div className='flex gap-4 mt-5'>
-        {
-          commission?.status?.[commission.status.length - 1]?.name === 'CREADA' &&
-          <MainButton text='Eliminar' bgColor='bg-red-500' onClick={() => setConfirmModal(true)}/>
-        }
-               {
-          commission?.status?.[commission.status.length - 1]?.name === 'CREADA' &&
-          <SecondaryButton text='Editar'/>
-        }
+        <MainButton text='Eliminar' bgColor='bg-red-500' onClick={() => setConfirmModal(true)} />
+        <SecondaryButton text='Editar' onClick={navegate} />
       </div>
       {confirmModal && (
         <Modal setModal={() => setConfirmModal(false)}>
           <h3 className="text-lg font-bold mb-4">¿Estás seguro de que deseas eliminar esta solicitud?</h3>
           <div className="flex justify-end gap-4">
             <SecondaryButton text="Cancelar" onClick={() => setConfirmModal(false)} />
-            <MainButton text='Eliminar' bgColor='bg-red-500' onClick={deleteData}/>
+            <MainButton text='Eliminar' bgColor='bg-red-500' onClick={deleteData} />
           </div>
         </Modal>
       )}

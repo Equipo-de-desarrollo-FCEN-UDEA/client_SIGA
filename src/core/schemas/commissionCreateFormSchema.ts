@@ -23,7 +23,7 @@ export const stepTwoSchema = z
   })
   .refine((data) => new Date(data.date_start) <= new Date(data.date_end), {
     message: "La fecha de inicio no puede ser posterior a la fecha de finalización.",
-    path: ["date_start"], // Asigna el error a `date_start`
+    path: ["date_start"],
   });
 
 export const stepThreeSchema = z.object({

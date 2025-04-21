@@ -1,5 +1,5 @@
 import "react-toastify/dist/ReactToastify.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import FormStepper from "@/components/molecules/FormStepper/FormStepper";
@@ -23,9 +23,11 @@ import View from "../components/View";
 import CommissionCRUD from "@/core/services/api/applications/commission";
 
 
-
-const FormCommission = () => {
+const EditCommissionComponent = ({ id }: { id: string }) => {
   const router = useRouter();
+  const [commission, setCommission] = useState<Commission>({} as Commission);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const methods = useForm<Commission>({
     resolver: zodResolver(combinedSchema),
   });
@@ -36,6 +38,24 @@ const FormCommission = () => {
   });
 
   const commissionCrud = new CommissionCRUD();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await commissionCrud.getById(id);
+        setCommission(data);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError(String(err));
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [id]);
 
   const onSubmit = async (data: {
     stepOne: StepOneFormData;
@@ -53,29 +73,24 @@ const FormCommission = () => {
       justification: data.stepThree.justification,
       documents: data.stepFour.documents
     }
-    try {
-      const response = await commissionCrud.create({ ...requestBody });
 
-      if (response.error) {
-        throw new Error(response.error.message || "Error al crear la comisión");
-      }
+    const response = await commissionCrud.updateData(id, { ...requestBody });
 
-      toast.success("Comisión creada exitosamente");
+    if (response.error)
+      throw new Error(response.error.message);
 
-      if (response) {
-        router.push(`/solicitudes/commission/ver/${response.id}`);
-      }
+    console.log(response);
 
-    } catch (error) {
-      toast.error(`${error || "Hubo un problema al crear la comisión"}`);
-    }
+    toast.success("Comisión editada exitosamente");
+
+    router.push(`/solicitudes/commission/ver/${response.id}`);
   };
 
   return (
-    <div className="max-h-2/3 border shadow-lg p-10 rounded-md w-full sm:mx-auto sm:w-auto my-3">
+    <div className="h-fit border shadow-lg p-5 rounded-md mx-auto mt-3">
+      <HeadingPrimary text="Editar Comisión" />
       <FormProvider {...methods}>
         <FormStepper
-          name="Crear Comisión"
           complete={complete}
           currentStep={currentStep}
           steps={steps}
@@ -84,13 +99,11 @@ const FormCommission = () => {
           onSubmit={onSubmit}
           handleSubmit={methods.handleSubmit}
         >
-          <div className="max-w-2x">
-            {currentStep === 1 && <Place />}
-            {currentStep === 2 && <Date />}
-            {currentStep === 3 && <Justification />}
-            {currentStep === 4 && <Documents />}
-            {currentStep === 5 && <View />}
-          </div>
+          {currentStep === 1 && <Place commissionPlace={{ country: commission.country, state: commission.state, city: commission.city }} />}
+          {currentStep === 2 && <Date commissionDate={{ date_start: commission.date_start, date_end: commission.date_end }} />}
+          {currentStep === 3 && <Justification commissionDetails={{ reason: commission.reason, justification: commission.justification }} />}
+          {currentStep === 4 && <Documents />}
+          {currentStep === 5 && <View />}
         </FormStepper>
       </FormProvider>
       <ToastContainer position="top-right" autoClose={3000} />
@@ -98,4 +111,4 @@ const FormCommission = () => {
   );
 };
 
-export default FormCommission;
+export default EditCommissionComponent;

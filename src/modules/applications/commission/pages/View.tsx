@@ -9,12 +9,14 @@ import MainButton from '@/components/atoms/buttons/MainButton';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
 import UserApplicationStatus from '@/core/interfaces/applications/applicationsStatus';
 import Modal from '@/components/templates/Modal';
+import UserApplication from '@/core/interfaces/applications/userApplication';
 import { useRouter } from 'next/navigation';
 
 
 const CommissionViewComponent = ({ id }: { id: string }) => {
   const router = useRouter();
   const [commission, setCommission] = useState<Commission>({} as Commission);
+  const [userApplication, setUserApplication] = useState<UserApplication|null>(null);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const [statuses, setStatuses] = useState<UserApplicationStatus[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -60,9 +62,9 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
   if (error) return <div>Error: {error}</div>;
 
 
-  return (
+  if (userApplication) return (
     <div className='max-w-2xl border shadow-lg p-10 rounded-md mx-auto mt-3'>
-      <View title="Ver Comision" statuses={statuses || []}>
+      <View title="Ver Comision" userApplication={userApplication}>
         <DetailsSection data={commission} />
       </View>
       <div className='flex gap-4 mt-5'>

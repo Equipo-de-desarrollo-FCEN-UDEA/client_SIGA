@@ -1,25 +1,33 @@
 services:
   nextjs:
     build:
-      context: ../
+      context: .
       dockerfile: Dockerfile.build
+    container_name: nextjs
     ports:
       - "3000:3000"
-    container_name: nextjs
+    volumes:
+      - ./:/src
+    env_file:
+      - ./prod.env
     networks:
       - siga-fcen
   nginx:
     build:
-      context: ../nginx
-      dockerfile: Dockerfile.prod
+      context: .
+      dockerfile: ./nginx/Dockerfile.prod
+    container_name: nginx
     expose:
       - "80"
     ports:
       - "80:80"
     restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - nextjs
     networks:
       - siga-fcen
-    mem_limit: 100m
 
 networks:
   siga-fcen:

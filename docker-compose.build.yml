@@ -9,7 +9,7 @@ services:
     volumes:
       - ./:/src
     env_file:
-      - ./prod.env
+      - .prod.env
     networks:
       - siga-fcen
   nginx:

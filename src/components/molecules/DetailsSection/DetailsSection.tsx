@@ -11,7 +11,7 @@ interface DetailsSectionProps {
 const DetailsSection: React.FC<DetailsSectionProps> = ({ data }) => {
   return (
     <div className="">
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-5">
         <LabelValue label="País" value={data.country} />
         <LabelValue label="Estado/Departamento" value={data.state} />
         <LabelValue label="Ciudad" value={data.city} />
@@ -22,10 +22,11 @@ const DetailsSection: React.FC<DetailsSectionProps> = ({ data }) => {
 
       {/* Reason */}
       <LabelValue label="Motivo de la comisión" value={data.reason} />
+
       <LabelValue label="Justificación" value={data.justification} />
 
       <AttachmentList documents={data.documents} />
-      
+
     </div>
   );
 };

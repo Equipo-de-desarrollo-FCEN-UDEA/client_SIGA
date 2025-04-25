@@ -21,6 +21,7 @@ const Create = () => {
   const methods = useForm<Purchase>({
     resolver: zodResolver(combinedSchema),
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const steps = ['Info. general', 'Cotizaciones', 'Confirmar'];
   const { currentStep, complete, nextStep, previusStep } = useStepperForm<Purchase>({
@@ -33,6 +34,7 @@ const Create = () => {
   const onSubmit = async (data: {
     stepOne: StepOneFormData;
   }) => {
+    setIsSubmitting(true);
     const formData = new FormData();
     formData.append('type', data.stepOne.type);
     formData.append('scope', data.stepOne.scope);
@@ -49,6 +51,7 @@ const Create = () => {
     if (response) {
       router.push(`/solicitudes/compra/ver/${response.id}`);
     }
+    setIsSubmitting(false);
   }
 
   return (
@@ -63,6 +66,7 @@ const Create = () => {
           onPrevius={previusStep}
           onSubmit={onSubmit}
           handleSubmit={methods.handleSubmit}
+          disabled={isSubmitting}
         >
           {currentStep === 1 && <GeneralInfo />}
           {currentStep === 2 && <UploadFiles files={files} setFiles={setFiles} />}

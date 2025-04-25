@@ -8,7 +8,6 @@ import DetailsSection from '@/components/molecules/DetailsSection/DetailsSection
 import View from '@/components/molecules/applications/View';
 import MainButton from '@/components/atoms/buttons/MainButton';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
-import UserApplicationStatus from '@/core/interfaces/applications/applicationsStatus';
 import Modal from '@/components/templates/Modal';
 import UserApplication from '@/core/interfaces/applications/userApplication';
 import { useRouter } from 'next/navigation';

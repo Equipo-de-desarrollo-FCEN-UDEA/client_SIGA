@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from "react-toastify";
 import CommissionCRUD from "@/core/services/api/applications/commission";
+import UserApplicationService from '@/core/services/api/applications/user_application';
 import { Commission } from "@/core/interfaces/applications/comission/commission";
 import DetailsSection from '@/components/molecules/DetailsSection/DetailsSection';
 import View from '@/components/molecules/applications/View';
 import MainButton from '@/components/atoms/buttons/MainButton';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
-import UserApplicationStatus from '@/core/interfaces/applications/applicationsStatus';
 import Modal from '@/components/templates/Modal';
 import UserApplication from '@/core/interfaces/applications/userApplication';
 import { useRouter } from 'next/navigation';
@@ -16,17 +16,19 @@ import { useRouter } from 'next/navigation';
 const CommissionViewComponent = ({ id }: { id: string }) => {
   const router = useRouter();
   const [commission, setCommission] = useState<Commission>({} as Commission);
-  const [userApplication, setUserApplication] = useState<UserApplication|null>(null);
+  const [userApplication, setUserApplication] = useState<UserApplication | null>(null);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
-  const [statuses, setStatuses] = useState<UserApplicationStatus[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const commissionCrud = new CommissionCRUD();
+    const userApplicationService = new UserApplicationService();
     const fetchData = async () => {
-      const commissionCrud = new CommissionCRUD();
       try {
         const data = await commissionCrud.getById(id);
+        const userApplicationResponse = await userApplicationService.getById(id);
+        setUserApplication(userApplicationResponse);
         setCommission(data);
       } catch (err) {
         if (err instanceof Error) {
@@ -63,7 +65,7 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
 
 
   if (userApplication) return (
-    <div className='max-w-2xl border shadow-lg p-10 rounded-md mx-auto mt-3'>
+    <div className="max-h-2/3 border shadow-lg p-10 rounded-md w-full sm:mx-auto sm:w-auto my-3">
       <View title="Ver Comision" userApplication={userApplication}>
         <DetailsSection data={commission} />
       </View>

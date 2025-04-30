@@ -18,7 +18,7 @@ const View = () => {
   };
 
   return (
-      <DetailsSection data={requestBody} />
+    <DetailsSection data={requestBody} />
   );
 };
 

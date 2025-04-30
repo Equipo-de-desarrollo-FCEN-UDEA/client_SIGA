@@ -1,5 +1,5 @@
 import "react-toastify/dist/ReactToastify.css";
-import React from "react";
+import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import FormStepper from "@/components/molecules/FormStepper/FormStepper";
@@ -18,17 +18,17 @@ import Date from "../components/Date";
 import { Documents } from "../components/Documents";
 import Place from "../components/Place";
 import Justification from "../components/Justification";
-import { HeadingPrimary } from "@/components/atoms/title/HeadingPrimary";
 import View from "../components/View";
 import CommissionCRUD from "@/core/services/api/applications/commission";
 
-
-
 const FormCommission = () => {
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const methods = useForm<Commission>({
     resolver: zodResolver(combinedSchema),
   });
+
   const steps = ["Lugar", "Fechas", "Justificación", "Documentos", "Finalizar"];
   const { currentStep, complete, nextStep, previusStep } = useStepperForm({
     methods,
@@ -43,6 +43,7 @@ const FormCommission = () => {
     stepThree: StepThreeFormData;
     stepFour: StepFourFormData;
   }) => {
+    setIsSubmitting(true);
     const requestBody: Commission = {
       country: data.stepOne.country,
       state: data.stepOne.state,
@@ -51,23 +52,23 @@ const FormCommission = () => {
       date_end: data.stepTwo.date_start,
       reason: data.stepThree.reason,
       justification: data.stepThree.justification,
-      documents: data.stepFour.documents
-    }
+      documents: data.stepFour.documents,
+    };
+
     try {
       const response = await commissionCrud.create({ ...requestBody });
 
-      if (response.error) {
+      if (response.error)
         throw new Error(response.error.message || "Error al crear la comisión");
-      }
 
       toast.success("Comisión creada exitosamente");
 
-      if (response) {
+      if (response)
         router.push(`/solicitudes/commission/ver/${response.id}`);
-      }
-
     } catch (error) {
       toast.error(`${error || "Hubo un problema al crear la comisión"}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -83,6 +84,7 @@ const FormCommission = () => {
           onPrevius={previusStep}
           onSubmit={onSubmit}
           handleSubmit={methods.handleSubmit}
+          disabled={isSubmitting}
         >
           <div className="max-w-2x">
             {currentStep === 1 && <Place />}

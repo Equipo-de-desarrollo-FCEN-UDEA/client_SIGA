@@ -13,6 +13,7 @@ type FormStepperProps = {
   currentStep: number;
   complete: boolean;
   name?: string;
+  disabled?: boolean;
   onNext: () => void;
   onPrevius: () => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,6 +27,7 @@ const FormStepper: React.FC<FormStepperProps> = ({
   currentStep,
   complete,
   name,
+  disabled,
   onNext,
   onPrevius,
   onSubmit,
@@ -75,7 +77,7 @@ const FormStepper: React.FC<FormStepperProps> = ({
         />
       )}
       {currentStep === steps.length && (
-        <MainButton buttonType="submit" text="Terminar" />
+        <MainButton buttonType="submit" text="Terminar" disabled={disabled} />
       )}
     </div>
   </form>

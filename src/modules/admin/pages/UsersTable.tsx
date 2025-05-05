@@ -5,14 +5,24 @@ import Link from "next/link";
 import { usePagination } from "pagination-react-js";
 import Pagination from "@components/molecules/Pagination/index";
 
-const UsersTable = ({ users }: { users: User[] }) => {
+interface UsersTableProps {
+  users: User[];
+  pages: number;
+  currentPage: number;
+  total: number;
+  limit: number;
+  offSet: number;
+  onPageChange: (page: number) => void;
+}
+
+const UsersTable = ({ users, pages, currentPage, total, limit, offSet, onPageChange  }: UsersTableProps) => {
   // Hook to handle pagination
   const { records, pageNumbers, setActivePage } =
     usePagination({
-      activePage: 1,
-      recordsPerPage: 7,
-      totalRecordsLength: users.length,
-      offset: 2,
+      activePage: currentPage,
+      recordsPerPage: limit,
+      totalRecordsLength: total,
+      offset: offSet,
       navCustomPageSteps: { prev: 3, next: 3 },
       permanentFirstNumber: true,
       permanentLastNumber: true,
@@ -22,9 +32,11 @@ const UsersTable = ({ users }: { users: User[] }) => {
   function updateActivePage(pageNumber: number | false) {
     if (pageNumber) {
       setActivePage(pageNumber);
+      onPageChange(pageNumber);
     }
   }
 
+  console.log("pageNumbers " + pageNumbers.lastPage)
   return (
     <div className="w-full flex flex-col items-center mt-4">
       <h1 className="font-bold text-2xl mb-2">Lista de Usuarios</h1>
@@ -48,7 +60,6 @@ const UsersTable = ({ users }: { users: User[] }) => {
         <tbody className="text-gray-700">
           {users.length > 0 ? (
             users
-              .slice(records.indexOfFirst, records.indexOfLast + 1)
               .map((user: User) => (
                 <tr
                   key={user.id}

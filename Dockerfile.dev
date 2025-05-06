@@ -9,7 +9,7 @@ COPY package*.json ./
 RUN npm install
 
 # Copia el resto del código fuente
-COPY . .
+COPY .. ..
 
 # Define las variables de entorno para desarrollo
 ENV NODE_ENV=development

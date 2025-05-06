@@ -1,35 +1,22 @@
 services:
-  # nextjs:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.build
-  #   container_name: nextjs
-  #   ports:
-  #     - "3000:3000"
-  #   expose:
-  #     - "3000"
-  #   volumes:
-  #     - ./:/src
-  #   env_file:
-  #     - prod.env
-  #   networks:
-  #     - siga-fcen
-  nginx:
+  nextjs:
     build:
       context: .
-      dockerfile: ./nginx/Dockerfile.prod
-    container_name: nginx
-    expose:
-      - "80"
+      dockerfile: Dockerfile.build
+      args:
+        NEXT_PUBLIC_API_URL: "https://backend/api/v1"
+    container_name: nextjs
     ports:
-      - "80:80"
-    restart: always
+      - "3000:3000"
+    expose:
+      - "3000"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./certs:/etc/nginx/ssl
+      - ./:/src
+    env_file:
+      - ./prod.env
     networks:
-      - siga-fcen
+      - front-red
 
 networks:
-  siga-fcen:
+  front-red:
     external: true

@@ -9,7 +9,7 @@ COPY package.json package-lock.json ./
 RUN npm install
 
 # Copiar el archivo de variables de entorno
-COPY .env.prod .env
+COPY ./.env.prod .env
 
 # Copiar el resto del código fuente
 COPY src ./src

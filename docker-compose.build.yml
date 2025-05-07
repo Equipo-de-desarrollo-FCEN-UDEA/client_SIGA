@@ -11,7 +11,7 @@ services:
     volumes:
       - ./:/src
     env_file:
-      - .env.prod
+      - ./.env.prod
     networks:
       - front-red
 

@@ -11,6 +11,7 @@ services:
       - "3000"
     networks:
       - siga-fcen
+
   cert-generator:
     image: alpine:latest
     container_name: cert-generator

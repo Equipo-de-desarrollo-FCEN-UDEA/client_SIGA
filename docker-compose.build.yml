@@ -3,8 +3,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.build
-      args:
-        NEXT_PUBLIC_API_URL: "https://backend/api/v1"
     container_name: nextjs
     ports:
       - "3000:3000"

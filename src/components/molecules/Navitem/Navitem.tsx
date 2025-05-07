@@ -28,7 +28,7 @@ export const NavApplications = () =>
     },
     {
       title: "Comisión",
-      href: "/solicitudes/commission/crear",
+      href: "/solicitudes/comision/crear",
       icon: <FaPersonWalkingLuggage size={25} />
     }
   ]);

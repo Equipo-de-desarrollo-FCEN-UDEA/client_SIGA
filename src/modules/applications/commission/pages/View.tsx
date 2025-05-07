@@ -69,7 +69,7 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
       <View title="Ver Comision" userApplication={userApplication}>
         <DetailsSection data={commission} />
       </View>
-      <div className='flex gap-4 mt-5'>
+      {/* <div className='flex gap-4 mt-5'>
         <MainButton text='Eliminar' bgColor='bg-red-500' onClick={() => setConfirmModal(true)} />
         <SecondaryButton text='Editar' onClick={navegate} />
       </div>
@@ -81,7 +81,7 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
             <MainButton text='Eliminar' bgColor='bg-red-500' onClick={deleteData} />
           </div>
         </Modal>
-      )}
+      )} */}
     </div>
   );
 }

@@ -83,7 +83,7 @@ const EditCommissionComponent = ({ id }: { id: string }) => {
 
     toast.success("Comisión editada exitosamente");
 
-    router.push(`/solicitudes/commission/ver/${response.id}`);
+    router.push(`/solicitudes/commision/ver/${response.id}`);
   };
 
   return (

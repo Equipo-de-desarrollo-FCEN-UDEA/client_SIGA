@@ -35,7 +35,7 @@ const FormCommission = () => {
     combinedSchema,
   });
 
-  const commissionCrud = new CommissionCRUD();
+  const puchaseService = new CommissionCRUD()
 
   const onSubmit = async (data: {
     stepOne: StepOneFormData;
@@ -44,33 +44,37 @@ const FormCommission = () => {
     stepFour: StepFourFormData;
   }) => {
     setIsSubmitting(true);
-    const requestBody: Commission = {
-      country: data.stepOne.country,
-      state: data.stepOne.state,
-      city: data.stepOne.city,
-      date_start: data.stepTwo.date_start,
-      date_end: data.stepTwo.date_start,
-      reason: data.stepThree.reason,
-      justification: data.stepThree.justification,
-      documents: data.stepFour.documents,
-    };
-
+  
+    const formData = new FormData();
+    formData.append("country", data.stepOne.country);
+    formData.append("state", data.stepOne.state);
+    formData.append("city", data.stepOne.city);
+    formData.append("date_start", data.stepTwo.date_start);
+    formData.append("date_end", data.stepTwo.date_end);
+    formData.append("reason", data.stepThree.reason);
+    formData.append("justification", data.stepThree.justification);
+  
+    if (data.stepFour.documents && data.stepFour.documents.length > 0) {
+      data.stepFour.documents.forEach((file: File) => {
+        formData.append("documents", file);
+      });
+    }
+  
     try {
-      const response = await commissionCrud.create({ ...requestBody });
-
+      const response = await  puchaseService.create(formData);
+  
       if (response.error)
         throw new Error(response.error.message || "Error al crear la comisión");
-
+  
       toast.success("Comisión creada exitosamente");
-
-      if (response)
-        router.push(`/solicitudes/commission/ver/${response.id}`);
+      router.push(`/solicitudes/comision/ver/${response.id}`);
     } catch (error) {
       toast.error(`${error || "Hubo un problema al crear la comisión"}`);
     } finally {
       setIsSubmitting(false);
     }
   };
+  
 
   return (
     <div className="max-h-2/3 border shadow-lg p-10 rounded-md w-full sm:mx-auto sm:w-auto my-3">

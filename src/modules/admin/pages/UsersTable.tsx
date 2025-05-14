@@ -36,7 +36,6 @@ const UsersTable = ({ users, pages, currentPage, total, limit, offSet, onPageCha
     }
   }
 
-  console.log("pageNumbers " + pageNumbers.lastPage)
   return (
     <div className="w-full flex flex-col items-center mt-4">
       <h1 className="font-bold text-2xl mb-2">Lista de Usuarios</h1>

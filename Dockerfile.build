@@ -8,12 +8,15 @@ WORKDIR /src
 COPY package.json package-lock.json ./
 RUN npm install
 
+# Copiar el archivo de variables de entorno
+COPY .env.prod .env
+
+# Copiar el resto del código fuente
 COPY src ./src
 COPY next.config.mjs ./
 COPY tsconfig.json ./
 COPY tailwind.config.ts ./
 COPY postcss.config.mjs ./
-COPY .. ..
 
 # Construir la aplicación Next.js
 RUN npm run build

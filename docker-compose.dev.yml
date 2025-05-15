@@ -12,9 +12,9 @@ services:
     env_file:
       - ./.env
     networks:
-      - siga-fcen
+      - front-red
     command: ["npm", "run", "dev"]
 
 networks:
-  siga-fcen:
+  front-red:
     external: true

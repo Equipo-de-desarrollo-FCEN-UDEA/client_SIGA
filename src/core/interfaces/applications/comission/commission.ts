@@ -1,6 +1,10 @@
 import { UUID } from "crypto";
 
-export interface Commission {
+export interface CommissionRequest {
+  academic_unit_id: UUID | null;
+}
+
+interface Commission {
   id?: UUID;
   country: string;
   state: string;
@@ -11,3 +15,5 @@ export interface Commission {
   justification: string;
   documents: File[];
 }
+
+export default Commission;

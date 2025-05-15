@@ -1,5 +1,5 @@
 import { useFormContext, useWatch } from "react-hook-form";
-import { Commission } from "@/core/interfaces/applications/comission/commission";
+import Commission from "@/core/interfaces/applications/comission/commission";
 import DetailsSection from "@/components/molecules/DetailsSection/DetailsSection";
 
 const View = () => {

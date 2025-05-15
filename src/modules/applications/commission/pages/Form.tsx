@@ -6,7 +6,7 @@ import FormStepper from "@/components/molecules/FormStepper/FormStepper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStepperForm } from "@/core/hooks/useStepperForm";
 import { useForm, FormProvider } from "react-hook-form";
-import { Commission } from "@/core/interfaces/applications/comission/commission";
+import Commission from "@/core/interfaces/applications/comission/commission";
 import {
   combinedSchema,
   StepOneFormData,

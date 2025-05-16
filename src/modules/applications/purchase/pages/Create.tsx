@@ -54,6 +54,18 @@ const Create = () => {
     setIsSubmitting(false);
   }
 
+  const [fileError, setFileError] = useState<string | null>(null);
+
+  const handleNextStep = () => {
+    if (currentStep === 2 && files.length < 2) {
+      setFileError("Debe subir al menos dos cotizaciones.");
+      return;
+    }
+    setFileError(null);
+    nextStep();
+  };
+
+
   return (
     <div className="max-h-2/3 border shadow-lg p-10 rounded-md w-full sm:mx-auto sm:w-auto my-3">
       <FormProvider {...methods}>
@@ -62,7 +74,7 @@ const Create = () => {
           complete={complete}
           currentStep={currentStep}
           steps={steps}
-          onNext={nextStep}
+          onNext={handleNextStep}
           onPrevius={previusStep}
           onSubmit={onSubmit}
           handleSubmit={methods.handleSubmit}
@@ -73,6 +85,10 @@ const Create = () => {
           {currentStep === 3 && <Confirm />}
         </FormStepper>
       </FormProvider>
+      {fileError && (
+        <h2 className="text-red-600 mt-2">{fileError}</h2>
+      )}
+
     </div>
   )
 }

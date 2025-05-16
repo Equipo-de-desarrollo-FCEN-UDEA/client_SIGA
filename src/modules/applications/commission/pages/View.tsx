@@ -75,17 +75,25 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
     fetchData();
   }, [id]);
 
+  const advanceStatus = async (academicUnitId: string | null) => {
+    await new CommissionCRUD().advanceCommissionStatus(
+      id as UUID,
+      { academic_unit_id: academicUnitId as UUID | null },
+      true
+    );
+    window.location.reload();
+  };
+  
   const createVoting = async () => {
     if (academicUnitId) {
-      await new CommissionCRUD().advanceCommissionStatus(id as UUID, { academic_unit_id: academicUnitId }, true);
-      window.location.reload();
+      await advanceStatus(academicUnitId);
     }
-  }
-
+  };
+  
   const approveApplication = async () => {
-    await new CommissionCRUD().advanceCommissionStatus(id as UUID, { academic_unit_id: null }, true);
-    window.location.reload();
-  }
+    await advanceStatus(null);
+  };
+  
 
   const deleteData = async () => {
     const commissionCrud = new CommissionCRUD();
@@ -133,7 +141,8 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
               <MainButton text="Responder" onClick={() => setModal(true)} />
             )}
             {
-              (isRepresentative || isAuxiliar) && (
+              (isRepresentative || isAuxiliar) && 
+              (
                 <MainButton text="Rechazar Solicitud" onClick={() => { setRejectModal(true) }} bgColor='bg-red-500' />
               )
             }

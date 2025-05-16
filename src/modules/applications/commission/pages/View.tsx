@@ -44,6 +44,10 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
     return diffInDays > 30;
   })();
 
+  const statusName = userApplication?.user_application_status[0]?.status.name;
+  const academicUnitId = userApplication?.user_application_academic_units[0]?.academic_unit.id;
+  const isRepresentative = user?.scopes.includes(`representante:${academicUnitId}`);
+  const isAuxiliar = user?.scopes.includes(`auxiliar:${academicUnitId}`);
 
   //modals
   const [rejectModal, setRejectModal] = useState<boolean>(false);
@@ -72,7 +76,6 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
   }, [id]);
 
   const createVoting = async () => {
-    const academicUnitId = userApplication?.user_application_academic_units[0]?.academic_unit.id;
     if (academicUnitId) {
       await new CommissionCRUD().advanceCommissionStatus(id as UUID, { academic_unit_id: academicUnitId }, true);
       window.location.reload();
@@ -113,28 +116,24 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
         userApplication?.user_application_status.at(0)?.status.name !== 'FINISHED' && (
           <div className='flex gap-4 my-3'>
             {
-              (userApplication?.user_application_status[0].status.name === 'CREATED') &&
+              statusName === 'CREATED' &&
               exceedsThirtyDays &&
-              user?.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit.id) &&
+              isRepresentative &&
               <MainButton text="Enviar a votación" onClick={() => setConfirmModal(true)} />
             }
-
             {
-              (userApplication?.user_application_status[0].status.name === 'CREATED' &&
-              !exceedsThirtyDays ||
-              userApplication?.user_application_status[0].status.name === 'IN_INSTITUTE' ||
-              userApplication?.user_application_status[0].status.name === 'IN_DEAN') &&
-              user?.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit.id) &&
+              (statusName === 'CREATED' && !exceedsThirtyDays ||
+              statusName === 'IN_INSTITUTE' ||
+              statusName === 'IN_DEAN') &&
+              isRepresentative &&
               <MainButton text="Aprobar Solicitud" onClick={() => setResponseModal(true)} />
             }
 
-            {userApplication?.user_application_academic_units[0] && user?.scopes && user.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit_id) && (
+            {userApplication && isRepresentative && (
               <MainButton text="Responder" onClick={() => setModal(true)} />
             )}
             {
-              (user?.scopes.includes(`representante:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) ||
-                user?.scopes.includes(`auxiliar:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`)) &&
-              (
+              (isRepresentative || isAuxiliar) && (
                 <MainButton text="Rechazar Solicitud" onClick={() => { setRejectModal(true) }} bgColor='bg-red-500' />
               )
             }
@@ -144,7 +143,7 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
       {modal && (
         <Response
           user_application_id={commission?.id as string}
-          academic_unit_id={userApplication?.user_application_academic_units[0]?.academic_unit_id as string}
+          academic_unit_id={academicUnitId as string}
         />
       )}
       {confirmModal && (
@@ -167,7 +166,9 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
         </Modal>
       )}
       {rejectModal && userApplication && (
-          <Reject userApplicationId={userApplication?.id} setRejectModal={setRejectModal} />
+        <Reject 
+        userApplicationId={userApplication?.id} 
+        setRejectModal={setRejectModal} />
       )}
 
     </div>

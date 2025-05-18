@@ -17,7 +17,7 @@ interface UsersTableProps {
 
 const UsersTable = ({ users, pages, currentPage, total, limit, offSet, onPageChange  }: UsersTableProps) => {
   // Hook to handle pagination
-  const { records, pageNumbers, setActivePage } =
+  const { pageNumbers, setActivePage } =
     usePagination({
       activePage: currentPage,
       recordsPerPage: limit,

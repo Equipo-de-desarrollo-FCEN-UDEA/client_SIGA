@@ -15,7 +15,18 @@ type PaginationProps = {
   updateActivePage: (pageNumber: number | false) => void;
 };
 
-const Pagination = ({ pageNumbers, updateActivePage }: PaginationProps) => (
+const Pagination = ({ pageNumbers, updateActivePage }: PaginationProps) => {
+  // Limitar la cantidad de páginas visibles (Ejemplo: 3 páginas anteriores y 3 páginas posteriores)
+  const pageLimit = 3;
+  const startPage = Math.max(pageNumbers.activePage - pageLimit, pageNumbers.firstPage);
+  const endPage = Math.min(pageNumbers.activePage + pageLimit, pageNumbers.lastPage);
+
+  const visiblePages = [];
+  for (let i = startPage; i <= endPage; i++) {
+    visiblePages.push(i);
+  }
+
+  return (
     <nav className="mt-4" role="navigation" aria-label="Pagination Navigation">
       <ul className="pagination">
         <PaginationItem
@@ -34,58 +45,17 @@ const Pagination = ({ pageNumbers, updateActivePage }: PaginationProps) => (
           &lsaquo;
         </PaginationItem>
 
-        <PaginationItem
-          label={`Goto first page ${pageNumbers.firstPage}`}
-          active={pageNumbers.firstPage === pageNumbers.activePage}
-          onClick={() => updateActivePage(pageNumbers.firstPage)}
-        >
-          {pageNumbers.firstPage}
-        </PaginationItem>
-
-        {pageNumbers.customPreviousPage && (
+        {/* Mostrar las páginas visibles */}
+        {visiblePages.map((page) => (
           <PaginationItem
-            label={`Goto page ${pageNumbers.customPreviousPage}`}
-            onClick={() => updateActivePage(pageNumbers.customPreviousPage)}
+            key={page}
+            label={`Goto page ${page}`}
+            active={page === pageNumbers.activePage}
+            onClick={() => updateActivePage(page)}
           >
-            &middot;&middot;&middot;
+            {page}
           </PaginationItem>
-        )}
-
-        {pageNumbers.navigation.map((navigationNumber) => {
-          const isFirstOrLastPage =
-            navigationNumber === pageNumbers.firstPage ||
-            navigationNumber === pageNumbers.lastPage;
-
-          return isFirstOrLastPage ? null : (
-            <PaginationItem
-              label={`Goto page ${navigationNumber}`}
-              key={navigationNumber}
-              active={navigationNumber === pageNumbers.activePage}
-              onClick={() => updateActivePage(navigationNumber)}
-            >
-              {navigationNumber}
-            </PaginationItem>
-          );
-        })}
-
-        {pageNumbers.customNextPage && (
-          <PaginationItem
-            label={`Goto page ${pageNumbers.customNextPage}`}
-            onClick={() => updateActivePage(pageNumbers.customNextPage)}
-          >
-            &middot;&middot;&middot;
-          </PaginationItem>
-        )}
-
-        {pageNumbers.firstPage !== pageNumbers.lastPage && (
-          <PaginationItem
-            label={`Goto last page ${pageNumbers.lastPage}`}
-            active={pageNumbers.lastPage === pageNumbers.activePage}
-            onClick={() => updateActivePage(pageNumbers.lastPage)}
-          >
-            {pageNumbers.lastPage}
-          </PaginationItem>
-        )}
+        ))}
 
         <PaginationItem
           label={`Goto next page ${pageNumbers.nextPage}`}
@@ -105,5 +75,6 @@ const Pagination = ({ pageNumbers, updateActivePage }: PaginationProps) => (
       </ul>
     </nav>
   );
+};
 
 export default Pagination;

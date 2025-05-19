@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { toast } from "react-toastify";
 import CommissionCRUD from "@/core/services/api/applications/commission";
 import UserApplicationService from '@/core/services/api/applications/user_application';
 import Commission from "@/core/interfaces/applications/comission/commission";
@@ -9,13 +8,11 @@ import View from '@/components/molecules/applications/View';
 import MainButton from '@/components/atoms/buttons/MainButton';
 import UserApplication from '@/core/interfaces/applications/userApplication';
 import ApplicationModals from '../../components/molecules/ApplicationModals';
-import { useRouter } from 'next/navigation';
 import { useSession } from '@/core/providers/SessionProvider';
 import { UUID } from 'crypto';
 
 
 const CommissionViewComponent = ({ id }: { id: string }) => {
-  const router = useRouter();
   const [commission, setCommission] = useState<Commission>({} as Commission);
 
   const [modal, setModal] = useState<boolean>(false);

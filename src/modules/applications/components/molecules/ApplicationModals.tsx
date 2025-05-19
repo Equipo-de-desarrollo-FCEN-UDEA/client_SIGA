@@ -4,7 +4,7 @@ import Reject from '@/modules/applications/components/molecules/Reject';
 import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
 import MainButton from '@/components/atoms/buttons/MainButton';
 
-interface ApplicationModalsProps {
+type ApplicationModalsProps = Readonly<{
   modal: boolean;
   confirmModal: boolean;
   responseModal: boolean;
@@ -17,7 +17,7 @@ interface ApplicationModalsProps {
   setRejectModal: React.Dispatch<React.SetStateAction<boolean>>;
   createVoting: () => void;
   approveApplication: () => void;
-}
+}>;
 
 export default function ApplicationModals(props: ApplicationModalsProps) {
   return (

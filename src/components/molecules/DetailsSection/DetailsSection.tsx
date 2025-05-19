@@ -1,6 +1,6 @@
 import AttachmentList from "@/components/atoms/attachmentList/AttachmentList";
 import { LabelValue } from "@/components/atoms/label/LabelValue";
-import { Commission } from "@/core/interfaces/applications/comission/commission";
+import Commission from "@/core/interfaces/applications/comission/commission";
 import React from "react";
 
 
@@ -18,7 +18,20 @@ const DetailsSection: React.FC<DetailsSectionProps> = ({ data }) => {
       </div>
 
       {/* Dates */}
-      <LabelValue label="Fechas" value={`${data.date_start} - ${data.date_end}`} />
+      {/* <LabelValue label="Fechas" value={`${data.date_start} - ${data.date_end}`} /> */}
+      <LabelValue
+        label="Fechas"
+        value={`${new Date(data.date_start).toLocaleDateString('es-CO', {
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric'
+        })} - ${new Date(data.date_end).toLocaleDateString('es-CO', {
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric'
+        })}`}
+      />
+
 
       {/* Reason */}
       <LabelValue label="Motivo de la comisión" value={data.reason} />

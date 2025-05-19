@@ -9,7 +9,6 @@ const AttachmentList: React.FC<AttachmentListProps> = ({ documents }) => {
 
   return (
     <div>
-      <span className="text-sm font-semibold text-gray-900">Archivos adjuntos de la solicitud</span>
       <ul className="space-y-2">
         {documents.map((file, index) => (
           <li key={index}>

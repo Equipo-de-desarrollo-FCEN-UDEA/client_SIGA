@@ -91,23 +91,6 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
     await advanceStatus(null);
   };
 
-
-  const deleteData = async () => {
-    const commissionCrud = new CommissionCRUD();
-    try {
-      await commissionCrud.deleteData(id);
-      setConfirmModal(false);
-      router.push("/");
-      toast.success("Comisión eliminada exitosamente");
-    } catch (err) {
-      toast.error(`${err || "Hubo un problema al eliminar la comisión"}`);
-    }
-  };
-
-  const navegate = async () => {
-    router.push(`/solicitudes/commission/editar/${id}`);
-  };
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 

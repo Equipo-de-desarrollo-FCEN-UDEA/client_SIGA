@@ -19,54 +19,41 @@ interface ApplicationModalsProps {
   approveApplication: () => void;
 }
 
-export default function ApplicationModals({
-  modal,
-  confirmModal,
-  responseModal,
-  rejectModal,
-  userApplication,
-  applicationId,
-  academicUnitId,
-  setConfirmModal,
-  setResponseModal,
-  setRejectModal,
-  createVoting,
-  approveApplication
-}: ApplicationModalsProps) {
+export default function ApplicationModals(props: ApplicationModalsProps) {
   return (
     <>
-      {modal && (
+      {props.modal && (
         <Response
-          user_application_id={applicationId}
-          academic_unit_id={academicUnitId}
+          user_application_id={props.applicationId}
+          academic_unit_id={props.academicUnitId}
         />
       )}
 
-      {confirmModal && (
-        <Modal setModal={() => setConfirmModal(false)}>
+      {props.confirmModal && (
+        <Modal setModal={() => props.setConfirmModal(false)}>
           <h3 className="text-lg font-bold mb-4">¿Estás seguro de que deseas enviar esta solicitud?</h3>
           <div className="flex justify-end gap-4">
-            <SecondaryButton text="Cancelar" onClick={() => setConfirmModal(false)} />
-            <MainButton text="Confirmar" onClick={createVoting} />
+            <SecondaryButton text="Cancelar" onClick={() => props.setConfirmModal(false)} />
+            <MainButton text="Confirmar" onClick={props.createVoting} />
           </div>
         </Modal>
       )}
 
-      {responseModal && (
-        <Modal setModal={() => setResponseModal(false)}>
+      {props.responseModal && (
+        <Modal setModal={() => props.setResponseModal(false)}>
           <h3 className="text-lg font-bold mb-4">Responder solicitud</h3>
           <p>¿Estás seguro de que deseas aprobar esta solicitud?</p>
           <div className="flex justify-end gap-4">
-            <SecondaryButton text="Cancelar" onClick={() => setResponseModal(false)} />
-            <MainButton text="Aprobar" onClick={approveApplication} />
+            <SecondaryButton text="Cancelar" onClick={() => props.setResponseModal(false)} />
+            <MainButton text="Aprobar" onClick={props.approveApplication} />
           </div>
         </Modal>
       )}
 
-      {rejectModal && userApplication && (
+      {props.rejectModal && props.userApplication && (
         <Reject 
-          userApplicationId={userApplication.id} 
-          setRejectModal={setRejectModal} 
+          userApplicationId={props.userApplication.id} 
+          setRejectModal={props.setRejectModal} 
         />
       )}
     </>

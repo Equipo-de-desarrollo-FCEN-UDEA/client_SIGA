@@ -6,12 +6,9 @@ import UserApplicationService from '@/core/services/api/applications/user_applic
 import Commission from "@/core/interfaces/applications/comission/commission";
 import DetailsSection from '@/components/molecules/DetailsSection/DetailsSection';
 import View from '@/components/molecules/applications/View';
-import Response from '@/modules/applications/components/molecules/Response';
 import MainButton from '@/components/atoms/buttons/MainButton';
-import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
-import Modal from '@/components/templates/Modal';
 import UserApplication from '@/core/interfaces/applications/userApplication';
-import Reject from '@/modules/applications/components/molecules/Reject';
+import ApplicationModals from '../../components/molecules/ApplicationModals';
 import { useRouter } from 'next/navigation';
 import { useSession } from '@/core/providers/SessionProvider';
 import { UUID } from 'crypto';
@@ -83,17 +80,17 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
     );
     window.location.reload();
   };
-  
+
   const createVoting = async () => {
     if (academicUnitId) {
       await advanceStatus(academicUnitId);
     }
   };
-  
+
   const approveApplication = async () => {
     await advanceStatus(null);
   };
-  
+
 
   const deleteData = async () => {
     const commissionCrud = new CommissionCRUD();
@@ -131,8 +128,8 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
             }
             {
               (statusName === 'CREATED' && !exceedsThirtyDays ||
-              statusName === 'IN_INSTITUTE' ||
-              statusName === 'IN_DEAN') &&
+                statusName === 'IN_INSTITUTE' ||
+                statusName === 'IN_DEAN') &&
               isRepresentative &&
               <MainButton text="Aprobar Solicitud" onClick={() => setResponseModal(true)} />
             }
@@ -141,7 +138,7 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
               <MainButton text="Responder" onClick={() => setModal(true)} />
             )}
             {
-              (isRepresentative || isAuxiliar) && 
+              (isRepresentative || isAuxiliar) &&
               (
                 <MainButton text="Rechazar Solicitud" onClick={() => { setRejectModal(true) }} bgColor='bg-red-500' />
               )
@@ -149,37 +146,20 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
           </div>
         )}
 
-      {modal && (
-        <Response
-          user_application_id={commission?.id as string}
-          academic_unit_id={academicUnitId as string}
-        />
-      )}
-      {confirmModal && (
-        <Modal setModal={() => setConfirmModal(false)}>
-          <h3 className="text-lg font-bold mb-4">¿Estás seguro de que deseas enviar esta solicitud?</h3>
-          <div className="flex justify-end gap-4">
-            <SecondaryButton text="Cancelar" onClick={() => setConfirmModal(false)} />
-            <MainButton text="Confirmar" onClick={createVoting} />
-          </div>
-        </Modal>
-      )}
-      {responseModal && (
-        <Modal setModal={() => setResponseModal(false)}>
-          <h3 className="text-lg font-bold mb-4">Responder solicitud</h3>
-          <p>¿Estás seguro de que deseas aprobar esta solicitud?</p>
-          <div className="flex justify-end gap-4">
-            <SecondaryButton text="Cancelar" onClick={() => setResponseModal(false)} />
-            <MainButton text="Aprobar" onClick={approveApplication} />
-          </div>
-        </Modal>
-      )}
-      {rejectModal && userApplication && (
-        <Reject 
-        userApplicationId={userApplication?.id} 
-        setRejectModal={setRejectModal} />
-      )}
-
+      <ApplicationModals
+        modal={modal}
+        confirmModal={confirmModal}
+        responseModal={responseModal}
+        rejectModal={rejectModal}
+        userApplication={userApplication}
+        applicationId={commission?.id as string}
+        academicUnitId={academicUnitId as string}
+        setConfirmModal={setConfirmModal}
+        setResponseModal={setResponseModal}
+        setRejectModal={setRejectModal}
+        createVoting={createVoting}
+        approveApplication={approveApplication}
+      />
     </div>
   );
 }

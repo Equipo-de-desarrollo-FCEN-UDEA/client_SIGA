@@ -4,14 +4,11 @@ import Mobility from '@/core/interfaces/applications/mobility/mobility'
 import MobilityCRUD from '@/core/services/api/applications/mobility'
 import View from '@/components/molecules/applications/View';
 import { useSession } from '@/core/providers/SessionProvider'
-import Response from '@/modules/applications/components/molecules/Response';
 import MainButton from '@/components/atoms/buttons/MainButton';
-import SecondaryButton from '@/components/atoms/buttons/SecondaryButton';
-import Modal from '@/components/templates/Modal';
 import UserApplication from '@/core/interfaces/applications/userApplication';
 import UserApplicationService from '@/core/services/api/applications/user_application';
-import Reject from '@/modules/applications/components/molecules/Reject';
 import { UUID } from 'crypto';
+import ApplicationModals from '../../components/molecules/ApplicationModals';
 
 const Page = ({ id }: { id: string }) => {
 
@@ -98,63 +95,48 @@ const Page = ({ id }: { id: string }) => {
         </div>
 
       </View>
-      {userApplication?.user_application_status.at(0)?.status.name !== 'REJECTED' && 
-      userApplication?.user_application_status.at(0)?.status.name !== 'FINISHED' &&(
-        <div className='flex gap-4 my-3'>
-          {
-            userApplication?.user_application_status[0].status.name === 'CREATED' &&
-            user?.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit.id) &&
-            <MainButton text="Enviar a votación" onClick={() => setConfirmModal(true)} />
-          }
+      {userApplication?.user_application_status.at(0)?.status.name !== 'REJECTED' &&
+        userApplication?.user_application_status.at(0)?.status.name !== 'FINISHED' && (
+          <div className='flex gap-4 my-3'>
+            {
+              userApplication?.user_application_status[0].status.name === 'CREATED' &&
+              user?.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit.id) &&
+              <MainButton text="Enviar a votación" onClick={() => setConfirmModal(true)} />
+            }
 
-          {
-            (userApplication?.user_application_status[0].status.name === 'IN_INTERNATIONAL' || 
-            userApplication?.user_application_status[0].status.name ===  'IN_DEAN') &&
-            user?.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit.id) &&
-            <MainButton text="Aprobar Solicitud" onClick={() => setResponseModal(true)} />
-          }
+            {
+              (userApplication?.user_application_status[0].status.name === 'IN_INTERNATIONAL' ||
+                userApplication?.user_application_status[0].status.name === 'IN_DEAN') &&
+              user?.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit.id) &&
+              <MainButton text="Aprobar Solicitud" onClick={() => setResponseModal(true)} />
+            }
 
-          {userApplication?.user_application_academic_units[0] && user?.scopes && user.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit_id) && (
-            <MainButton text="Responder" onClick={() => setModal(true)} />
-          )}
-          {(user?.scopes.includes(`representante:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) ||
-          user?.scopes.includes(`auxiliar:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) )&&
-          (
-          <MainButton text="Rechazar Solicitud" onClick={() => { setRejectModal(true) }} bgColor='bg-red-500' />
-          )
-          }
-        </div>
-      )}
-
-      {modal && (
-        <Response
-          user_application_id={mobility?.id as string}
-          academic_unit_id={userApplication?.user_application_academic_units[0]?.academic_unit_id as string}
-        />
-      )}
-
-      {confirmModal && (
-        <Modal setModal={() => setConfirmModal(false)}>
-          <h3 className="text-lg font-bold mb-4">¿Estás seguro de que deseas enviar esta solicitud?</h3>
-          <div className="flex justify-end gap-4">
-            <SecondaryButton text="Cancelar" onClick={() => setConfirmModal(false)} />
-            <MainButton text="Confirmar" onClick={createVoting} />
+            {userApplication?.user_application_academic_units[0] && user?.scopes && user.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit_id) && (
+              <MainButton text="Responder" onClick={() => setModal(true)} />
+            )}
+            {(user?.scopes.includes(`representante:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) ||
+              user?.scopes.includes(`auxiliar:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`)) &&
+              (
+                <MainButton text="Rechazar Solicitud" onClick={() => { setRejectModal(true) }} bgColor='bg-red-500' />
+              )
+            }
           </div>
-        </Modal>
-      )}
-      {responseModal && (
-        <Modal setModal={() => setResponseModal(false)}>
-          <h3 className="text-lg font-bold mb-4">Responder solicitud</h3>
-          <p>¿Estás seguro de que deseas aprobar esta solicitud?</p>
-          <div className="flex justify-end gap-4">
-            <SecondaryButton text="Cancelar" onClick={() => setResponseModal(false)} />
-            <MainButton text="Aprobar" onClick={approveApplication} />
-          </div>
-        </Modal>
-      )}
-      {rejectModal && userApplication && (
-          <Reject userApplicationId={userApplication?.id} setRejectModal={setRejectModal} />
-      )}
+        )}
+
+      <ApplicationModals
+        modal={modal}
+        confirmModal={confirmModal}
+        responseModal={responseModal}
+        rejectModal={rejectModal}
+        userApplication={userApplication}
+        applicationId={mobility?.id as string}
+        academicUnitId={userApplication?.user_application_academic_units[0]?.academic_unit_id as string}
+        setConfirmModal={setConfirmModal}
+        setResponseModal={setResponseModal}
+        setRejectModal={setRejectModal}
+        createVoting={createVoting}
+        approveApplication={approveApplication}
+      />
     </div>
   );
 }

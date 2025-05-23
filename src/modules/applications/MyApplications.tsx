@@ -39,10 +39,10 @@ const MyApplications = () => {
     }, [userApplications]);
 
     return (
-        <div className="p-10 mx-auto my-3">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <Table headers={headers} rows={rows} link={true} />
         </div>
     )
 }
 
-export default MyApplications
+export default MyApplications;

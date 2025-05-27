@@ -12,9 +12,9 @@ services:
     env_file:
       - ./.env
     networks:
-      - backend-red
+      - front-red
     command: ["npm", "run", "dev"]
 
 networks:
-  backend-red:
+  front-red:
     external: true

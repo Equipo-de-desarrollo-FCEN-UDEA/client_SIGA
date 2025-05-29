@@ -115,7 +115,7 @@ const Sidebar = () => {
                     <div className="relative">
                         <button
                             type="button"
-                            className="fixed absolute bottom-40 right-[-35px] flex h-10 w-10 items-center 
+                            className="fixed bottom-40 right-[-35px] flex h-10 w-10 items-center 
                                justify-center rounded-full bg-green-700 text-white 
                                shadow-lg hover:bg-green-600 hover:shadow-xl 
                                transition-all duration-200 ease-in-out"

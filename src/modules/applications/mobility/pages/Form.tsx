@@ -23,7 +23,7 @@ const FormMobility = () => {
   const methods = useForm<MobilityFormSchema>({
     resolver: zodResolver(combinedSchema),
   });
-  
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const steps = ["Info. general", "Info. Contacto", "Documentos", "Materias"];
   const { currentStep, complete, nextStep, previusStep } = useStepperForm({
     methods,
@@ -39,6 +39,7 @@ const FormMobility = () => {
     stepTwo: StepTwoFormData;
     stepThree: StepThreeFormData;
   }) => {
+    setIsSubmitting(true);
     const currentDate = new Date();
     const formData = new FormData();
     formData.append('process', data.stepOne.process);
@@ -71,6 +72,7 @@ const FormMobility = () => {
     if (response) {
       router.push(`/solicitudes/movilidad/ver/${response.id}`);
     }
+    setIsSubmitting(false);
   };
 
   return (
@@ -85,6 +87,7 @@ const FormMobility = () => {
           onPrevius={previusStep}
           onSubmit={onSubmit}
           handleSubmit={methods.handleSubmit}
+          disabled={isSubmitting}
         >
           {currentStep === 1 && <GeneralInfo />}
           {currentStep === 2 && <Contact />}

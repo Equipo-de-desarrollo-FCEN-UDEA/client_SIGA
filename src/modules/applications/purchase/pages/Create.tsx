@@ -21,6 +21,7 @@ const Create = () => {
   const methods = useForm<Purchase>({
     resolver: zodResolver(combinedSchema),
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const steps = ['Info. general', 'Cotizaciones', 'Confirmar'];
   const { currentStep, complete, nextStep, previusStep } = useStepperForm<Purchase>({
@@ -33,6 +34,7 @@ const Create = () => {
   const onSubmit = async (data: {
     stepOne: StepOneFormData;
   }) => {
+    setIsSubmitting(true);
     const formData = new FormData();
     formData.append('type', data.stepOne.type);
     formData.append('scope', data.stepOne.scope);
@@ -49,7 +51,20 @@ const Create = () => {
     if (response) {
       router.push(`/solicitudes/compra/ver/${response.id}`);
     }
+    setIsSubmitting(false);
   }
+
+  const [fileError, setFileError] = useState<string | null>(null);
+
+  const handleNextStep = () => {
+    if (currentStep === 2 && files.length < 2) {
+      setFileError("Debe subir al menos dos cotizaciones.");
+      return;
+    }
+    setFileError(null);
+    nextStep();
+  };
+
 
   return (
     <div className="max-h-2/3 border shadow-lg p-10 rounded-md w-full sm:mx-auto sm:w-auto my-3">
@@ -59,16 +74,21 @@ const Create = () => {
           complete={complete}
           currentStep={currentStep}
           steps={steps}
-          onNext={nextStep}
+          onNext={handleNextStep}
           onPrevius={previusStep}
           onSubmit={onSubmit}
           handleSubmit={methods.handleSubmit}
+          disabled={isSubmitting}
         >
           {currentStep === 1 && <GeneralInfo />}
           {currentStep === 2 && <UploadFiles files={files} setFiles={setFiles} />}
           {currentStep === 3 && <Confirm />}
         </FormStepper>
       </FormProvider>
+      {fileError && (
+        <h2 className="text-red-600 mt-2">{fileError}</h2>
+      )}
+
     </div>
   )
 }

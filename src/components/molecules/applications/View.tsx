@@ -58,9 +58,9 @@ const View: FC<Props> = ({ title, userApplication, children }) => {
           {children}
         </div>
         <div className='flex flex-col border-b-2 py-3 my-2'>
-          <h3 className='font-bold text-sm'>
+          <h5 className='font-bold'>
             Documentos:
-          </h3>
+          </h5>
           <div className="flex">
             <div className='flex flex-col'>
               {userApplication?.documents?.map((document) => (

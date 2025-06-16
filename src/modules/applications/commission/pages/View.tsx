@@ -38,6 +38,15 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
     return diffInDays > 30;
   })();
 
+  // Verifica si la comisión ha acabado para subir cumplido
+  const endDate = commission?.date_end ? new Date(commission.date_end) : null;
+  const now = new Date();
+  if (endDate) {
+    endDate.setHours(0, 0, 0, 0);
+    now.setHours(0, 0, 0, 0);
+  }
+  const uploadCompliment = endDate ? now >= endDate : false;
+
   const statusName = userApplication?.user_application_status[0]?.status.name;
   const academicUnitId = userApplication?.user_application_academic_units[0]?.academic_unit.id;
   const isRepresentative = user?.scopes.includes(`representante:${academicUnitId}`);
@@ -109,14 +118,19 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
             {
               (statusName === 'CREATED' && !exceedsThirtyDays ||
                 statusName === 'IN_INSTITUTE' ||
-                statusName === 'IN_DEAN') &&
+                statusName === 'IN_DEAN' ||
+                statusName === 'UPLOAD_PROOF') &&
               isRepresentative &&
               <MainButton text="Aprobar Solicitud" onClick={() => setResponseModal(true)} />
             }
 
-            {userApplication && isRepresentative && (
-              <MainButton text="Responder" onClick={() => setModal(true)} />
+            { (uploadCompliment && statusName === 'APPROVED') && (
+              <MainButton text="Habilitar Cumplido" onClick={() => setResponseModal(true)} />
             )}
+
+            {/* {userApplication && isRepresentative && (
+              <MainButton text="Responder" onClick={() => setModal(true)} />
+            )} */}
             {
               (isRepresentative || isAuxiliar) &&
               (

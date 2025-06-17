@@ -6,7 +6,8 @@ const navItems = [
   { href: "/solicitudes/adb1ea44-189f-47a7-b763-e0aae6e7c07e", label: "Decanatura" },
   { href: "/solicitudes/auxiliar/ver", label: "Vista-auxiliar" },
   { href: "/solicitudes/b882d1ef-1714-4f05-ad61-a9bfdd109592", label: "Pregrado Matemáticas" },
-  { href: "/voting", label: "Mis votaciones" },
+    { href: "/solicitudes/e38e3d01-ae8a-4a73-a511-72e268424237", label: "Instituto de Matemáticas" },
+  { href: "/voting", label: "Mis votaciones" }
 ];
 
 

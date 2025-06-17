@@ -133,6 +133,7 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
             )} */}
             {
               (isRepresentative || isAuxiliar) &&
+              (statusName !== 'UPLOAD_PROOF' && statusName !== 'APPROVED') &&
               (
                 <MainButton text="Rechazar Solicitud" onClick={() => { setRejectModal(true) }} bgColor='bg-red-500' />
               )

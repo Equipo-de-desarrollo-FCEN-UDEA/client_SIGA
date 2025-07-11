@@ -18,10 +18,10 @@ const RegisterPersonalInfo = () => {
     "TARJETA DE IDENTIDAD",
   ];
   const identificationValue = [
-    "cedula_ciudadania",
-    "cedula_extranjeria",
-    "pasaporte",
-    "tarjeta_de_identidad",
+    "CEDULA_CIUDADANIA",
+    "CEDULA_EXTRANJERIA",
+    "PASAPORTE",
+    "TARJETA_DE_IDENTIDAD",
   ];
 
   return (

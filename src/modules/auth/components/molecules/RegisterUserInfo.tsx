@@ -20,10 +20,10 @@ const RegisterUserInfo = ({
 }) => {
   const facultyOptions = ["FACULTAD DE CIENCIAS EXACTAS"];
   const roleOptions = [
-    "PROFESOR",
+    "PROFESOR VINCULADO",
     "ESTUDIANTE PREGRADO",
     "ESTUDIANTE POSGRADO",
-    "ADMINISTRATIVO",
+    "EMPLEADO",
   ];
 
   const {
@@ -38,14 +38,14 @@ const RegisterUserInfo = ({
 
   useEffect(() => {
     // Actualiza el rolId basado en la vinculación seleccionada
-    if (vinculation === "PROFESOR") {
-      setRolId(process.env.NEXT_PUBLIC_ROL_PROFESOR || "");
+    if (vinculation === "PROFESOR VINCULADO") {
+      setRolId(process.env.NEXT_PUBLIC_ROL_PROFESOR_VINCULADO || "");
     } else if (vinculation === "ESTUDIANTE PREGRADO") {
       setRolId(process.env.NEXT_PUBLIC_ROL_ESTUDIANTE_PREGRADO || "");
     } else if (vinculation === "ESTUDIANTE POSGRADO") {
       setRolId(process.env.NEXT_PUBLIC_ROL_ESTUDIANTE_POSGRADO || "");
-    } else if (vinculation === "ADMINISTRATIVO") {
-      setRolId(process.env.NEXT_PUBLIC_ROL_ADMINISTRATIVO || "");
+    } else if (vinculation === "EMPLEADO") {
+      setRolId(process.env.NEXT_PUBLIC_ROL_EMPLEADO || "");
     }
   }, [vinculation]);
 
@@ -101,7 +101,7 @@ const RegisterUserInfo = ({
           error={errors.stepTwo?.academic_unit?.message}
         />
       )}
-      {(vinculation === "PROFESOR" || vinculation === "ADMINISTRATIVO") && (
+      {(vinculation === "PROFESOR VINCULADO" || vinculation === "EMPLEADO") && (
         <SelectInput
           valueOptions={facultyObject.institute.map((item) => item.id)}
           options={facultyObject.institute.map((item) =>

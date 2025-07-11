@@ -12,10 +12,10 @@ export const stepOneSchema = z.object({
     .refine(
       (identification_type) =>
         [
-          "cedula_ciudadania",
-          "cedula_extranjeria",
-          "pasaporte",
-          "tarjeta_de_identidad",
+          "CEDULA_CIUDADANIA",
+          "CEDULA_EXTRANJERIA",
+          "PASAPORTE",
+          "TARJETA_DE_IDENTIDAD",
         ].includes(identification_type),
       {
         message: "Seleccione un tipo de identificación válido",
@@ -54,7 +54,7 @@ export const stepTwoSchema = z.object({
       message: "La facultad seleccionada no es válida",
     }),
   vinculation: z.string().refine((vinculation) => 
-    ["PROFESOR", "ESTUDIANTE PREGRADO", "ESTUDIANTE POSGRADO", "ADMINISTRATIVO"].includes(vinculation), {
+    ["PROFESOR VINCULADO", "ESTUDIANTE PREGRADO", "ESTUDIANTE POSGRADO", "EMPLEADO"].includes(vinculation), {
     message: "La vinculación seleccionada no es válida",
     }
   ),

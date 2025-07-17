@@ -50,14 +50,20 @@ export const stepTwoSchema = z.object({
     }),
   faculty: z
     .string()
-    .refine((faculty) => ["FACULTAD DE CIENCIAS EXACTAS"].includes(faculty), {
+    .refine((faculty) => [
+      "FACULTAD DE CIENCIAS EXACTAS",
+      "FACULTAD DE CIENCIAS SOCIALES Y HUMANAS",
+    ].includes(faculty), {
       message: "La facultad seleccionada no es válida",
     }),
-  vinculation: z.string().refine((vinculation) => 
-    ["PROFESOR VINCULADO", "ESTUDIANTE PREGRADO", "ESTUDIANTE POSGRADO", "EMPLEADO"].includes(vinculation), {
+  vinculation: z.string().refine((vinculation) => [
+    "PROFESOR VINCULADO", 
+    "ESTUDIANTE PREGRADO", 
+    "ESTUDIANTE POSGRADO", 
+    "EMPLEADO"
+  ].includes(vinculation), {
     message: "La vinculación seleccionada no es válida",
-    }
-  ),
+  }),
   academic_unit: z.string().min(1, {
     message: "Seleccione una unidad académica",
   }),

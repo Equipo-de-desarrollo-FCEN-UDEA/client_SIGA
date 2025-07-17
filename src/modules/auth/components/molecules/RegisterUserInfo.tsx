@@ -9,6 +9,8 @@ type TypeAcademicUnit = { name: string; id: string }[];
 const RegisterUserInfo = ({
   facultyObject,
   setRolId,
+  facultySelection,
+  setFacultySelection,
 }: {
   facultyObject: {
     undergraduate: TypeAcademicUnit;
@@ -17,8 +19,13 @@ const RegisterUserInfo = ({
   };
   rolId: string;
   setRolId: (rolId: string) => void;
+  facultySelection: "FACULTAD DE CIENCIAS EXACTAS" | "FACULTAD DE CIENCIAS SOCIALES Y HUMANAS";
+  setFacultySelection: (faculty: "FACULTAD DE CIENCIAS EXACTAS" | "FACULTAD DE CIENCIAS SOCIALES Y HUMANAS") => void;
 }) => {
-  const facultyOptions = ["FACULTAD DE CIENCIAS EXACTAS"];
+  const facultyOptions = [
+    "FACULTAD DE CIENCIAS EXACTAS",
+    "FACULTAD DE CIENCIAS SOCIALES Y HUMANAS"
+  ];
   const roleOptions = [
     "PROFESOR VINCULADO",
     "ESTUDIANTE PREGRADO",
@@ -35,7 +42,8 @@ const RegisterUserInfo = ({
 
   // Sincroniza vinculation con el formulario
   const vinculation = watch("stepTwo.vinculation", ""); 
-
+  const faculty = watch("stepTwo.faculty", "");
+  
   useEffect(() => {
     // Actualiza el rolId basado en la vinculación seleccionada
     if (vinculation === "PROFESOR VINCULADO") {
@@ -48,6 +56,16 @@ const RegisterUserInfo = ({
       setRolId(process.env.NEXT_PUBLIC_ROL_EMPLEADO || "");
     }
   }, [vinculation]);
+
+  useEffect(() => {
+    // Actualiza la facultad seleccionada solo si es válida
+    if (
+      faculty === "FACULTAD DE CIENCIAS EXACTAS" ||
+      faculty === "FACULTAD DE CIENCIAS SOCIALES Y HUMANAS"
+    ) {
+      setFacultySelection(faculty);
+    }
+  }, [faculty, setFacultySelection]);
 
   return (
     <div className="grid gap-4 my-7">

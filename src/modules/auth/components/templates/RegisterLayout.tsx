@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { useStepperForm } from "@/core/hooks/useStepperForm";
 
 type TypeAcademicUnit = { name: string; id: string }[];
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const RegisterLayout = () => {
   const router = useRouter();
@@ -79,10 +80,16 @@ const RegisterLayout = () => {
     }
   };
 
+  const [facultySelection, setFacultySelection] = useState<"FACULTAD DE CIENCIAS EXACTAS" | "FACULTAD DE CIENCIAS SOCIALES Y HUMANAS">("FACULTAD DE CIENCIAS EXACTAS");
+
   useEffect(() => {
     const loadAcademicUnits = async () => {
+
+
+      if (!facultySelection) return; // No hay facultad seleccionada aún
+
       try {
-        const data = await fetchAcademicUnitsSorted();
+        const data = await fetchAcademicUnitsSorted(facultySelection);
         setAcademicUnitData(data);
       } catch {
         alert("Error al cargar las unidades académicas");
@@ -90,7 +97,8 @@ const RegisterLayout = () => {
     };
 
     loadAcademicUnits();
-  }, []);
+  }, [facultySelection]);
+
 
   return (
     <div className="max-w-3xl border shadow-lg p-10 rounded-md">
@@ -110,6 +118,8 @@ const RegisterLayout = () => {
               rolId={rolId}
               setRolId={setRolId}
               facultyObject={academicUnitData}
+              setFacultySelection={setFacultySelection}
+              facultySelection={facultySelection}
             />
           )}
           {currentStep === 3 && <RegisterConfirmation />}

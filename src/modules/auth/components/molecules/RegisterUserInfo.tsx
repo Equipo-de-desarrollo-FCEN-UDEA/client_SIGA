@@ -38,12 +38,12 @@ const RegisterUserInfo = ({
     watch,
     register,
     formState: { errors },
-  } = useFormContext<{stepTwo: StepTwoFormData}>();
+  } = useFormContext<{ stepTwo: StepTwoFormData }>();
 
   // Sincroniza vinculation con el formulario
-  const vinculation = watch("stepTwo.vinculation", ""); 
+  const vinculation = watch("stepTwo.vinculation", "");
   const faculty = watch("stepTwo.faculty", "");
-  
+
   useEffect(() => {
     // Actualiza el rolId basado en la vinculación seleccionada
     if (vinculation === "PROFESOR VINCULADO") {
@@ -97,7 +97,7 @@ const RegisterUserInfo = ({
         error={errors.stepTwo?.vinculation?.message}
       />
 
-      {vinculation === "ESTUDIANTE PREGRADO" && (
+      {/* {vinculation === "ESTUDIANTE PREGRADO" && (
         <SelectInput
           valueOptions={facultyObject.undergraduate.map((item) => item.id)}
           options={facultyObject.undergraduate.map((item) =>
@@ -118,18 +118,18 @@ const RegisterUserInfo = ({
           {...register("stepTwo.academic_unit")}
           error={errors.stepTwo?.academic_unit?.message}
         />
-      )}
-      {(vinculation === "PROFESOR VINCULADO" || vinculation === "EMPLEADO") && (
-        <SelectInput
-          valueOptions={facultyObject.institute.map((item) => item.id)}
-          options={facultyObject.institute.map((item) =>
-            item.name.toLocaleUpperCase()
-          )}
-          label="Instituto:"
-          {...register("stepTwo.academic_unit")}
-          error={errors.stepTwo?.academic_unit?.message}
-        />
-      )}
+      )} */}
+
+      <SelectInput
+        valueOptions={facultyObject.institute.map((item) => item.id)}
+        options={facultyObject.institute.map((item) =>
+          item.name.toLocaleUpperCase()
+        )}
+        label="Unidad Académica:"
+        {...register("stepTwo.academic_unit")}
+        error={errors.stepTwo?.academic_unit?.message}
+      />
+
     </div>
   );
 };

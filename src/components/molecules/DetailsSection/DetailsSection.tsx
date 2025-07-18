@@ -13,7 +13,7 @@ const DetailsSection: React.FC<DetailsSectionProps> = ({ data }) => {
     <div className="">
       <div className="grid grid-cols-3 gap-5">
         <LabelValue label="País" value={data.country} />
-        <LabelValue label="Estado/Departamento" value={data.state} />
+        <LabelValue label="Estado/ Departamento" value={data.state} />
         <LabelValue label="Ciudad" value={data.city} />
       </div>
 

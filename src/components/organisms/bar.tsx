@@ -3,9 +3,11 @@ import Link from "next/link";
 // TODO: HAY QUE CAMBIAR LOS UUID QUEMADOS
 const navItems = [
   { href: "/solicitudes/auxiliar/ver", label: "Vista-auxiliar" },
-  { href: "/solicitudes/adb1ea44-189f-47a7-b763-e0aae6e7c07e", label: "Decanatura" },
+  { href: "/solicitudes/adb1ea44-189f-47a7-b763-e0aae6e7c07e", label: "Decanatura FCEN" },
+  { href: "/solicitudes/e5a90438-fc83-4c1d-bcd3-f94edf109728", label: "Decanatura FCSH" },
   { href: "/solicitudes/auxiliar/ver", label: "Vista-auxiliar" },
-  { href: "/solicitudes/b882d1ef-1714-4f05-ad61-a9bfdd109592", label: "Pregrado Matemáticas" },
+  { href: "/solicitudes/badced29-e888-4d00-b9fe-aec53baa4657", label: "Instituto Física" },
+  { href: "/solicitudes/096dffe3-679f-48d9-a107-b0f2e22b7e0c", label: "Departamento Antropología" },
   { href: "/voting", label: "Mis votaciones" },
 ];
 

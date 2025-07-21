@@ -125,29 +125,32 @@ const View = ({ id }: { id: string }) => {
                     {(currentStatus != 'REJECTED' && currentStatus != 'FINISHED') && (
                         <>
                             {userApplication?.user_application_status.length == 1 &&
-                                user?.scopes.includes(`representante:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) &&
+                                (user?.scopes.includes(`representante:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) ||
+                                user?.scopes.includes("decano:" + userApplication?.user_application_academic_units?.at(-1)?.academic_unit.id)) &&
                                 (
                                     <SecondaryButton text="Asignar auxiliar" onClick={() => setAssistantModal(true)} />
                                 )
                             }
 
                             {userApplication?.user_application_status.length == 2 &&
-                                user?.scopes.includes(`auxiliar:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) &&
-                                (
+                                (user?.scopes.includes(`auxiliar:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) ||
+                                user?.scopes.includes(`decano:${userApplication?.user_application_academic_units?.at(-1)?.academic_unit.id}`)) && (
                                     <SecondaryButton text="Completar información" onClick={() => setCompleteInfoModal(true)} />
                                 )
                             }
 
                             {userApplication?.user_application_status?.length >= 3 &&
-                                user?.scopes.includes(`representante:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) &&
-                                user?.scopes.includes(`auxiliar:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) &&
+                                (user?.scopes.includes(`representante:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) &&
+                                user?.scopes.includes(`auxiliar:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`)) ||
+                                user?.scopes.includes(`decano:${userApplication?.user_application_academic_units?.at(-1)?.academic_unit.id}`) &&
                                 (
                                     <SecondaryButton text="Descargar Formato de vicerrectoria" onClick={() => { getFormat() }} />
                                 )
                             }
 
                             {userApplication?.user_application_status.length && [3, 4, 6, 7].includes(userApplication?.user_application_status.length) &&
-                                user?.scopes.includes(`auxiliar:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) &&
+                                (user?.scopes.includes(`auxiliar:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) ||
+                                user?.scopes.includes(`decano:${userApplication?.user_application_academic_units?.at(-1)?.academic_unit.id}`)) &&
                                 (
                                     <SecondaryButton text="Actualizar estado" onClick={() => { setNextStatusModal(true) }} />
                                 )
@@ -160,7 +163,8 @@ const View = ({ id }: { id: string }) => {
                                 )
                             }
                             {(user?.scopes.includes(`representante:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) ||
-                                user?.scopes.includes(`auxiliar:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`)) &&
+                                user?.scopes.includes(`auxiliar:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) ||
+                                user?.scopes.includes(`decano:${userApplication?.user_application_academic_units?.at(-1)?.academic_unit.id}`)) &&
                                 (
                                     <MainButton text="Rechazar Solicitud" onClick={() => { setRejectModal(true) }} bgColor='bg-red-500' />
                                 )

@@ -89,7 +89,7 @@ const Page = ({ id }: { id: string }) => {
             <p>{mobility?.destination_institution}</p>
           </div>
           <div>
-            <h5>Academic unit actual</h5>
+            <h5>Unidad académica actual</h5>
             <p>{userApplication?.user_application_academic_units[0]?.academic_unit.name}</p>
           </div>
         </div>
@@ -99,22 +99,29 @@ const Page = ({ id }: { id: string }) => {
         userApplication?.user_application_status.at(0)?.status.name !== 'FINISHED' && (
           <div className='flex gap-4 my-3'>
             {
-              userApplication?.user_application_status[0].status.name === 'CREATED' &&
-              user?.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit.id) &&
+              userApplication?.user_application_status[0].status.name === 'REQUESTED' &&
+              (user?.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit.id) ||
+              user?.scopes.includes("decano:" + userApplication?.user_application_academic_units?.at(-1)?.academic_unit.id)) &&
               <MainButton text="Enviar a votación" onClick={() => setConfirmModal(true)} />
             }
 
             {
               (userApplication?.user_application_status[0].status.name === 'IN_INTERNATIONAL' ||
                 userApplication?.user_application_status[0].status.name === 'IN_DEAN') &&
-              user?.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit.id) &&
+              (user?.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit.id) ||
+              user?.scopes.includes("decano:" + userApplication?.user_application_academic_units?.at(-1)?.academic_unit.id)) &&
               <MainButton text="Aprobar Solicitud" onClick={() => setResponseModal(true)} />
             }
+
+            <p>
+              {userApplication?.user_application_academic_units?.at(-1)?.academic_unit.name}
+            </p>
 
             {userApplication?.user_application_academic_units[0] && user?.scopes && user.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit_id) && (
               <MainButton text="Responder" onClick={() => setModal(true)} />
             )}
             {(user?.scopes.includes(`representante:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`) ||
+              user?.scopes.includes(`decano:${userApplication?.user_application_academic_units?.at(-1)?.academic_unit.id}`) ||
               user?.scopes.includes(`auxiliar:${userApplication?.user_application_academic_units[0]?.academic_unit.id}`)) &&
               (
                 <MainButton text="Rechazar Solicitud" onClick={() => { setRejectModal(true) }} bgColor='bg-red-500' />

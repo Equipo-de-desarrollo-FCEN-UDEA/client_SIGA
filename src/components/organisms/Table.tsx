@@ -11,7 +11,7 @@ interface TableProps {
 }
 
 const Table = ({ headers, rows, link }: TableProps) => (
-    <div className="overflow-x-auto shadow-md mx-5">
+    <div className="overflow-x-auto shadow-md">
       <table className="min-w-full bg-white border border-gray-200">
         <Head headers={headers} />
         <Body rows={rows} link={link} />

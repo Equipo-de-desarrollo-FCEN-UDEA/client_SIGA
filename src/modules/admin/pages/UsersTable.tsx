@@ -37,8 +37,7 @@ const UsersTable = ({ users, pages, currentPage, total, limit, offSet, onPageCha
   }
 
   return (
-    <div className="w-full flex flex-col items-center mt-4">
-      <h1 className="font-bold text-2xl mb-2">Lista de Usuarios</h1>
+    <div className="w-full flex flex-col items-center">
       <table className="table-auto min-w-full border-collapse border border-slate-500 bg-white shadow-md rounded-lg overflow-scroll">
         <thead className="bg-darkGreen text-white">
           <tr>

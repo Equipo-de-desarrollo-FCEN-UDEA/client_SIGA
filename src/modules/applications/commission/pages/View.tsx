@@ -15,7 +15,7 @@ import { UUID } from 'crypto';
 const CommissionViewComponent = ({ id }: { id: string }) => {
   const [commission, setCommission] = useState<Commission>({} as Commission);
 
-  const [modal, setModal] = useState<boolean>(false);
+  const modal = false;
   const [userApplication, setUserApplication] = useState<UserApplication | null>(null);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const [responseModal, setResponseModal] = useState<boolean>(false);
@@ -114,10 +114,6 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
               (isRepresentative || isDecano) &&
               <MainButton text="Aprobar Solicitud" onClick={() => setResponseModal(true)} />
             }
-
-            {/* {userApplication && (isRepresentative || isDecano) && (
-              <MainButton text="Responder" onClick={() => setModal(true)} />
-            )} */}
             {
               (isRepresentative || isAuxiliar || isDecano) &&
               (

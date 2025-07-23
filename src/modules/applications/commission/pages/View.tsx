@@ -15,7 +15,7 @@ import { UUID } from 'crypto';
 const CommissionViewComponent = ({ id }: { id: string }) => {
   const [commission, setCommission] = useState<Commission>({} as Commission);
 
-  const [modal, setModal] = useState<boolean>(false);
+  const modal = false;
   const [userApplication, setUserApplication] = useState<UserApplication | null>(null);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const [responseModal, setResponseModal] = useState<boolean>(false);
@@ -42,6 +42,7 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
   const academicUnitId = userApplication?.user_application_academic_units[0]?.academic_unit.id;
   const isRepresentative = user?.scopes.includes(`representante:${academicUnitId}`);
   const isAuxiliar = user?.scopes.includes(`auxiliar:${academicUnitId}`);
+  const isDecano = user?.scopes.includes(`decano:${userApplication?.user_application_academic_units?.at(-1)?.academic_unit.id}`);
 
   //modals
   const [rejectModal, setRejectModal] = useState<boolean>(false);
@@ -101,24 +102,20 @@ const CommissionViewComponent = ({ id }: { id: string }) => {
         userApplication?.user_application_status.at(0)?.status.name !== 'FINISHED' && (
           <div className='flex gap-4 my-3'>
             {
-              statusName === 'CREATED' &&
+              statusName === 'REQUESTED' &&
               exceedsThirtyDays &&
-              isRepresentative &&
+              (isRepresentative || isDecano) &&
               <MainButton text="Enviar a votación" onClick={() => setConfirmModal(true)} />
             }
             {
-              (statusName === 'CREATED' && !exceedsThirtyDays ||
+              (statusName === 'REQUESTED' && !exceedsThirtyDays ||
                 statusName === 'IN_INSTITUTE' ||
                 statusName === 'IN_DEAN') &&
-              isRepresentative &&
+              (isRepresentative || isDecano) &&
               <MainButton text="Aprobar Solicitud" onClick={() => setResponseModal(true)} />
             }
-
-            {userApplication && isRepresentative && (
-              <MainButton text="Responder" onClick={() => setModal(true)} />
-            )}
             {
-              (isRepresentative || isAuxiliar) &&
+              (isRepresentative || isAuxiliar || isDecano) &&
               (
                 <MainButton text="Rechazar Solicitud" onClick={() => { setRejectModal(true) }} bgColor='bg-red-500' />
               )

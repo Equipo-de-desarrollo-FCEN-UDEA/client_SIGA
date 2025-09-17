@@ -59,7 +59,7 @@ const VotingDetail = ({ id }: { id: string}) => {
     };
 
     const closeVoting = async () => {
-        votingService.closeVoting(voting_id);
+        const res = await votingService.closeVoting(voting_id);
         window.location.reload();
     };
 

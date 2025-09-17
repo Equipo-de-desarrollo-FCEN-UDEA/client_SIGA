@@ -113,9 +113,9 @@ const Page = ({ id }: { id: string }) => {
               <MainButton text="Aprobar Solicitud" onClick={() => setResponseModal(true)} />
             }
 
-            <p>
-              {userApplication?.user_application_academic_units?.at(-1)?.academic_unit.name}
-            </p>
+            {/* <p>
+              {userApplication?.user_application_academic_units?.at(0)?.academic_unit.name}
+            </p> */}
 
             {userApplication?.user_application_academic_units[0] && user?.scopes && user.scopes.includes("representante:" + userApplication?.user_application_academic_units[0]?.academic_unit_id) && (
               <MainButton text="Responder" onClick={() => setModal(true)} />

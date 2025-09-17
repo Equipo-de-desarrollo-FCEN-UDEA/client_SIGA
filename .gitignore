@@ -135,3 +135,9 @@ dist
 # Certs directory
 certs/
 openssl.cnf
+
+#package-lock.json
+# Comment the above line if you want to ignore package-lock.json, uncomment if you want to track it
+package-lock.json
+package.json
+

@@ -34,7 +34,7 @@ export async function middleware(request: NextRequest) {
     // For admin routes, check if user has admin role
     if (isAdminRoute) {
       const hasAdminRole = userData.user_roles_academic_units?.some(
-        (roleUnit: any) => roleUnit.rol.name.toLowerCase().includes('admin')
+        (roleUnit: { rol: { name: string } }) => roleUnit.rol.name.toLowerCase().includes('admin')
       );
       
       if (!hasAdminRole) {

@@ -57,6 +57,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = async () => {
     try {
+      // Try to call logout endpoint if it exists
       await fetch('http://localhost:8003/api/v1/auth/logout', {
         method: 'POST',
         credentials: 'include',
@@ -65,6 +66,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       console.error('Logout error:', error);
     } finally {
       setUser(null);
+      // Redirect to login page
+      if (typeof window !== 'undefined') {
+        window.location.href = '/auth/login';
+      }
     }
   };
 

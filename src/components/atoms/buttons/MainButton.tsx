@@ -6,6 +6,7 @@ type MainButtonProps = {
   textColor?: string;
   buttonType?: "submit" | "reset" | "button";
   onClick?: () => void;
+  disabled?: boolean;
 };
 
 const MainButton: React.FC<MainButtonProps> = ({
@@ -14,12 +15,18 @@ const MainButton: React.FC<MainButtonProps> = ({
   textColor = "text-white",
   buttonType = "submit",
   onClick,
+  disabled = false,
 }) => {
   return (
     <button
-      className={`w-full h-9 rounded-md ${bgColor} ${textColor}`}
+      className={`w-full h-9 rounded-md ${
+        disabled 
+          ? "bg-gray-400 cursor-not-allowed" 
+          : bgColor
+      } ${textColor} transition-colors`}
       type={buttonType}
       onClick={onClick}
+      disabled={disabled}
     >
       {text}
     </button>

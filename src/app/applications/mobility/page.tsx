@@ -1,8 +1,10 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 
 export default function Home() {
-  const [votings, setVotings] = useState([]);
+  const [, setVotings] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

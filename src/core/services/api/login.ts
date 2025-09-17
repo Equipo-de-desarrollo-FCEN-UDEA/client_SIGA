@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.setHeader('Set-Cookie', response.headers['set-cookie']);
       }      
     res.status(200).json({ message: "Logged in successfully" });
-  } catch (error) {
+  } catch {
     res.status(401).json({ message: "Invalid credentials" });
   }
 }

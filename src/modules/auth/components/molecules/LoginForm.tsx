@@ -1,38 +1,43 @@
 "use client";
 
-import { use, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import TextInput from "@components/atoms/inputs/TextInput";
 import MainButton from "@components/atoms/buttons/MainButton";
-import handler from "@/core/services/api/login";
+import { useAuth } from "@/core/contexts/AuthContext";
 
 function LoginForm() {
-  const [username, setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  
+  const { login } = useAuth();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("username", username);
-    formData.append("password", password);
+    setIsLoading(true);
+    setError("");
 
     try {
-      const response = await fetch("http://localhost:8003/api/v1/auth/access-token", {
-        method: "POST",
-        credentials: "include",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Login failed");
+      const success = await login({ email, password });
+      
+      if (success) {
+        // Get redirect path from URL params or default based on user role
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectPath = urlParams.get('redirect') || '/';
+        router.push(redirectPath);
+      } else {
+        setError("Credenciales inválidas. Por favor, inténtalo de nuevo.");
       }
-
-      const data = await response.json();
-      console.log("Login successful:", data);
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Login error:", error);
+      setError("Error al iniciar sesión. Por favor, inténtalo de nuevo.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -42,26 +47,38 @@ function LoginForm() {
         <TextInput
           placeholder="Correo institucional"
           onChange={(e) => setEmail(e.target.value)}
-          value={username}
-        ></TextInput>
+          value={email}
+          type="email"
+          required
+        />
         <TextInput
           placeholder="Contraseña"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           type="password"
-        ></TextInput>
+          required
+        />
       </div>
 
-      <div className="w-full flex justify-between text-darkGreen underline mb-10">
+      {error && (
+        <div className="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+          {error}
+        </div>
+      )}
+
+      <div className="w-full flex justify-between text-darkGreen underline mb-10 mt-4">
         <Link href="/">
           <p>¿Olvidaste tu contraseña?</p>
         </Link>
         <Link href="../register">
-          <p>Registrate</p>
+          <p>Regístrate</p>
         </Link>
       </div>
 
-      <MainButton text="Iniciar Sesión"></MainButton>
+      <MainButton 
+        text={isLoading ? "Iniciando..." : "Iniciar Sesión"} 
+        disabled={isLoading}
+      />
     </form>
   );
 }
